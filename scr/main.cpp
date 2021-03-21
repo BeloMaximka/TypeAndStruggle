@@ -327,43 +327,18 @@ inline void RestartGame() {
     GamePlayerHearts.clear();
     if (Difficulty == DIFFICULTY_EASY)
     {
-        if (ArithmeticMode)
-        {
-            DifficultySpeedModifier = 0.7;
-        }
-        else
-        {
-            DifficultySpeedModifier = 0.6;
-        }
-        
-        AddHearts(5);
+        DifficultySpeedModifier = ArithmeticMode ? 0.7 : 0.6;
+        AddHearts(2);
     }
     else if (Difficulty == DIFFICULTY_NORMAL)
     {
-        if (ArithmeticMode)
-        {
-            DifficultySpeedModifier = 0.7;
-        }
-        else
-        {
-            DifficultySpeedModifier = 0.8;
-        }
-        
-        AddHearts(3);
+        DifficultySpeedModifier = ArithmeticMode ? 0.7 : 0.8;
     }
     else if (Difficulty == DIFFICULTY_HARD)
     {
-        if (ArithmeticMode)
-        {
-            DifficultySpeedModifier = 0.5;
-        }
-        else
-        {
-            DifficultySpeedModifier = 0.8;
-        }
-        
-        AddHearts(3);
+        DifficultySpeedModifier = ArithmeticMode ? 0.5 : 0.8;
     }
+    AddHearts(3);
     GameBonuses.clear();
     GameEnemies.clear();
     WordInput = "";
