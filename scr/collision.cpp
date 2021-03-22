@@ -1,4 +1,4 @@
-#include "main.h"
+﻿#include "main.h"
 
 bool IsColliding(collisionbox First, collisionbox Second) {
     if (First.TopLeft.x >= Second.BottomRight.x || Second.TopLeft.x >= First.BottomRight.x) {

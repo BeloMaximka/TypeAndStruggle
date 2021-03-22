@@ -1,4 +1,4 @@
-
+﻿
 unsigned int TimerEnemySpawn = 0;
 unsigned int TimerBonusSpawn = 0;
 unsigned int TimerHeartRotate = 0;

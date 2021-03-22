@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "main.h"
 #include "render.h"
 #include "game_resources.h"

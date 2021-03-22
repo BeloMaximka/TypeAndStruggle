@@ -1,9 +1,9 @@
-#include "main.h"
+п»ї#include "main.h"
 
 int TickShoot = SDL_GetTicks();
 void ReadKeys(SDL_Event Event) {
 
-	// Проверяем нажатые клавиши
+	// РџСЂРѕРІРµСЂСЏРµРј РЅР°Р¶Р°С‚С‹Рµ РєР»Р°РІРёС€Рё
 	if (Event.type == SDL_KEYDOWN) {
 		// ESC
 		if (Event.key.keysym.scancode == SDL_SCANCODE_ESCAPE && !MainMenuShow && !ChoosingDifficultyShow && !PlayerDead && !HighscoresEnterShow && !HighscoresShow)
@@ -15,12 +15,12 @@ void ReadKeys(SDL_Event Event) {
 		{
 			if (Event.key.keysym.scancode == SDL_SCANCODE_BACKSPACE && WordInput.length() > 0)
 			{
-				// если символ больше байта, удаляем сразу два
+				// РµСЃР»Рё СЃРёРјРІРѕР» Р±РѕР»СЊС€Рµ Р±Р°Р№С‚Р°, СѓРґР°Р»СЏРµРј СЃСЂР°Р·Сѓ РґРІР°
 				if (WordInput[WordInput.length() - 1] < 0)
 				{
 					WordInput = WordInput.substr(0, WordInput.length() - 2);
 				}
-				// если символ однобайтовый, удаляем один символ
+				// РµСЃР»Рё СЃРёРјРІРѕР» РѕРґРЅРѕР±Р°Р№С‚РѕРІС‹Р№, СѓРґР°Р»СЏРµРј РѕРґРёРЅ СЃРёРјРІРѕР»
 				else
 				{
 					WordInput = WordInput.substr(0, WordInput.length() - 1);
@@ -32,7 +32,7 @@ void ReadKeys(SDL_Event Event) {
 				{
 					if ((!ArithmeticMode && WordInput == GameEnemies[i].Word) || (ArithmeticMode && WordInput == GameEnemies[i].ArithmeticAnswer))
 					{
-						// Создаём сердечки
+						// РЎРѕР·РґР°С‘Рј СЃРµСЂРґРµС‡РєРё
 						EntityCosmeticParticle CosmeticHeartToAdd;
 						CosmeticHeartToAdd.Type = PRTCL_HEART;
 						CosmeticHeartToAdd.Size = 32;
@@ -45,7 +45,7 @@ void ReadKeys(SDL_Event Event) {
 						CosmeticHeartToAdd.Pos.x = GameEnemies[i].Pos.x;
 						CosmeticHeartToAdd.Pos.y = GameEnemies[i].Pos.y + GameEnemies[i].Height / 6;
 						GameCosmetics.push_back(CosmeticHeartToAdd);
-						// Добавляем очки
+						// Р”РѕР±Р°РІР»СЏРµРј РѕС‡РєРё
 						double ScoreModifier = 1;
 						if (Difficulty == DIFFICULTY_EASY)
 						{
@@ -72,7 +72,7 @@ void ReadKeys(SDL_Event Event) {
 							MainPlayer.Score += 25 * GameEnemies[i].Word.length() * ScoreModifier;
 						}
 						
-						// Удаляем противника
+						// РЈРґР°Р»СЏРµРј РїСЂРѕС‚РёРІРЅРёРєР°
 						GameEnemies.erase(GameEnemies.begin() + i);
 
 						i--;
@@ -98,7 +98,7 @@ void ReadKeys(SDL_Event Event) {
 						{
 							SlowdownTimerMod = 100;
 						}
-						// Создаём звездочки
+						// РЎРѕР·РґР°С‘Рј Р·РІРµР·РґРѕС‡РєРё
 						EntityCosmeticParticle CosmeticHeartToAdd;
 						CosmeticHeartToAdd.Type = PRTCL_STAR;
 						CosmeticHeartToAdd.Size = 32;
@@ -111,7 +111,7 @@ void ReadKeys(SDL_Event Event) {
 						CosmeticHeartToAdd.Pos.x = GameBonuses[i].Pos.x;
 						CosmeticHeartToAdd.Pos.y = GameBonuses[i].Pos.y + GameBonuses[i].Size / 6;
 						GameCosmetics.push_back(CosmeticHeartToAdd);
-						// Удаляем бонус
+						// РЈРґР°Р»СЏРµРј Р±РѕРЅСѓСЃ
 						GameBonuses.erase(GameBonuses.begin() + i);
 						i--;
 					}
@@ -178,13 +178,13 @@ void ReadKeys(SDL_Event Event) {
 	}
 	if (!GamePaused || HighscoresEnterShow)
 	{
-		// Ввод текста
+		// Р’РІРѕРґ С‚РµРєСЃС‚Р°
 		if (Event.type == SDL_TEXTINPUT)
 		{
 			WordInput += Event.text.text;
 		}
 
-		// Проверяем отжатые клавиши
+		// РџСЂРѕРІРµСЂСЏРµРј РѕС‚Р¶Р°С‚С‹Рµ РєР»Р°РІРёС€Рё
 		if (Event.type == SDL_KEYUP) {
 
 		}
@@ -202,29 +202,29 @@ void ReadMouse(SDL_Event Event) {
 		{
 			if (IngameMenuShow)
 			{
-				//Кнопка Continue
+				//РљРЅРѕРїРєР° Continue
 				if (IsColliding(MouseCollision, Buttons[BTN_INGAME_CONTINUE].Collision))
 				{
 					IngameMenuShow = false;
 					GamePaused = false;
 				}
-				//Кнопка Quit to Desktop 
+				//РљРЅРѕРїРєР° Quit to Desktop 
 				else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_QUIT_DESKTOP].Collision))
 				{
 					QuitGame();				
 				}
-				//Кнопка Restart
+				//РљРЅРѕРїРєР° Restart
 				else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_RESTART].Collision))
 				{
 					Restart = true;
 					IngameMenuShow = false;
 					GamePaused = false;
 				}
-				//Кнопка Quit to Main Menu 
+				//РљРЅРѕРїРєР° Quit to Main Menu 
 				else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_QUIT_MAINMENU].Collision))
 				{					
 					IngameMenuShow = false;
-					// Проверка на рекорд
+					// РџСЂРѕРІРµСЂРєР° РЅР° СЂРµРєРѕСЂРґ
 					for (int i = 0; i < GameHighscoresSize; i++)
 					{
 						if (GameHighscores[i].Score != 0 && MainPlayer.Score > GameHighscores[i].Score && MainPlayer.Score != 0)
@@ -240,27 +240,27 @@ void ReadMouse(SDL_Event Event) {
 			}
 			else if (MainMenuShow)
 			{
-				//Кнопка Play Classic
+				//РљРЅРѕРїРєР° Play Classic
 				if (IsColliding(MouseCollision, Buttons[BTN_MENU_CLASSIC].Collision))
 				{
 					ArithmeticMode = false;
 					MainMenuShow = false;
 					ChoosingDifficultyShow = true;
 				}
-				//Кнопка Arithmetic
+				//РљРЅРѕРїРєР° Arithmetic
 				else if (IsColliding(MouseCollision, Buttons[BTN_MENU_ARITHMETIC].Collision))
 				{
 					ArithmeticMode = true;
 					MainMenuShow = false;
 					ChoosingDifficultyShow = true;
 				}
-				//Кнопка Scores
+				//РљРЅРѕРїРєР° Scores
 				else if (IsColliding(MouseCollision, Buttons[BTN_MENU_SCORES].Collision))
 				{					
 					MainMenuShow = false;
 					HighscoresShow = true;
 				}
-				//Кнопка Quit to Desktop
+				//РљРЅРѕРїРєР° Quit to Desktop
 				else if (IsColliding(MouseCollision, Buttons[BTN_MENU_QUIT_DESKTOP].Collision))
 				{
 					QuitGame();
@@ -268,7 +268,7 @@ void ReadMouse(SDL_Event Event) {
 			}
 			else if (ChoosingDifficultyShow)
 			{
-				//Кнопка Easy
+				//РљРЅРѕРїРєР° Easy
 				if (IsColliding(MouseCollision, Buttons[BTN_DIFFICULTY_EASY].Collision))
 				{
 					Difficulty = DIFFICULTY_EASY;
@@ -276,7 +276,7 @@ void ReadMouse(SDL_Event Event) {
 					GamePaused = false;
 					Restart = true;
 				}
-				//Кнопка Normal
+				//РљРЅРѕРїРєР° Normal
 				else if (IsColliding(MouseCollision, Buttons[BTN_DIFFICULTY_NORMAL].Collision))
 				{
 					Difficulty = DIFFICULTY_NORMAL;
@@ -284,7 +284,7 @@ void ReadMouse(SDL_Event Event) {
 					GamePaused = false;
 					Restart = true;
 				}
-				//Кнопка Hard
+				//РљРЅРѕРїРєР° Hard
 				else if (IsColliding(MouseCollision, Buttons[BTN_DIFFICULTY_HARD].Collision))
 				{
 					Difficulty = DIFFICULTY_HARD;
@@ -292,7 +292,7 @@ void ReadMouse(SDL_Event Event) {
 					GamePaused = false;
 					Restart = true;
 				}
-				//Кнопка Back
+				//РљРЅРѕРїРєР° Back
 				else if (IsColliding(MouseCollision, Buttons[BTN_DIFFICULTY_BACK].Collision))
 				{
 					ChoosingDifficultyShow = false;
@@ -301,15 +301,15 @@ void ReadMouse(SDL_Event Event) {
 			}
 			else if (PlayerDead)
 			{
-				// Рестарт
+				// Р РµСЃС‚Р°СЂС‚
 				if (IsColliding(MouseCollision, Buttons[BTN_DEAD_RETRY].Collision))
 				{
 					Restart = true;
 				}
-				// Кнопка в меню
+				// РљРЅРѕРїРєР° РІ РјРµРЅСЋ
 				else if (IsColliding(MouseCollision, Buttons[BTN_DEAD_QUIT_MAINMENU].Collision))
 				{
-					// Проверка на рекорд
+					// РџСЂРѕРІРµСЂРєР° РЅР° СЂРµРєРѕСЂРґ
 					for (int i = 0; i < GameHighscoresSize; i++)
 					{
 						if (GameHighscores[i].Score != 0 && MainPlayer.Score > GameHighscores[i].Score && MainPlayer.Score != 0)

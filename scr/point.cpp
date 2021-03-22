@@ -1,4 +1,4 @@
-#include "main.h"
+﻿#include "main.h"
 
 point RotateVector(point PointFirst, double Angle) {
     Angle *= (M_PI / 180);

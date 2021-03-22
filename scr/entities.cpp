@@ -1,4 +1,4 @@
-#include "main.h"
+п»ї#include "main.h"
 
 std::vector<EntityEnemy> GameEnemies;
 std::vector<point> GamePlayerHearts;
@@ -104,11 +104,11 @@ void SpawnEnemy() {
 			double ArithmeticMovementMod = 1;
 			if (Difficulty == DIFFICULTY_EASY)
 			{
-				// Генерация первого числа
+				// Р“РµРЅРµСЂР°С†РёСЏ РїРµСЂРІРѕРіРѕ С‡РёСЃР»Р°
 				_itoa_s(rand() % 16, StrBuffer, 10, 10);
 				EnemyToAdd.Word += StrBuffer;
 				ArithmeticResult = atoi(StrBuffer);
-				// Сложение
+				// РЎР»РѕР¶РµРЅРёРµ
 				if (ArithmeticOperation == 0)
 				{
 					_itoa_s(rand() % 16, StrBuffer, 10, 10);
@@ -116,7 +116,7 @@ void SpawnEnemy() {
 					EnemyToAdd.Word += StrBuffer;
 					ArithmeticResult += atoi(StrBuffer);
 				}
-				// Вычитание
+				// Р’С‹С‡РёС‚Р°РЅРёРµ
 				else if (ArithmeticOperation == 1)
 				{
 					_itoa_s(rand() % 16, StrBuffer, 10, 10);
@@ -124,7 +124,7 @@ void SpawnEnemy() {
 					EnemyToAdd.Word += StrBuffer;
 					ArithmeticResult -= atoi(StrBuffer);
 				}
-				// Умножение
+				// РЈРјРЅРѕР¶РµРЅРёРµ
 				else if (ArithmeticOperation == 2)
 				{
 					ArithmeticMovementMod = 0.6;
@@ -133,7 +133,7 @@ void SpawnEnemy() {
 					EnemyToAdd.Word += StrBuffer;
 					ArithmeticResult *= atoi(StrBuffer);
 				}
-				// Деление
+				// Р”РµР»РµРЅРёРµ
 				else if (ArithmeticOperation == 3)
 				{
 					ArithmeticMovementMod = 0.5;
@@ -154,11 +154,11 @@ void SpawnEnemy() {
 			}
 			else if (Difficulty == DIFFICULTY_NORMAL)
 			{
-				// Генерация первого числа
+				// Р“РµРЅРµСЂР°С†РёСЏ РїРµСЂРІРѕРіРѕ С‡РёСЃР»Р°
 				_itoa_s(rand() % 100, StrBuffer, 10, 10);
 				EnemyToAdd.Word += StrBuffer;
 				ArithmeticResult = atoi(StrBuffer);
-				// Сложение
+				// РЎР»РѕР¶РµРЅРёРµ
 				if (ArithmeticOperation == 0)
 				{
 					_itoa_s(rand() % 100, StrBuffer, 10, 10);
@@ -166,7 +166,7 @@ void SpawnEnemy() {
 					EnemyToAdd.Word += StrBuffer;
 					ArithmeticResult += atoi(StrBuffer);
 				}
-				// Вычитание
+				// Р’С‹С‡РёС‚Р°РЅРёРµ
 				else if (ArithmeticOperation == 1)
 				{
 					_itoa_s(rand() % 100, StrBuffer, 10, 10);
@@ -174,7 +174,7 @@ void SpawnEnemy() {
 					EnemyToAdd.Word += StrBuffer;
 					ArithmeticResult -= atoi(StrBuffer);
 				}
-				// Умножение
+				// РЈРјРЅРѕР¶РµРЅРёРµ
 				else if (ArithmeticOperation == 2)
 				{
 					ArithmeticMovementMod = 0.6;
@@ -183,7 +183,7 @@ void SpawnEnemy() {
 					EnemyToAdd.Word += StrBuffer;
 					ArithmeticResult *= atoi(StrBuffer);
 				}
-				// Деление
+				// Р”РµР»РµРЅРёРµ
 				else if (ArithmeticOperation == 3)
 				{
 					ArithmeticMovementMod = 0.5;
@@ -204,11 +204,11 @@ void SpawnEnemy() {
 			}
 			else if (Difficulty == DIFFICULTY_HARD)
 			{
-				// Генерация первого числа
+				// Р“РµРЅРµСЂР°С†РёСЏ РїРµСЂРІРѕРіРѕ С‡РёСЃР»Р°
 				_itoa_s(rand() % 1000, StrBuffer, 10, 10);
 				EnemyToAdd.Word += StrBuffer;
 				ArithmeticResult = atoi(StrBuffer);
-				// Сложение
+				// РЎР»РѕР¶РµРЅРёРµ
 				if (ArithmeticOperation == 0)
 				{
 					_itoa_s(rand() % 1000, StrBuffer, 10, 10);
@@ -216,7 +216,7 @@ void SpawnEnemy() {
 					EnemyToAdd.Word += StrBuffer;
 					ArithmeticResult += atoi(StrBuffer);
 				}
-				// Вычитание
+				// Р’С‹С‡РёС‚Р°РЅРёРµ
 				else if (ArithmeticOperation == 1)
 				{
 					_itoa_s(rand() % 1000, StrBuffer, 10, 10);
@@ -224,7 +224,7 @@ void SpawnEnemy() {
 					EnemyToAdd.Word += StrBuffer;
 					ArithmeticResult -= atoi(StrBuffer);
 				}
-				// Умножение
+				// РЈРјРЅРѕР¶РµРЅРёРµ
 				else if (ArithmeticOperation == 2)
 				{
 					ArithmeticMovementMod = 0.6;
@@ -233,7 +233,7 @@ void SpawnEnemy() {
 					EnemyToAdd.Word += StrBuffer;
 					ArithmeticResult *= atoi(StrBuffer);
 				}
-				// Деление
+				// Р”РµР»РµРЅРёРµ
 				else if (ArithmeticOperation == 3)
 				{
 					ArithmeticMovementMod = 0.5;
@@ -301,11 +301,11 @@ void SpawnBonus() {
 		double ArithmeticMovementMod = 1;
 		if (Difficulty == DIFFICULTY_EASY)
 		{
-			// Генерация первого числа
+			// Р“РµРЅРµСЂР°С†РёСЏ РїРµСЂРІРѕРіРѕ С‡РёСЃР»Р°
 			_itoa_s(rand() % 16, StrBuffer, 10, 10);
 			BonusToAdd.Word += StrBuffer;
 			ArithmeticResult = atoi(StrBuffer);
-			// Сложение
+			// РЎР»РѕР¶РµРЅРёРµ
 			if (ArithmeticOperation == 0)
 			{
 				_itoa_s(rand() % 16, StrBuffer, 10, 10);
@@ -313,7 +313,7 @@ void SpawnBonus() {
 				BonusToAdd.Word += StrBuffer;
 				ArithmeticResult += atoi(StrBuffer);
 			}
-			// Вычитание
+			// Р’С‹С‡РёС‚Р°РЅРёРµ
 			else if (ArithmeticOperation == 1)
 			{
 				_itoa_s(rand() % 16, StrBuffer, 10, 10);
@@ -321,7 +321,7 @@ void SpawnBonus() {
 				BonusToAdd.Word += StrBuffer;
 				ArithmeticResult -= atoi(StrBuffer);
 			}
-			// Умножение
+			// РЈРјРЅРѕР¶РµРЅРёРµ
 			else if (ArithmeticOperation == 2)
 			{
 				ArithmeticMovementMod = 0.6;
@@ -330,7 +330,7 @@ void SpawnBonus() {
 				BonusToAdd.Word += StrBuffer;
 				ArithmeticResult *= atoi(StrBuffer);
 			}
-			// Деление
+			// Р”РµР»РµРЅРёРµ
 			else if (ArithmeticOperation == 3)
 			{
 				ArithmeticMovementMod = 0.5;
@@ -351,11 +351,11 @@ void SpawnBonus() {
 		}
 		else if (Difficulty == DIFFICULTY_NORMAL)
 		{
-			// Генерация первого числа
+			// Р“РµРЅРµСЂР°С†РёСЏ РїРµСЂРІРѕРіРѕ С‡РёСЃР»Р°
 			_itoa_s(rand() % 100, StrBuffer, 10, 10);
 			BonusToAdd.Word += StrBuffer;
 			ArithmeticResult = atoi(StrBuffer);
-			// Сложение
+			// РЎР»РѕР¶РµРЅРёРµ
 			if (ArithmeticOperation == 0)
 			{
 				_itoa_s(rand() % 100, StrBuffer, 10, 10);
@@ -363,7 +363,7 @@ void SpawnBonus() {
 				BonusToAdd.Word += StrBuffer;
 				ArithmeticResult += atoi(StrBuffer);
 			}
-			// Вычитание
+			// Р’С‹С‡РёС‚Р°РЅРёРµ
 			else if (ArithmeticOperation == 1)
 			{
 				_itoa_s(rand() % 100, StrBuffer, 10, 10);
@@ -371,7 +371,7 @@ void SpawnBonus() {
 				BonusToAdd.Word += StrBuffer;
 				ArithmeticResult -= atoi(StrBuffer);
 			}
-			// Умножение
+			// РЈРјРЅРѕР¶РµРЅРёРµ
 			else if (ArithmeticOperation == 2)
 			{
 				ArithmeticMovementMod = 0.6;
@@ -380,7 +380,7 @@ void SpawnBonus() {
 				BonusToAdd.Word += StrBuffer;
 				ArithmeticResult *= atoi(StrBuffer);
 			}
-			// Деление
+			// Р”РµР»РµРЅРёРµ
 			else if (ArithmeticOperation == 3)
 			{
 				ArithmeticMovementMod = 0.5;
@@ -401,11 +401,11 @@ void SpawnBonus() {
 		}
 		else if (Difficulty == DIFFICULTY_HARD)
 		{
-			// Генерация первого числа
+			// Р“РµРЅРµСЂР°С†РёСЏ РїРµСЂРІРѕРіРѕ С‡РёСЃР»Р°
 			_itoa_s(rand() % 1000, StrBuffer, 10, 10);
 			BonusToAdd.Word += StrBuffer;
 			ArithmeticResult = atoi(StrBuffer);
-			// Сложение
+			// РЎР»РѕР¶РµРЅРёРµ
 			if (ArithmeticOperation == 0)
 			{
 				_itoa_s(rand() % 1000, StrBuffer, 10, 10);
@@ -413,7 +413,7 @@ void SpawnBonus() {
 				BonusToAdd.Word += StrBuffer;
 				ArithmeticResult += atoi(StrBuffer);
 			}
-			// Вычитание
+			// Р’С‹С‡РёС‚Р°РЅРёРµ
 			else if (ArithmeticOperation == 1)
 			{
 				_itoa_s(rand() % 1000, StrBuffer, 10, 10);
@@ -421,7 +421,7 @@ void SpawnBonus() {
 				BonusToAdd.Word += StrBuffer;
 				ArithmeticResult -= atoi(StrBuffer);
 			}
-			// Умножение
+			// РЈРјРЅРѕР¶РµРЅРёРµ
 			else if (ArithmeticOperation == 2)
 			{
 				ArithmeticMovementMod = 0.6;
@@ -430,7 +430,7 @@ void SpawnBonus() {
 				BonusToAdd.Word += StrBuffer;
 				ArithmeticResult *= atoi(StrBuffer);
 			}
-			// Деление
+			// Р”РµР»РµРЅРёРµ
 			else if (ArithmeticOperation == 3)
 			{
 				ArithmeticMovementMod = 0.5;
@@ -489,7 +489,7 @@ void UpdateHearts(double RotateStep) {
 	}
 }
 void UpdateEntities() {
-	// Враги
+	// Р’СЂР°РіРё
 	for (int i = 0; i < GameEnemies.size(); i++)
 	{
 		point MovDir;
@@ -506,7 +506,7 @@ void UpdateEntities() {
 				EnemyRotateStep = 0;
 			}
 		}
-		// Изменение скорости в соответствии с замедлением
+		// РР·РјРµРЅРµРЅРёРµ СЃРєРѕСЂРѕСЃС‚Рё РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ Р·Р°РјРµРґР»РµРЅРёРµРј
 		double SlowdownSpeedMod = 10 / (10 + SlowdownTimerMod);
 		GameEnemies[i].Pos.x += abs(GameEnemies[i].Speed * TickDifference) * GameEnemies[i].MovementDir.x * SlowdownSpeedMod;
 		GameEnemies[i].Pos.y += abs(GameEnemies[i].Speed * TickDifference) * GameEnemies[i].MovementDir.y * SlowdownSpeedMod;
@@ -521,7 +521,7 @@ void UpdateEntities() {
 			i--;			
 		}
 	}
-	// Изменение скорости в соответствии с замедлением
+	// РР·РјРµРЅРµРЅРёРµ СЃРєРѕСЂРѕСЃС‚Рё РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ Р·Р°РјРµРґР»РµРЅРёРµРј
 	double SlowdownSpeedMod = 10 / (10 + SlowdownTimerMod);
 	for (int i = 0; i < GameEnemies.size(); i++)
 	{
@@ -551,7 +551,7 @@ void UpdateEntities() {
 			i--;
 		}
 	}
-	// изменение скорости дабы избежать перекрытия имен
+	// РёР·РјРµРЅРµРЅРёРµ СЃРєРѕСЂРѕСЃС‚Рё РґР°Р±С‹ РёР·Р±РµР¶Р°С‚СЊ РїРµСЂРµРєСЂС‹С‚РёСЏ РёРјРµРЅ
 	for (int i = 0; i < GameEnemies.size(); i++)
 	{
 		for (int j = i; j < GameEnemies.size(); j++)
@@ -563,7 +563,7 @@ void UpdateEntities() {
 			}
 		}
 	}
-	// Сердца
+	// РЎРµСЂРґС†Р°
 	if (TimerHeartRotate > 1)
 	{
 		TimerHeartRotate = 0;
@@ -574,7 +574,7 @@ void UpdateEntities() {
 			HeartRotateStep = 0;
 		}
 	}
-	// Бонусы
+	// Р‘РѕРЅСѓСЃС‹
 	if (TimerBonusUpdate > 2)
 	{
 		TimerBonusUpdate = 0;

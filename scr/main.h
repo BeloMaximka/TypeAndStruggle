@@ -1,10 +1,10 @@
-#pragma once
+п»ї#pragma once
 // SDL
-// Подключаем библиотеку SLD.h для работы и графикой, аудио и инпутом.
+// РџРѕРґРєР»СЋС‡Р°РµРј Р±РёР±Р»РёРѕС‚РµРєСѓ SLD.h РґР»СЏ СЂР°Р±РѕС‚С‹ Рё РіСЂР°С„РёРєРѕР№, Р°СѓРґРёРѕ Рё РёРЅРїСѓС‚РѕРј.
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
-// С++ билиотеки
+// РЎ++ Р±РёР»РёРѕС‚РµРєРё
 #include <stdarg.h>
 #include <string.h>
 #include <time.h>
@@ -12,7 +12,7 @@
 #include <vector>
 #include <math.h>
 #include <string>
-// Собственные
+// РЎРѕР±СЃС‚РІРµРЅРЅС‹Рµ
 #include "collision.h"
 #include "entities.h"
 #include "game_resources.h"
@@ -26,11 +26,11 @@
 //------------------------------------------------------
 // main.h
 //------------------------------------------------------
-// Дефайны, глобальные значения т.д.
+// Р”РµС„Р°Р№РЅС‹, РіР»РѕР±Р°Р»СЊРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ С‚.Рґ.
 //------------------------------------------------------
 #define strcat USEstrcat_s
 #define localtime USElocaltime_s
-// Использовать математически константы по типу M_PI
+// РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РјР°С‚РµРјР°С‚РёС‡РµСЃРєРё РєРѕРЅСЃС‚Р°РЅС‚С‹ РїРѕ С‚РёРїСѓ M_PI
 #define _USE_MATH_DEFINES
 #define NODEBUG_MODE
 
@@ -72,7 +72,7 @@ struct highscore {
 	int Difficulty;
 	int Mode;
 };
-// Глобальные переменные
+// Р“Р»РѕР±Р°Р»СЊРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ
 extern std::vector<button> Buttons;
 extern bool IngameMenuShow;
 extern int MapCurrent[24][24];

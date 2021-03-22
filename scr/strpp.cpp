@@ -1,14 +1,14 @@
-#include <string.h>
+п»ї#include <string.h>
 
-// Выделяет память под указанное количество елементов (по умолчанию 1)
-// и заполняет первый елемент символом с кодом 0, после чего возращает адрес на выделенную память
+// Р’С‹РґРµР»СЏРµС‚ РїР°РјСЏС‚СЊ РїРѕРґ СѓРєР°Р·Р°РЅРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РµР»РµРјРµРЅС‚РѕРІ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ 1)
+// Рё Р·Р°РїРѕР»РЅСЏРµС‚ РїРµСЂРІС‹Р№ РµР»РµРјРµРЅС‚ СЃРёРјРІРѕР»РѕРј СЃ РєРѕРґРѕРј 0, РїРѕСЃР»Рµ С‡РµРіРѕ РІРѕР·СЂР°С‰Р°РµС‚ Р°РґСЂРµСЃ РЅР° РІС‹РґРµР»РµРЅРЅСѓСЋ РїР°РјСЏС‚СЊ
 char* StrInit(int Size = 1) {
 	char* StrPtr = new char[Size];
 	StrPtr[0] = '\0';
 	return StrPtr;
 }
 
-// Добавляет символ к строке на определённый индекс
+// Р”РѕР±Р°РІР»СЏРµС‚ СЃРёРјРІРѕР» Рє СЃС‚СЂРѕРєРµ РЅР° РѕРїСЂРµРґРµР»С‘РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 void StrAddC(char*& StringPtr, const char Element, const int Index) {
 	char* StringPtrSecond;
 	int StringPtrSecondSize = strlen(StringPtr) + 2;
@@ -26,7 +26,7 @@ void StrAddC(char*& StringPtr, const char Element, const int Index) {
 	StringPtr = StringPtrSecond;
 }
 
-// Добавляет символ к концу строки
+// Р”РѕР±Р°РІР»СЏРµС‚ СЃРёРјРІРѕР» Рє РєРѕРЅС†Сѓ СЃС‚СЂРѕРєРё
 void StrAddC(char*& StringPtr, const char Element) {
 	const int Index = strlen(StringPtr);
 	char* StringPtrSecond;
@@ -45,7 +45,7 @@ void StrAddC(char*& StringPtr, const char Element) {
 	StringPtr = StringPtrSecond;
 }
 
-// Удалячет символ со строки на определённом индексе
+// РЈРґР°Р»СЏС‡РµС‚ СЃРёРјРІРѕР» СЃРѕ СЃС‚СЂРѕРєРё РЅР° РѕРїСЂРµРґРµР»С‘РЅРЅРѕРј РёРЅРґРµРєСЃРµ
 void StrRemoveC(char*& StringPtr, const int Index) {
 	char* StringPtrSecond;
 	int StringPtrSecondSize = strlen(StringPtr) + 2;
@@ -62,7 +62,7 @@ void StrRemoveC(char*& StringPtr, const int Index) {
 	StringPtr = StringPtrSecond;
 }
 
-// Удаляет последний символ
+// РЈРґР°Р»СЏРµС‚ РїРѕСЃР»РµРґРЅРёР№ СЃРёРјРІРѕР»
 void StrRemoveC(char*& StringPtr) {
 	const int Index = strlen(StringPtr);
 	char* StringPtrSecond;
@@ -80,7 +80,7 @@ void StrRemoveC(char*& StringPtr) {
 	StringPtr = StringPtrSecond;
 }
 
-// Добавляет строку на указанный иденкс
+// Р”РѕР±Р°РІР»СЏРµС‚ СЃС‚СЂРѕРєСѓ РЅР° СѓРєР°Р·Р°РЅРЅС‹Р№ РёРґРµРЅРєСЃ
 void StrAddS(char*& StringPtrDest, const char* StringPtrScr, const int Index) {
 	char* StringPtrSecond;
 	int StringPtrSecondSize = strlen(StringPtrDest) + strlen(StringPtrScr) + 1;
@@ -103,7 +103,7 @@ void StrAddS(char*& StringPtrDest, const char* StringPtrScr, const int Index) {
 	StringPtrDest = StringPtrSecond;
 }
 
-// Добавляет строку в конец уже имеющийся
+// Р”РѕР±Р°РІР»СЏРµС‚ СЃС‚СЂРѕРєСѓ РІ РєРѕРЅРµС† СѓР¶Рµ РёРјРµСЋС‰РёР№СЃСЏ
 void StrAddS(char*& StringPtrDest, const char* StringPtrScr) {
 	const int Index = strlen(StringPtrDest);
 	char* StringPtrSecond;
@@ -127,7 +127,7 @@ void StrAddS(char*& StringPtrDest, const char* StringPtrScr) {
 	StringPtrDest = StringPtrSecond;
 }
 
-// Убирает Size символов на определённом индексе
+// РЈР±РёСЂР°РµС‚ Size СЃРёРјРІРѕР»РѕРІ РЅР° РѕРїСЂРµРґРµР»С‘РЅРЅРѕРј РёРЅРґРµРєСЃРµ
 void StrRemoveS(char*& StringPtr, const int Index, const int Size) {
 	char* StringPtrSecond;
 	int StringPtrSecondSize = strlen(StringPtr) - Size + 1;

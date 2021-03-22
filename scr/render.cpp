@@ -1,14 +1,14 @@
-#include "main.h"
+п»ї#include "main.h"
 #define SCREENPOS_X_CENTERED TRUE_RESOLUTION_X / 2
 #define SCREENPOS_Y_CENTERED TRUE_RESOLUTION_Y / 2
-// Небольшой буфер для ФПСА
+// РќРµР±РѕР»СЊС€РѕР№ Р±СѓС„РµСЂ РґР»СЏ Р¤РџРЎРђ
 char FPSString[10] = { '0','\0' };
-// Определяет скорость битья сердца
+// РћРїСЂРµРґРµР»СЏРµС‚ СЃРєРѕСЂРѕСЃС‚СЊ Р±РёС‚СЊСЏ СЃРµСЂРґС†Р°
 int HeartbeatRate = 100;
 //SDL_Color ColorDefaultBlue = { 44, 85, 107, 255 };
 SDL_Color ColorDefaultBlue = { 54, 88, 163, 255 };
 
-// Рендерит текстуру
+// Р РµРЅРґРµСЂРёС‚ С‚РµРєСЃС‚СѓСЂСѓ
 void RenderTexture(SDL_Texture* Texture, int PosX, int PosY, int Width, int Height)
 {
     SDL_Rect DestinationRectangle;
@@ -18,7 +18,7 @@ void RenderTexture(SDL_Texture* Texture, int PosX, int PosY, int Width, int Heig
     DestinationRectangle.h = Height;
     SDL_RenderCopy(RendererPrimary, Texture, NULL, &DestinationRectangle);
 }
-// Рендерит текстуру без масшnабирования
+// Р РµРЅРґРµСЂРёС‚ С‚РµРєСЃС‚СѓСЂСѓ Р±РµР· РјР°СЃС€nР°Р±РёСЂРѕРІР°РЅРёСЏ
 void RenderTexture(SDL_Texture* Texture, int PosX, int PosY)
 {
     int Width, Height;
@@ -30,7 +30,7 @@ void RenderTexture(SDL_Texture* Texture, int PosX, int PosY)
     DestinationRectangle.h = Height;
     SDL_RenderCopy(RendererPrimary, Texture, NULL, &DestinationRectangle);
 }
-// Рендер текста
+// Р РµРЅРґРµСЂ С‚РµРєСЃС‚Р°
 void RenderText(const char* Text, TTF_Font* Font, int x, int y, Uint8 ColorRed, Uint8 ColorGreen, Uint8 ColorBlue, Uint8 ColorAlpha, bool Centered) {
     SDL_Color Color;
     Color.r = ColorRed;
@@ -48,7 +48,7 @@ void RenderText(const char* Text, TTF_Font* Font, int x, int y, Uint8 ColorRed, 
     }    
     SDL_DestroyTexture(TextTexture);
 }
-// Рендер текста с альтернативным вводом цвета
+// Р РµРЅРґРµСЂ С‚РµРєСЃС‚Р° СЃ Р°Р»СЊС‚РµСЂРЅР°С‚РёРІРЅС‹Рј РІРІРѕРґРѕРј С†РІРµС‚Р°
 inline void RenderText(const char* Text, TTF_Font* Font, int x, int y, SDL_Color Color, bool Centered) {
     RenderText(Text, Font, x, y, Color.r, Color.g, Color.b, Color.a, Centered);
 }
@@ -78,16 +78,16 @@ void RenderTextureCentered(SDL_Texture* Texture, int PosX, int PosY, int Width, 
 void DrawButton(int ButtonId, int LineThickness) {
     SDL_Rect Line;
     SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
-    // Верхняя
+    // Р’РµСЂС…РЅСЏСЏ
     Line = { (int)Buttons[ButtonId].Pos.x - Buttons[ButtonId].Width / 2,(int)Buttons[ButtonId].Pos.y - Buttons[ButtonId].Heigth / 2, Buttons[ButtonId].Width,  LineThickness };
     SDL_RenderFillRect(RendererPrimary, &Line);
-    // Нижняя
+    // РќРёР¶РЅСЏСЏ
     Line = { (int)Buttons[ButtonId].Pos.x - Buttons[ButtonId].Width / 2,(int)Buttons[ButtonId].Pos.y + Buttons[ButtonId].Heigth / 2, Buttons[ButtonId].Width,  LineThickness };
     SDL_RenderFillRect(RendererPrimary, &Line);
-    // Левая
+    // Р›РµРІР°СЏ
     Line = { (int)Buttons[ButtonId].Pos.x - Buttons[ButtonId].Width / 2,(int)Buttons[ButtonId].Pos.y - Buttons[ButtonId].Heigth / 2, LineThickness,   Buttons[ButtonId].Heigth };
     SDL_RenderFillRect(RendererPrimary, &Line);
-    // Правая
+    // РџСЂР°РІР°СЏ
     Line = { (int)Buttons[ButtonId].Pos.x + Buttons[ButtonId].Width / 2,(int)Buttons[ButtonId].Pos.y - Buttons[ButtonId].Heigth / 2, LineThickness,   Buttons[ButtonId].Heigth + LineThickness };
     SDL_RenderFillRect(RendererPrimary, &Line);
     RenderText(Buttons[ButtonId].Text.c_str(), MenuFont, Buttons[ButtonId].Pos.x, Buttons[ButtonId].Pos.y, ColorDefaultBlue, true);
@@ -95,8 +95,8 @@ void DrawButton(int ButtonId, int LineThickness) {
 void DrawFrame() {
     if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
     FramesPerSecondPresent++;   
-    // Менюшки
-    // Меню в игре
+    // РњРµРЅСЋС€РєРё
+    // РњРµРЅСЋ РІ РёРіСЂРµ
     if (IngameMenuShow)
     {
         RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);        
@@ -116,9 +116,9 @@ void DrawFrame() {
     }
     else if (MainMenuShow)
     {
-        // Фон
+        // Р¤РѕРЅ
         RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
-        // Линия
+        // Р›РёРЅРёСЏ
         SDL_Rect Line = { SCREENPOS_X_CENTERED - 250,SCREENPOS_Y_CENTERED / 4 + 55 + SCREENPOS_Y_CENTERED / 8, 500, 5 };
         SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
         SDL_RenderFillRect(RendererPrimary, &Line);
@@ -135,9 +135,9 @@ void DrawFrame() {
     }
     else if (ChoosingDifficultyShow)
     {
-        // Фон
+        // Р¤РѕРЅ
         RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
-        // Линия
+        // Р›РёРЅРёСЏ
         SDL_Rect Line = { SCREENPOS_X_CENTERED - 370,SCREENPOS_Y_CENTERED / 4 + 55 + SCREENPOS_Y_CENTERED / 8, 740, 5 };
         SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
         SDL_RenderFillRect(RendererPrimary, &Line);
@@ -154,11 +154,11 @@ void DrawFrame() {
     }
     else if (HighscoresShow)
     {
-        // Фон
+        // Р¤РѕРЅ
         RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
-        // Кнопка Back
+        // РљРЅРѕРїРєР° Back
         DrawButton(BTN_SCORES_BACK, 5);
-        // Напись
+        // РќР°РїРёСЃСЊ
         RenderText("Highscores", MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED / 4 - SCREENPOS_Y_CENTERED / 8, ColorDefaultBlue, true);
         RenderText("  #    Names          Mode   Difficulty   Score    ", ScoresFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 16, ColorDefaultBlue, true);
         char StrBuffer[13];
@@ -166,7 +166,7 @@ void DrawFrame() {
         {
             _itoa_s(i + 1, StrBuffer, 13, 10);
             RenderText(StrBuffer, NormalFont, SCREENPOS_X_CENTERED / 8, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i+1), ColorDefaultBlue, false);
-            // Режим
+            // Р РµР¶РёРј
             if (GameHighscores[i].Mode == 0)
             {
                 RenderText("Classic", NormalFont, SCREENPOS_X_CENTERED / 8 + 460, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
@@ -179,7 +179,7 @@ void DrawFrame() {
             {
                 RenderText("_____", NormalFont, SCREENPOS_X_CENTERED / 8 + 460, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
             }
-            // Сложность
+            // РЎР»РѕР¶РЅРѕСЃС‚СЊ
             if (GameHighscores[i].Difficulty == DIFFICULTY_EASY)
             {
                 RenderText("Easy", NormalFont, SCREENPOS_X_CENTERED / 8 + 670, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
@@ -196,7 +196,7 @@ void DrawFrame() {
             {
                 RenderText("____", NormalFont, SCREENPOS_X_CENTERED / 8 + 670, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
             }
-            // Счёт
+            // РЎС‡С‘С‚
             if (GameHighscores[i].Score >= 0)
             {
                 _itoa_s(GameHighscores[i].Score, StrBuffer, 13, 10);
@@ -206,26 +206,26 @@ void DrawFrame() {
             {
                 RenderText("____", NormalFont, SCREENPOS_X_CENTERED / 8 + 870, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
             }
-            // Имя
+            // РРјСЏ
             RenderText(GameHighscores[i].Name, NormalFont, SCREENPOS_X_CENTERED / 8 + 100, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1), ColorDefaultBlue, false);
         }
     }
     else if (HighscoresEnterShow)
     {
-    // Фон
+    // Р¤РѕРЅ
     RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
-    // Напись
+    // РќР°РїРёСЃСЊ
     RenderText("You entered the top 10!", ScoresFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED - SCREENPOS_Y_CENTERED / 4, ColorDefaultBlue, true);
     RenderText("Enter the name ( <15 or leave empty to skip):", ScoresFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED - SCREENPOS_Y_CENTERED / 8, ColorDefaultBlue, true);
-    // Вводимый текст
+    // Р’РІРѕРґРёРјС‹Р№ С‚РµРєСЃС‚
     RenderText(WordInput.c_str(), NormalFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED, ColorDefaultBlue, true);
     }
-    // Игровое поле
+    // РРіСЂРѕРІРѕРµ РїРѕР»Рµ
     else
     {
-        // Фон
+        // Р¤РѕРЅ
         RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
-        // Косметические частицы
+        // РљРѕСЃРјРµС‚РёС‡РµСЃРєРёРµ С‡Р°СЃС‚РёС†С‹
         for (int i = 0; i < GameCosmetics.size(); i++)
         {
             if (TimerCosmeticHeartDecrease > 5)
@@ -253,7 +253,7 @@ void DrawFrame() {
         {
             TimerCosmeticHeartDecrease = 0;
         }
-        // Бонусы
+        // Р‘РѕРЅСѓСЃС‹
         for (int i = 0; i < GameBonuses.size(); i++)
         {
             RenderTextureCentered(Textures[GameBonuses[i].TextureIndex], GameBonuses[i].Pos.x, GameBonuses[i].Pos.y, GameBonuses[i].Size, GameBonuses[i].Size, GameBonuses[i].Rotation);
@@ -262,13 +262,13 @@ void DrawFrame() {
                 RenderText(GameBonuses[i].Word.c_str(), NormalFont, GameBonuses[i].Pos.x, GameBonuses[i].Pos.y - GameBonuses[i].Size / 2 - 10, ColorDefaultBlue, true);
             }            
         }
-        // Противники
+        // РџСЂРѕС‚РёРІРЅРёРєРё
         for (int i = 0; i < GameEnemies.size(); i++)
         {
             RenderTextureCentered(Textures[GameEnemies[i].TextureIndex], GameEnemies[i].Pos.x, GameEnemies[i].Pos.y, GameEnemies[i].Width, GameEnemies[i].Height, GameEnemies[i].Rotation);
             RenderText(GameEnemies[i].Word.c_str(), NormalFont, GameEnemies[i].Pos.x, GameEnemies[i].Pos.y - GameEnemies[i].Height / 2, ColorDefaultBlue, true);
         }
-        // Персонаж
+        // РџРµСЂСЃРѕРЅР°Р¶
         if (GamePlayerHearts.size() == 0)
         {
             HeartbeatRate = 25;
@@ -314,12 +314,12 @@ void DrawFrame() {
             TimerHeartbeat = 0;            
         }        
         
-        // Седрца
+        // РЎРµРґСЂС†Р°
         for (int i = 0; i < GamePlayerHearts.size(); i++)
         {
             RenderTextureCentered(Textures[GIMG_SPRITES_HEART], GamePlayerHearts[i].x, GamePlayerHearts[i].y, 32, 32, 90);
         }        
-        // Вводимый текст    
+        // Р’РІРѕРґРёРјС‹Р№ С‚РµРєСЃС‚    
         RenderText(WordInput.c_str(), NormalFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED/4, ColorDefaultBlue, true);
         char ScoreStrTemp[12];
         _itoa_s(MainPlayer.Score, ScoreStrTemp, 12, 10);
@@ -331,28 +331,28 @@ void DrawFrame() {
             _itoa_s(MainPlayer.Score, ScoreStrTemp, 12, 10);
             Temp = "Your Score: ";
             Temp += ScoreStrTemp;
-            //Слова
+            //РЎР»РѕРІР°
             RenderText("Maybe next time!", MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED - SCREENPOS_Y_CENTERED / 2, ColorDefaultBlue, true);
-            // Рекорд
+            // Р РµРєРѕСЂРґ
             RenderText(Temp.c_str(), MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED - SCREENPOS_Y_CENTERED / 4, ColorDefaultBlue, true);            
-            // Кнопки
+            // РљРЅРѕРїРєРё
             DrawButton(BTN_DEAD_RETRY, 5);
             DrawButton(BTN_DEAD_QUIT_MAINMENU, 5);
         }
     }
-    // ФПС, если включён
+    // Р¤РџРЎ, РµСЃР»Рё РІРєР»СЋС‡С‘РЅ
     if (FPSCounter) {
         RenderText(FPSString, NormalFont, 0, 0, 0, 0, 0, 255, false);
     } 
 
-    // Если счётчик FPS включён, отобразить FPS
+    // Р•СЃР»Рё СЃС‡С‘С‚С‡РёРє FPS РІРєР»СЋС‡С‘РЅ, РѕС‚РѕР±СЂР°Р·РёС‚СЊ FPS
     if (FPSCounter == true && TickCurrent - TicksToSecond_FPS >= 1000)
     {
         TicksToSecond_FPS = TickCurrent;
         _itoa_s(FramesPerSecondPresent, FPSString, 10);
         FramesPerSecondPresent = 0;
     }    
-    // Курсор
+    // РљСѓСЂСЃРѕСЂ
     if (GamePaused && !HighscoresEnterShow)
     {
         RenderTexture(Textures[GIMG_INTERFACE_CURSOR], MousePosWindow.x, MousePosWindow.y);

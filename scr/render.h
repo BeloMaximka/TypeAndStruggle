@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "main.h"
 void RenderTexture(SDL_Texture* Texture, int PosX, int PosY, int Width, int Height);
 void RenderTexture(SDL_Texture* Texture, int PosX, int PosY);

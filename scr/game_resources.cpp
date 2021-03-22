@@ -1,4 +1,4 @@
-#include "main.h"
+п»ї#include "main.h"
 
 #define IMG_MISSING_RES 16
 #define IMG_MISSING_PIXEL_FIRST 0x0
@@ -25,18 +25,18 @@ TTF_Font* LoadFont(const char* FilePath, int FontSize) {
 
 SDL_Texture* GetTextTexture(const char* Text, TTF_Font* Font, SDL_Color Color)
 {
-    // Загружаем шрифт в поверхность
+    // Р—Р°РіСЂСѓР¶Р°РµРј С€СЂРёС„С‚ РІ РїРѕРІРµСЂС…РЅРѕСЃС‚СЊ
     SDL_Surface* FontSurface = TTF_RenderUTF8_Blended(Font, Text, Color);
     if (FontSurface == nullptr && strlen(Text) > 0) {
         WriteInLog("[ERROR] Unable to render the text \"%s\"! Can't create the font surface.", Text);
         return nullptr;
     }
-    // Создаём текстуру текста с поверхности
+    // РЎРѕР·РґР°С‘Рј С‚РµРєСЃС‚СѓСЂСѓ С‚РµРєСЃС‚Р° СЃ РїРѕРІРµСЂС…РЅРѕСЃС‚Рё
     SDL_Texture* FontTexture = SDL_CreateTextureFromSurface(RendererPrimary, FontSurface);
     if (FontTexture == nullptr && strlen(Text) > 0) {
         WriteInLog("[ERROR] Unable to render the text \"%s\"! Can't create the texture.", Text);
     }
-    // Очистка поверхности
+    // РћС‡РёСЃС‚РєР° РїРѕРІРµСЂС…РЅРѕСЃС‚Рё
     SDL_FreeSurface(FontSurface);
     return FontTexture;
 }
