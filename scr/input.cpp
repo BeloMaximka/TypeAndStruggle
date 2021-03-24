@@ -191,7 +191,6 @@ void ReadKeys(SDL_Event Event) {
 	}
 }
 void ReadMouse(SDL_Event Event) {
-	double ResolutionRatio = (double)TRUE_RESOLUTION_X / WINDOW_RESOLUTION_X > (double)TRUE_RESOLUTION_Y / WINDOW_RESOLUTION_Y ? (double)TRUE_RESOLUTION_X / WINDOW_RESOLUTION_X : (double)TRUE_RESOLUTION_Y / WINDOW_RESOLUTION_Y;
 	SDL_GetMouseState(&MousePosWindow.x, &MousePosWindow.y);
 	MousePosWindow.x *= (double)TRUE_RESOLUTION_X / WINDOW_RESOLUTION_X;
 	MousePosWindow.y *= (double)TRUE_RESOLUTION_Y / WINDOW_RESOLUTION_Y;
