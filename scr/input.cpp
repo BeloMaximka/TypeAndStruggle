@@ -308,6 +308,7 @@ void ReadMouse(SDL_Event Event) {
 				// Кнопка в меню
 				else if (IsColliding(MouseCollision, Buttons[BTN_DEAD_QUIT_MAINMENU].Collision))
 				{
+					PlayerDead = false;
 					// Проверка на рекорд
 					for (int i = 0; i < GameHighscoresSize; i++)
 					{

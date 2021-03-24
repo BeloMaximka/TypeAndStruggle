@@ -1,8 +1,6 @@
 ﻿#include "main.h"
 using namespace std;
 
-
-
 const char* WINDOW_NAME = "Type&Struggle";
 int TRUE_RESOLUTION_X = 1080; // 640
 int TRUE_RESOLUTION_Y = 1080; // 480
@@ -45,7 +43,6 @@ int Difficulty = 1;
 double DifficultySpeedModifier = 1;
 double EnemySpawnDelay = 200;
 double SlowdownTimerMod = 0;
-
 
 //Создание кнопок
 void InitButtons() {
