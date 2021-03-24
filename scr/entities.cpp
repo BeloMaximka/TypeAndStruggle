@@ -7,7 +7,6 @@ std::vector<EntityBonus> GameBonuses;
 double HeartRotateStep = 0;
 double EnemyRotateStep = 0;
 bool PlayerNoDefense = false;
-int EnemySideMovement = 90;
 
 void AddHearts(int Count) {
 	if (Count > 0)
