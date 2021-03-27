@@ -59,42 +59,58 @@ void DrawButton(int ButtonId, int LineThickness) {
 	SDL_Rect Line;
 	SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
 	// Верхняя
-	Line = { (int)Buttons[ButtonId].Pos.x - Buttons[ButtonId].Width / 2,(int)Buttons[ButtonId].Pos.y - Buttons[ButtonId].Heigth / 2, Buttons[ButtonId].Width, LineThickness };
+	Line = { (int)GameButtons[ButtonId].Pos.x - GameButtons[ButtonId].Width / 2,(int)GameButtons[ButtonId].Pos.y - GameButtons[ButtonId].Heigth / 2, GameButtons[ButtonId].Width, LineThickness };
 	SDL_RenderFillRect(RendererPrimary, &Line);
 	// Нижняя
-	Line = { (int)Buttons[ButtonId].Pos.x - Buttons[ButtonId].Width / 2,(int)Buttons[ButtonId].Pos.y + Buttons[ButtonId].Heigth / 2, Buttons[ButtonId].Width, LineThickness };
+	Line = { (int)GameButtons[ButtonId].Pos.x - GameButtons[ButtonId].Width / 2,(int)GameButtons[ButtonId].Pos.y + GameButtons[ButtonId].Heigth / 2, GameButtons[ButtonId].Width, LineThickness };
 	SDL_RenderFillRect(RendererPrimary, &Line);
 	// Левая
-	Line = { (int)Buttons[ButtonId].Pos.x - Buttons[ButtonId].Width / 2,(int)Buttons[ButtonId].Pos.y - Buttons[ButtonId].Heigth / 2, LineThickness, Buttons[ButtonId].Heigth };
+	Line = { (int)GameButtons[ButtonId].Pos.x - GameButtons[ButtonId].Width / 2,(int)GameButtons[ButtonId].Pos.y - GameButtons[ButtonId].Heigth / 2, LineThickness, GameButtons[ButtonId].Heigth };
 	SDL_RenderFillRect(RendererPrimary, &Line);
 	// Правая
-	Line = { (int)Buttons[ButtonId].Pos.x + Buttons[ButtonId].Width / 2,(int)Buttons[ButtonId].Pos.y - Buttons[ButtonId].Heigth / 2, LineThickness, Buttons[ButtonId].Heigth + LineThickness };
+	Line = { (int)GameButtons[ButtonId].Pos.x + GameButtons[ButtonId].Width / 2,(int)GameButtons[ButtonId].Pos.y - GameButtons[ButtonId].Heigth / 2, LineThickness, GameButtons[ButtonId].Heigth + LineThickness };
 	SDL_RenderFillRect(RendererPrimary, &Line);
-	RenderText(Buttons[ButtonId].Text.c_str(), MenuFont, Buttons[ButtonId].Pos.x, Buttons[ButtonId].Pos.y, ColorDefaultBlue, true);
+	RenderText(GameButtons[ButtonId].Text.c_str(), MenuFont, GameButtons[ButtonId].Pos.x, GameButtons[ButtonId].Pos.y, ColorDefaultBlue, true);
 }
+
+void DrawPauseMenuFrame()
+{
+	if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
+	RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
+	SDL_Rect Line = { SCREENPOS_X_CENTERED - 275,SCREENPOS_Y_CENTERED / 4 + 55 + SCREENPOS_Y_CENTERED / 8, 550, 5 };
+	SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
+	SDL_RenderFillRect(RendererPrimary, &Line);
+	SDL_SetRenderDrawColor(RendererPrimary, 255, 255, 255, 255);
+	RenderText("Game Paused", MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8, ColorDefaultBlue, true);
+	// Continue
+	DrawButton(BTN_INGAME_CONTINUE, 5);
+	// Quit to Main Menu
+	DrawButton(BTN_INGAME_QUIT_MAINMENU, 5);
+	// Quit to Desktop
+	DrawButton(BTN_INGAME_QUIT_DESKTOP, 5);
+	// Restart
+	DrawButton(BTN_INGAME_RESTART, 5);
+
+	// ФПС, если включён
+	if (FPSCounter) {
+		RenderText(FPSString, NormalFont, 0, 0, 0, 0, 0, 255, false);
+		if (TickCurrent - TicksToSecond_FPS >= 1000)
+		{
+			TicksToSecond_FPS = TickCurrent;
+			_itoa_s(FramesPerSecondPresent, FPSString, 10);
+			FramesPerSecondPresent = 0;
+		}
+	}
+
+	// Курсор
+	RenderTexture(Textures[GIMG_INTERFACE_CURSOR], MousePosWindow.x, MousePosWindow.y);
+}
+
 void DrawFrame() {
 	if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
 	FramesPerSecondPresent++;
-	// Менюшки
-	// Меню в игре
-	if (IngameMenuShow)
-	{
-		RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
-		SDL_Rect Line = { SCREENPOS_X_CENTERED - 275,SCREENPOS_Y_CENTERED / 4 + 55 + SCREENPOS_Y_CENTERED / 8, 550, 5 };
-		SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
-		SDL_RenderFillRect(RendererPrimary, &Line);
-		SDL_SetRenderDrawColor(RendererPrimary, 255, 255, 255, 255);
-		RenderText("Game Paused", MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8, ColorDefaultBlue, true);
-		// Continue
-		DrawButton(BTN_INGAME_CONTINUE, 5);
-		// Quit to Main Menu
-		DrawButton(BTN_INGAME_QUIT_MAINMENU, 5);
-		// Quit to Desktop
-		DrawButton(BTN_INGAME_QUIT_DESKTOP, 5);
-		// Restart
-		DrawButton(BTN_INGAME_RESTART, 5);
-	}
-	else if (MainMenuShow)
+	// Менюшки		
+	if (MainMenuShow)
 	{
 		// Фон
 		RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);

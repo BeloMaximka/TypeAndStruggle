@@ -1,15 +1,63 @@
 ﻿#include "main.h"
 
 int TickShoot = SDL_GetTicks();
-void ReadKeys(SDL_Event Event) {
+
+InputCode ReadKeysPause(const SDL_Event& Event)
+{
+	if (Event.type == SDL_KEYDOWN)
+	{
+		switch (Event.key.keysym.scancode)
+		{
+		case SDL_SCANCODE_ESCAPE:
+			return InputCode::PAUSE_CONTINUE;
+		default:
+			return InputCode::NOTHING;
+		}
+	}
+	return InputCode::NOTHING;
+}
+
+InputCode ReadMousePause(const SDL_Event& Event, const buttons& Buttons)
+{
+	SDL_GetMouseState(&MousePosWindow.x, &MousePosWindow.y);
+	MousePosWindow.x *= (double)TRUE_RESOLUTION_X / WINDOW_RESOLUTION_X;
+	MousePosWindow.y *= (double)TRUE_RESOLUTION_Y / WINDOW_RESOLUTION_Y;
+	collisionbox MouseCollision = UpdateCollision({ (double)MousePosWindow.x , (double)MousePosWindow.y }, 1, 1);
+	if (Event.type == SDL_MOUSEBUTTONDOWN)
+	{
+		//Кнопка Continue
+		if (IsColliding(MouseCollision, Buttons[BTN_INGAME_CONTINUE].Collision))
+		{
+			return InputCode::PAUSE_CONTINUE;
+		}
+		//Кнопка Quit to Desktop 
+		else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_QUIT_DESKTOP].Collision))
+		{
+			return InputCode::PAUSE_TO_DESKTOP;
+		}
+		//Кнопка Restart
+		else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_RESTART].Collision))
+		{
+			return InputCode::PAUSE_RESTART;
+		}
+		//Кнопка Quit to Main Menu 
+		else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_QUIT_MAINMENU].Collision))
+		{
+			return InputCode::PAUSE_TO_MAIN_MENU;
+		}
+	}
+	return InputCode::NOTHING;
+}
+void ReadKeys(SDL_Event& Event) {
 
 	// Проверяем нажатые клавиши
 	if (Event.type == SDL_KEYDOWN) {
 		// ESC
 		if (Event.key.keysym.scancode == SDL_SCANCODE_ESCAPE && !MainMenuShow && !ChoosingDifficultyShow && !PlayerDead && !HighscoresEnterShow && !HighscoresShow)
 		{
-			GamePaused = GamePaused == true ? false : true;
-			IngameMenuShow = IngameMenuShow == true ? false : true;
+			PauseMenu();
+			//GamePaused = GamePaused == true ? false : true;
+			//IngameMenuShow = IngameMenuShow == true ? false : true;
 		}
 		if (!GamePaused || HighscoresEnterShow)
 		{
@@ -24,7 +72,7 @@ void ReadKeys(SDL_Event Event) {
 				else
 				{
 					WordInput = WordInput.substr(0, WordInput.length() - 1);
-				}				
+				}
 			}
 			if (Event.key.keysym.scancode == SDL_SCANCODE_RETURN && !HighscoresEnterShow)
 			{
@@ -71,7 +119,7 @@ void ReadKeys(SDL_Event Event) {
 						{
 							MainPlayer.Score += 25 * GameEnemies[i].Word.length() * ScoreModifier;
 						}
-						
+
 						// Удаляем противника
 						GameEnemies.erase(GameEnemies.begin() + i);
 
@@ -155,7 +203,7 @@ void ReadKeys(SDL_Event Event) {
 						if (BreakCycle == 1)
 						{
 							break;
-						}						
+						}
 					}
 					SDL_RWops* File = SDL_RWFromFile("data.bin", "w");
 					for (int i = 0; i < GameHighscoresSize; i++)
@@ -190,7 +238,7 @@ void ReadKeys(SDL_Event Event) {
 		}
 	}
 }
-void ReadMouse(SDL_Event Event) {
+void ReadMouse(SDL_Event& Event) {
 	SDL_GetMouseState(&MousePosWindow.x, &MousePosWindow.y);
 	MousePosWindow.x *= (double)TRUE_RESOLUTION_X / WINDOW_RESOLUTION_X;
 	MousePosWindow.y *= (double)TRUE_RESOLUTION_Y / WINDOW_RESOLUTION_Y;
@@ -202,33 +250,33 @@ void ReadMouse(SDL_Event Event) {
 			if (IngameMenuShow)
 			{
 				//Кнопка Continue
-				if (IsColliding(MouseCollision, Buttons[BTN_INGAME_CONTINUE].Collision))
+				if (IsColliding(MouseCollision, GameButtons[BTN_INGAME_CONTINUE].Collision))
 				{
 					IngameMenuShow = false;
 					GamePaused = false;
 				}
 				//Кнопка Quit to Desktop 
-				else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_QUIT_DESKTOP].Collision))
+				else if (IsColliding(MouseCollision, GameButtons[BTN_INGAME_QUIT_DESKTOP].Collision))
 				{
-					QuitGame();				
+					QuitGame();
 				}
 				//Кнопка Restart
-				else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_RESTART].Collision))
+				else if (IsColliding(MouseCollision, GameButtons[BTN_INGAME_RESTART].Collision))
 				{
 					Restart = true;
 					IngameMenuShow = false;
 					GamePaused = false;
 				}
 				//Кнопка Quit to Main Menu 
-				else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_QUIT_MAINMENU].Collision))
-				{					
+				else if (IsColliding(MouseCollision, GameButtons[BTN_INGAME_QUIT_MAINMENU].Collision))
+				{
 					IngameMenuShow = false;
 					// Проверка на рекорд
 					for (int i = 0; i < GameHighscoresSize; i++)
 					{
 						if (GameHighscores[i].Score != 0 && MainPlayer.Score > GameHighscores[i].Score && MainPlayer.Score != 0)
 						{
-							HighscoresEnterShow = true;							
+							HighscoresEnterShow = true;
 						}
 					}
 					if (!HighscoresEnterShow)
@@ -240,27 +288,27 @@ void ReadMouse(SDL_Event Event) {
 			else if (MainMenuShow)
 			{
 				//Кнопка Play Classic
-				if (IsColliding(MouseCollision, Buttons[BTN_MENU_CLASSIC].Collision))
+				if (IsColliding(MouseCollision, GameButtons[BTN_MENU_CLASSIC].Collision))
 				{
 					ArithmeticMode = false;
 					MainMenuShow = false;
 					ChoosingDifficultyShow = true;
 				}
 				//Кнопка Arithmetic
-				else if (IsColliding(MouseCollision, Buttons[BTN_MENU_ARITHMETIC].Collision))
+				else if (IsColliding(MouseCollision, GameButtons[BTN_MENU_ARITHMETIC].Collision))
 				{
 					ArithmeticMode = true;
 					MainMenuShow = false;
 					ChoosingDifficultyShow = true;
 				}
 				//Кнопка Scores
-				else if (IsColliding(MouseCollision, Buttons[BTN_MENU_SCORES].Collision))
-				{					
+				else if (IsColliding(MouseCollision, GameButtons[BTN_MENU_SCORES].Collision))
+				{
 					MainMenuShow = false;
 					HighscoresShow = true;
 				}
 				//Кнопка Quit to Desktop
-				else if (IsColliding(MouseCollision, Buttons[BTN_MENU_QUIT_DESKTOP].Collision))
+				else if (IsColliding(MouseCollision, GameButtons[BTN_MENU_QUIT_DESKTOP].Collision))
 				{
 					QuitGame();
 				}
@@ -268,7 +316,7 @@ void ReadMouse(SDL_Event Event) {
 			else if (ChoosingDifficultyShow)
 			{
 				//Кнопка Easy
-				if (IsColliding(MouseCollision, Buttons[BTN_DIFFICULTY_EASY].Collision))
+				if (IsColliding(MouseCollision, GameButtons[BTN_DIFFICULTY_EASY].Collision))
 				{
 					Difficulty = DIFFICULTY_EASY;
 					ChoosingDifficultyShow = false;
@@ -276,7 +324,7 @@ void ReadMouse(SDL_Event Event) {
 					Restart = true;
 				}
 				//Кнопка Normal
-				else if (IsColliding(MouseCollision, Buttons[BTN_DIFFICULTY_NORMAL].Collision))
+				else if (IsColliding(MouseCollision, GameButtons[BTN_DIFFICULTY_NORMAL].Collision))
 				{
 					Difficulty = DIFFICULTY_NORMAL;
 					ChoosingDifficultyShow = false;
@@ -284,7 +332,7 @@ void ReadMouse(SDL_Event Event) {
 					Restart = true;
 				}
 				//Кнопка Hard
-				else if (IsColliding(MouseCollision, Buttons[BTN_DIFFICULTY_HARD].Collision))
+				else if (IsColliding(MouseCollision, GameButtons[BTN_DIFFICULTY_HARD].Collision))
 				{
 					Difficulty = DIFFICULTY_HARD;
 					ChoosingDifficultyShow = false;
@@ -292,7 +340,7 @@ void ReadMouse(SDL_Event Event) {
 					Restart = true;
 				}
 				//Кнопка Back
-				else if (IsColliding(MouseCollision, Buttons[BTN_DIFFICULTY_BACK].Collision))
+				else if (IsColliding(MouseCollision, GameButtons[BTN_DIFFICULTY_BACK].Collision))
 				{
 					ChoosingDifficultyShow = false;
 					MainMenuShow = true;
@@ -301,12 +349,12 @@ void ReadMouse(SDL_Event Event) {
 			else if (PlayerDead)
 			{
 				// Рестарт
-				if (IsColliding(MouseCollision, Buttons[BTN_DEAD_RETRY].Collision))
+				if (IsColliding(MouseCollision, GameButtons[BTN_DEAD_RETRY].Collision))
 				{
 					Restart = true;
 				}
 				// Кнопка в меню
-				else if (IsColliding(MouseCollision, Buttons[BTN_DEAD_QUIT_MAINMENU].Collision))
+				else if (IsColliding(MouseCollision, GameButtons[BTN_DEAD_QUIT_MAINMENU].Collision))
 				{
 					PlayerDead = false;
 					// Проверка на рекорд
@@ -321,13 +369,13 @@ void ReadMouse(SDL_Event Event) {
 					{
 						MainMenuShow = true;
 					}
-					
+
 				}
 			}
 			else if (HighscoresShow)
 			{
 				// Back
-				if (IsColliding(MouseCollision, Buttons[BTN_SCORES_BACK].Collision))
+				if (IsColliding(MouseCollision, GameButtons[BTN_SCORES_BACK].Collision))
 				{
 					MainMenuShow = true;
 					HighscoresShow = false;
@@ -348,7 +396,7 @@ void ReadMouse(SDL_Event Event) {
 			}
 			if (Event.button.button == SDL_BUTTON_RIGHT)
 			{
-				SpawnBonus();				
+				SpawnBonus();
 			}
 		}
 	}
