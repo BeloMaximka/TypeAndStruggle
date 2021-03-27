@@ -259,15 +259,15 @@ void SpawnEnemy() {
 		{
 			if (Difficulty == DIFFICULTY_EASY)
 			{
-				EnemyToAdd.Word = GameWords[rand() % (GameWords.size() / 2)];
+				EnemyToAdd.Word = WordsList[rand() % (WordsList.size() / 2)];
 			}
 			else if (Difficulty == DIFFICULTY_NORMAL)
 			{
-				EnemyToAdd.Word = GameWords[rand() % GameWords.size()];
+				EnemyToAdd.Word = WordsList[rand() % WordsList.size()];
 			}
 			else if (Difficulty == DIFFICULTY_HARD)
 			{
-				EnemyToAdd.Word = GameWords[rand() % (GameWords.size() - GameWords.size() / 2) + GameWords.size() / 2];
+				EnemyToAdd.Word = WordsList[rand() % (WordsList.size() - WordsList.size() / 2) + WordsList.size() / 2];
 			}
 			EnemyToAdd.Speed = 0.07 * sqrt((double)3 / EnemyToAdd.Word.length()) * DifficultySpeedModifier;
 		}
@@ -455,15 +455,15 @@ void SpawnBonus() {
 	{
 		if (Difficulty == DIFFICULTY_EASY)
 		{
-			BonusToAdd.Word = GameWords[rand() % (GameWords.size() / 2)];
+			BonusToAdd.Word = WordsList[rand() % (WordsList.size() / 2)];
 		}
 		else if (Difficulty == DIFFICULTY_NORMAL)
 		{
-			BonusToAdd.Word = GameWords[rand() % GameWords.size()];
+			BonusToAdd.Word = WordsList[rand() % WordsList.size()];
 		}
 		else if (Difficulty == DIFFICULTY_HARD)
 		{
-			BonusToAdd.Word = GameWords[rand() % (GameWords.size() - GameWords.size() / 2) + GameWords.size() / 2];
+			BonusToAdd.Word = WordsList[rand() % (WordsList.size() - WordsList.size() / 2) + WordsList.size() / 2];
 		}
 	}
 	BonusToAdd.Lifetime = 200;

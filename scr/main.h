@@ -12,16 +12,33 @@
 #include <vector>
 #include <math.h>
 #include <string>
-// Собственные
+
+#include "point.h"
 #include "collision.h"
+
+
+struct button
+{
+	point Pos;
+	std::string Text;
+	int Heigth;
+	int Width;
+	int ID;
+	collisionbox Collision;
+};
+typedef std::vector<button> buttons;
+
+// Собственные
 #include "entities.h"
 #include "game_resources.h"
-#include "input.h"
 #include "log.h"
-#include "point.h"
 #include "render.h"
 #include "strpp.h"
 #include "timers.h"
+#include "interface.h"
+#include "input.h"
+
+
 
 //------------------------------------------------------
 // main.h
@@ -30,6 +47,7 @@
 //------------------------------------------------------
 #define strcat USEstrcat_s
 #define localtime USElocaltime_s
+#define REPEAT_DELAY 1
 // Использовать математически константы по типу M_PI
 #define _USE_MATH_DEFINES
 #define NODEBUG_MODE
@@ -57,23 +75,17 @@ enum BUTTON_NAMES {
 	BTN_DEAD_QUIT_MAINMENU,
 	BTN_SCORES_BACK
 };
-struct button
-{
-	point Pos;
-	std::string Text;
-	int Heigth;
-	int Width;
-	int ID;
-	collisionbox Collision;
-};
 struct highscore {
 	char Name[16];
 	int Score;
 	int Difficulty;
 	int Mode;
 };
+
+//typedef std::vector<button> buttons;
+
 // Глобальные переменные
-extern std::vector<button> Buttons;
+extern buttons GameButtons;
 extern bool IngameMenuShow;
 extern int MapCurrent[24][24];
 extern const char* WINDOW_NAME;
@@ -100,14 +112,13 @@ extern bool ChoosingDifficultyShow;
 extern int Difficulty;
 extern bool PlayerDead;
 extern bool ArithmeticMode;
-extern std::vector<std::string> GameWords;
+extern std::vector<std::string> WordsList;
 extern double SlowdownTimerMod;
 extern double DifficultySpeedModifier;
 extern bool HighscoresShow;
 extern bool HighscoresEnterShow;
-
+extern int FramesPerSecondTarget;
 extern const int GameHighscoresSize;
 extern highscore GameHighscores[];
-
 
 void QuitGame();
