@@ -174,6 +174,53 @@ InputCode ReadMouseScores(const SDL_Event& Event, const buttons& Buttons)
 	}
 	return InputCode::NOTHING;
 }
+
+InputCode ReadKeysScoreEnter(const SDL_Event& Event, std::string& WordInput)
+{
+	if (Event.type == SDL_KEYDOWN)
+	{
+		switch (Event.key.keysym.scancode)
+		{
+		case SDL_SCANCODE_ESCAPE:
+			return InputCode::SCORESENTER_SKIP;
+		case SDL_SCANCODE_BACKSPACE:
+			if (WordInput.length() > 0)
+			{
+				// если символ больше байта, удаляем сразу два
+				if (WordInput[WordInput.length() - 1] < 0)
+				{
+					WordInput = WordInput.substr(0, WordInput.length() - 2);
+				}
+				// если символ однобайтовый, удаляем один символ
+				else
+				{
+					WordInput = WordInput.substr(0, WordInput.length() - 1);
+				}
+			}
+			break;
+		case SDL_SCANCODE_RETURN:
+			if (WordInput == "")
+			{
+				return InputCode::SCORESENTER_SKIP;
+			}
+			else
+			{
+				return InputCode::SCORESENTER_ENTER;
+			}
+			break;
+		default:
+			return InputCode::NOTHING;
+		}
+	}
+	// Ввод текста
+	if (Event.type == SDL_TEXTINPUT)
+	{
+		WordInput += Event.text.text;
+	}
+	return InputCode::NOTHING;
+}
+
+
 void ReadKeys(SDL_Event& Event) {
 
 	// Проверяем нажатые клавиши

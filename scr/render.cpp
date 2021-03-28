@@ -254,139 +254,153 @@ void DrawHighscoresFrame()
 	// Курсор
 	RenderTexture(Textures[GIMG_INTERFACE_CURSOR], MousePosWindow.x, MousePosWindow.y);
 }
+void DrawHighscoreEnterFrame(const std::string& WordInput)
+{
+	if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
+	FramesPerSecondPresent++;
+
+	// Фон
+	RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
+	// Напись
+	RenderText("You entered the top 10!", ScoresFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED - SCREENPOS_Y_CENTERED / 4, ColorDefaultBlue, true);
+	RenderText("Enter the name ( <15 or leave empty to skip):", ScoresFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED - SCREENPOS_Y_CENTERED / 8, ColorDefaultBlue, true);
+	// Вводимый текст
+	RenderText(WordInput.c_str(), NormalFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED, ColorDefaultBlue, true);
+
+	// ФПС, если включён
+	if (FPSCounter) {
+		RenderText(FPSString, NormalFont, 0, 0, 0, 0, 0, 255, false);
+		if (TickCurrent - TicksToSecond_FPS >= 1000)
+		{
+			TicksToSecond_FPS = TickCurrent;
+			_itoa_s(FramesPerSecondPresent, FPSString, 10);
+			FramesPerSecondPresent = 0;
+		}
+	}
+
+	// Курсор
+	RenderTexture(Textures[GIMG_INTERFACE_CURSOR], MousePosWindow.x, MousePosWindow.y);
+}
 void DrawFrame() {
 	if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
 	FramesPerSecondPresent++;
-	// Менюшки
-	if (HighscoresEnterShow)
-	{
-		// Фон
-		RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
-		// Напись
-		RenderText("You entered the top 10!", ScoresFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED - SCREENPOS_Y_CENTERED / 4, ColorDefaultBlue, true);
-		RenderText("Enter the name ( <15 or leave empty to skip):", ScoresFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED - SCREENPOS_Y_CENTERED / 8, ColorDefaultBlue, true);
-		// Вводимый текст
-		RenderText(WordInput.c_str(), NormalFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED, ColorDefaultBlue, true);
-	}
+
 	// Игровое поле
+	// Фон
+	RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
+	// Косметические частицы
+	for (int i = 0; i < GameCosmetics.size(); i++)
+	{
+		if (TimerCosmeticHeartDecrease > 5)
+		{
+			GameCosmetics[i].Size -= 3;
+			if (GameCosmetics[i].Size < 1)
+			{
+				GameCosmetics.erase(GameCosmetics.begin() + i);
+				i--;
+				continue;
+			}
+		}
+		if (GameCosmetics[i].Type == PRTCL_HEART)
+		{
+			RenderTextureCentered(Textures[GIMG_SPRITES_COSMETIC_HEART], GameCosmetics[i].Pos.x, GameCosmetics[i].Pos.y, GameCosmetics[i].Size, GameCosmetics[i].Size, 90);
+		}
+		else
+		{
+			RenderTextureCentered(Textures[GIMG_SPRITES_COSMETIC_STAR], GameCosmetics[i].Pos.x, GameCosmetics[i].Pos.y, GameCosmetics[i].Size, GameCosmetics[i].Size, 90);
+		}
+
+
+	}
+	if (TimerCosmeticHeartDecrease > 10)
+	{
+		TimerCosmeticHeartDecrease = 0;
+	}
+	// Бонусы
+	for (int i = 0; i < GameBonuses.size(); i++)
+	{
+		RenderTextureCentered(Textures[GameBonuses[i].TextureIndex], GameBonuses[i].Pos.x, GameBonuses[i].Pos.y, GameBonuses[i].Size, GameBonuses[i].Size, GameBonuses[i].Rotation);
+		if (GameBonuses[i].Size == GameBonuses[i].FullSize)
+		{
+			RenderText(GameBonuses[i].Word.c_str(), NormalFont, GameBonuses[i].Pos.x, GameBonuses[i].Pos.y - GameBonuses[i].Size / 2 - 10, ColorDefaultBlue, true);
+		}
+	}
+	// Противники
+	for (int i = 0; i < GameEnemies.size(); i++)
+	{
+		RenderTextureCentered(Textures[GameEnemies[i].TextureIndex], GameEnemies[i].Pos.x, GameEnemies[i].Pos.y, GameEnemies[i].Width, GameEnemies[i].Height, GameEnemies[i].Rotation);
+		RenderText(GameEnemies[i].Word.c_str(), NormalFont, GameEnemies[i].Pos.x, GameEnemies[i].Pos.y - GameEnemies[i].Height / 2, ColorDefaultBlue, true);
+	}
+	// Персонаж
+	if (GamePlayerHearts.size() == 0)
+	{
+		HeartbeatRate = 25;
+	}
+	else if (GamePlayerHearts.size() == 1)
+	{
+		HeartbeatRate = 50;
+	}
 	else
 	{
-		// Фон
-		RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
-		// Косметические частицы
-		for (int i = 0; i < GameCosmetics.size(); i++)
-		{
-			if (TimerCosmeticHeartDecrease > 5)
-			{
-				GameCosmetics[i].Size -= 3;
-				if (GameCosmetics[i].Size < 1)
-				{
-					GameCosmetics.erase(GameCosmetics.begin() + i);
-					i--;
-					continue;
-				}
-			}
-			if (GameCosmetics[i].Type == PRTCL_HEART)
-			{
-				RenderTextureCentered(Textures[GIMG_SPRITES_COSMETIC_HEART], GameCosmetics[i].Pos.x, GameCosmetics[i].Pos.y, GameCosmetics[i].Size, GameCosmetics[i].Size, 90);
-			}
-			else
-			{
-				RenderTextureCentered(Textures[GIMG_SPRITES_COSMETIC_STAR], GameCosmetics[i].Pos.x, GameCosmetics[i].Pos.y, GameCosmetics[i].Size, GameCosmetics[i].Size, 90);
-			}
-
-
-		}
-		if (TimerCosmeticHeartDecrease > 10)
-		{
-			TimerCosmeticHeartDecrease = 0;
-		}
-		// Бонусы
-		for (int i = 0; i < GameBonuses.size(); i++)
-		{
-			RenderTextureCentered(Textures[GameBonuses[i].TextureIndex], GameBonuses[i].Pos.x, GameBonuses[i].Pos.y, GameBonuses[i].Size, GameBonuses[i].Size, GameBonuses[i].Rotation);
-			if (GameBonuses[i].Size == GameBonuses[i].FullSize)
-			{
-				RenderText(GameBonuses[i].Word.c_str(), NormalFont, GameBonuses[i].Pos.x, GameBonuses[i].Pos.y - GameBonuses[i].Size / 2 - 10, ColorDefaultBlue, true);
-			}
-		}
-		// Противники
-		for (int i = 0; i < GameEnemies.size(); i++)
-		{
-			RenderTextureCentered(Textures[GameEnemies[i].TextureIndex], GameEnemies[i].Pos.x, GameEnemies[i].Pos.y, GameEnemies[i].Width, GameEnemies[i].Height, GameEnemies[i].Rotation);
-			RenderText(GameEnemies[i].Word.c_str(), NormalFont, GameEnemies[i].Pos.x, GameEnemies[i].Pos.y - GameEnemies[i].Height / 2, ColorDefaultBlue, true);
-		}
-		// Персонаж
-		if (GamePlayerHearts.size() == 0)
-		{
-			HeartbeatRate = 25;
-		}
-		else if (GamePlayerHearts.size() == 1)
-		{
-			HeartbeatRate = 50;
-		}
-		else
-		{
-			HeartbeatRate = 100;
-		}
+		HeartbeatRate = 100;
+	}
+	if (MainPlayer.IsDamaged == true)
+	{
+		RenderTextureCentered(Textures[GIMG_SPRITES_PLAYER_DAMAGED], MainPlayer.Pos.x, MainPlayer.Pos.y, MainPlayer.Width * 0.9, MainPlayer.Height * 0.9, MainPlayer.Rotation);
+	}
+	else if (TimerHeartbeat > HeartbeatRate)
+	{
 		if (MainPlayer.IsDamaged == true)
 		{
-			RenderTextureCentered(Textures[GIMG_SPRITES_PLAYER_DAMAGED], MainPlayer.Pos.x, MainPlayer.Pos.y, MainPlayer.Width * 0.9, MainPlayer.Height * 0.9, MainPlayer.Rotation);
-		}
-		else if (TimerHeartbeat > HeartbeatRate)
-		{
-			if (MainPlayer.IsDamaged == true)
-			{
-				RenderTextureCentered(Textures[GIMG_SPRITES_PLAYER_DAMAGED], MainPlayer.Pos.x, MainPlayer.Pos.y, MainPlayer.Width * 1.2, MainPlayer.Height * 1.2, MainPlayer.Rotation);
-			}
-			else
-			{
-				RenderTextureCentered(Textures[GIMG_SPRITES_PLAYER], MainPlayer.Pos.x, MainPlayer.Pos.y, MainPlayer.Width * 1.2, MainPlayer.Height * 1.2, MainPlayer.Rotation);
-			}
+			RenderTextureCentered(Textures[GIMG_SPRITES_PLAYER_DAMAGED], MainPlayer.Pos.x, MainPlayer.Pos.y, MainPlayer.Width * 1.2, MainPlayer.Height * 1.2, MainPlayer.Rotation);
 		}
 		else
 		{
-			RenderTextureCentered(Textures[GIMG_SPRITES_PLAYER], MainPlayer.Pos.x, MainPlayer.Pos.y, MainPlayer.Width, MainPlayer.Height, MainPlayer.Rotation);
+			RenderTextureCentered(Textures[GIMG_SPRITES_PLAYER], MainPlayer.Pos.x, MainPlayer.Pos.y, MainPlayer.Width * 1.2, MainPlayer.Height * 1.2, MainPlayer.Rotation);
 		}
-		if (TimerHeartDamaged > 5)
-		{
-			if (MainPlayer.IsDamaged == true)
-			{
-				TimerHeartbeat = 0;
-			}
-			MainPlayer.IsDamaged = false;
-
-		}
-		if (TimerHeartbeat > HeartbeatRate + 10)
+	}
+	else
+	{
+		RenderTextureCentered(Textures[GIMG_SPRITES_PLAYER], MainPlayer.Pos.x, MainPlayer.Pos.y, MainPlayer.Width, MainPlayer.Height, MainPlayer.Rotation);
+	}
+	if (TimerHeartDamaged > 5)
+	{
+		if (MainPlayer.IsDamaged == true)
 		{
 			TimerHeartbeat = 0;
 		}
+		MainPlayer.IsDamaged = false;
 
-		// Седрца
-		for (int i = 0; i < GamePlayerHearts.size(); i++)
-		{
-			RenderTextureCentered(Textures[GIMG_SPRITES_HEART], GamePlayerHearts[i].x, GamePlayerHearts[i].y, 32, 32, 90);
-		}
-		// Вводимый текст    
-		RenderText(WordInput.c_str(), NormalFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED / 4, ColorDefaultBlue, true);
+	}
+	if (TimerHeartbeat > HeartbeatRate + 10)
+	{
+		TimerHeartbeat = 0;
+	}
+
+	// Седрца
+	for (int i = 0; i < GamePlayerHearts.size(); i++)
+	{
+		RenderTextureCentered(Textures[GIMG_SPRITES_HEART], GamePlayerHearts[i].x, GamePlayerHearts[i].y, 32, 32, 90);
+	}
+	// Вводимый текст    
+	RenderText(WordInput.c_str(), NormalFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED / 4, ColorDefaultBlue, true);
+	char ScoreStrTemp[12];
+	_itoa_s(MainPlayer.Score, ScoreStrTemp, 12, 10);
+	RenderText(ScoreStrTemp, NormalFont, SCREENPOS_X_CENTERED, TRUE_RESOLUTION_Y - 50, ColorDefaultBlue, true);
+	if (PlayerDead)
+	{
+		std::string Temp;
 		char ScoreStrTemp[12];
 		_itoa_s(MainPlayer.Score, ScoreStrTemp, 12, 10);
-		RenderText(ScoreStrTemp, NormalFont, SCREENPOS_X_CENTERED, TRUE_RESOLUTION_Y - 50, ColorDefaultBlue, true);
-		if (PlayerDead)
-		{
-			std::string Temp;
-			char ScoreStrTemp[12];
-			_itoa_s(MainPlayer.Score, ScoreStrTemp, 12, 10);
-			Temp = "Your Score: ";
-			Temp += ScoreStrTemp;
-			//Слова
-			RenderText("Maybe next time!", MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED - SCREENPOS_Y_CENTERED / 2, ColorDefaultBlue, true);
-			// Рекорд
-			RenderText(Temp.c_str(), MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED - SCREENPOS_Y_CENTERED / 4, ColorDefaultBlue, true);
-			// Кнопки
-			DrawButton(BTN_DEAD_RETRY, 5);
-			DrawButton(BTN_DEAD_QUIT_MAINMENU, 5);
-		}
+		Temp = "Your Score: ";
+		Temp += ScoreStrTemp;
+		//Слова
+		RenderText("Maybe next time!", MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED - SCREENPOS_Y_CENTERED / 2, ColorDefaultBlue, true);
+		// Рекорд
+		RenderText(Temp.c_str(), MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED - SCREENPOS_Y_CENTERED / 4, ColorDefaultBlue, true);
+		// Кнопки
+		DrawButton(BTN_DEAD_RETRY, 5);
+		DrawButton(BTN_DEAD_QUIT_MAINMENU, 5);
 	}
 	// ФПС, если включён
 	if (FPSCounter) {
