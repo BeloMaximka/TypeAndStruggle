@@ -7,4 +7,12 @@ enum class PauseMenuCode
     TO_DESKTOP,
 };
 
+enum class DifficultyCode
+{
+    BACK,
+    EASY,
+    NORMAL,
+    HARD,
+};
+
 PauseMenuCode PauseMenu();

@@ -353,32 +353,10 @@ inline void RestartGame() {
     }
     
 }
-int main(int argc, char* argv[])
+void GameSession()
 {
-    // Переменные
-    MousePosWindow.x = WINDOW_RESOLUTION_X;
-    MousePosWindow.y = WINDOW_RESOLUTION_Y;
-    bool MainLoop = true;
     Uint32 TicksToNextFrame = SDL_GetTicks();
-    //
-    MainPlayer.Pos.x = TRUE_RESOLUTION_X/2;
-    MainPlayer.Pos.y = TRUE_RESOLUTION_Y/2;
-    MainPlayer.Height = 96;
-    MainPlayer.Width = 96;
-    MainPlayer.Collision = UpdateCollision(MainPlayer.Pos, MainPlayer.Height, MainPlayer.Width);
-    MainPlayer.Rotation = 90;
-    MainPlayer.Speed = 1;
-    MainPlayer.MovementDir.x = 0;
-    MainPlayer.MovementDir.y = 0;
-    //
-    WriteInLog("[INFO] Starting the game...");
-    GameInit();
-    srand(time(0));
-    SDL_SetRenderDrawColor(RendererPrimary, 0, 0, 0, 255);
-    SDL_StartTextInput();
-    TickTimer = SDL_GetTicks();
-    SlowdownDecreaseTimer = SDL_GetTicks();
-    while (MainLoop)
+    while (true)
     {
         // Чтобы игра слишком часто не обновлялась
         if (TickCurrent - SDL_GetTicks() < 1)
@@ -457,6 +435,33 @@ int main(int argc, char* argv[])
             }
         }
     }
+}
+
+int main(int argc, char* argv[])
+{
+    // Переменные
+    MousePosWindow.x = WINDOW_RESOLUTION_X;
+    MousePosWindow.y = WINDOW_RESOLUTION_Y;
+    //
+    MainPlayer.Pos.x = TRUE_RESOLUTION_X/2;
+    MainPlayer.Pos.y = TRUE_RESOLUTION_Y/2;
+    MainPlayer.Height = 96;
+    MainPlayer.Width = 96;
+    MainPlayer.Collision = UpdateCollision(MainPlayer.Pos, MainPlayer.Height, MainPlayer.Width);
+    MainPlayer.Rotation = 90;
+    MainPlayer.Speed = 1;
+    MainPlayer.MovementDir.x = 0;
+    MainPlayer.MovementDir.y = 0;
+    //
+    WriteInLog("[INFO] Starting the game...");
+    GameInit();
+    srand(time(0));
+    SDL_SetRenderDrawColor(RendererPrimary, 0, 0, 0, 255);
+    SDL_StartTextInput();
+    TickTimer = SDL_GetTicks();
+    SlowdownDecreaseTimer = SDL_GetTicks();
+    GameSession();
+   
     //Выходим из приложения
     QuitGame();
     return 0;
