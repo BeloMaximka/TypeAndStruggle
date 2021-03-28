@@ -17,6 +17,8 @@ enum class InputCode
 	MAIN_SCORES,
 	MAIN_TO_DESKTOP,
 	SCORES_BACK,
+	SCORESENTER_SKIP,
+	SCORESENTER_ENTER,
 };
 
 InputCode ReadKeysPause(const SDL_Event& Event);
@@ -26,5 +28,6 @@ InputCode ReadMouseDifficuly(const SDL_Event& Event, const buttons& Buttons);
 InputCode ReadMouseMain(const SDL_Event& Event, const buttons& Buttons);
 InputCode ReadKeysScores(const SDL_Event& Event);
 InputCode ReadMouseScores(const SDL_Event& Event, const buttons& Buttons);
+InputCode ReadKeysScoreEnter(const SDL_Event& Event, std::string& WordInput);
 void ReadKeys(SDL_Event& Event);
 void ReadMouse(SDL_Event& Event);
