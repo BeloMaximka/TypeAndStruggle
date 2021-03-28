@@ -16,3 +16,4 @@ enum class DifficultyCode
 };
 
 PauseMenuCode PauseMenu();
+void MainMenu();

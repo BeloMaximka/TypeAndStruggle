@@ -7,4 +7,6 @@ void RenderText(const char* Text, TTF_Font* Font, int x, int y, Uint8 ColorRed, 
 void RenderTextureCentered(SDL_Texture* Texture, int PosX, int PosY, double Angle);
 void DrawPauseMenuFrame();
 void DrawDifficultyFrame();
+void DrawMainMenuFrame();
+void DrawHighscoresFrame();
 void DrawFrame();

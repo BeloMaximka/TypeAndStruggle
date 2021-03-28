@@ -143,89 +143,122 @@ void DrawDifficultyFrame()
 	// Курсор
 	RenderTexture(Textures[GIMG_INTERFACE_CURSOR], MousePosWindow.x, MousePosWindow.y);
 }
+void DrawMainMenuFrame()
+{
+	if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
+	FramesPerSecondPresent++;
 
+	// Фон
+	RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
+	// Линия
+	SDL_Rect Line = { SCREENPOS_X_CENTERED - 250,SCREENPOS_Y_CENTERED / 4 + 55 + SCREENPOS_Y_CENTERED / 8, 500, 5 };
+	SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
+	SDL_RenderFillRect(RendererPrimary, &Line);
+	SDL_SetRenderDrawColor(RendererPrimary, 255, 255, 255, 255);
+	RenderText("Main Menu", MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8, ColorDefaultBlue, true);
+	// Play classic        
+	DrawButton(BTN_MENU_CLASSIC, 5);
+	// Play arithmeitc
+	DrawButton(BTN_MENU_ARITHMETIC, 5);
+	// Scores        
+	DrawButton(BTN_MENU_SCORES, 5);
+	// Quit        
+	DrawButton(BTN_MENU_QUIT_DESKTOP, 5);
+
+	// ФПС, если включён
+	if (FPSCounter) {
+		RenderText(FPSString, NormalFont, 0, 0, 0, 0, 0, 255, false);
+		if (TickCurrent - TicksToSecond_FPS >= 1000)
+		{
+			TicksToSecond_FPS = TickCurrent;
+			_itoa_s(FramesPerSecondPresent, FPSString, 10);
+			FramesPerSecondPresent = 0;
+		}
+	}
+
+	// Курсор
+	RenderTexture(Textures[GIMG_INTERFACE_CURSOR], MousePosWindow.x, MousePosWindow.y);
+}
+void DrawHighscoresFrame()
+{
+	if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
+	FramesPerSecondPresent++;
+
+	// Фон
+	RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
+	// Кнопка Back
+	DrawButton(BTN_SCORES_BACK, 5);
+	// Напись
+	RenderText("Highscores", MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED / 4 - SCREENPOS_Y_CENTERED / 8, ColorDefaultBlue, true);
+	RenderText("  #    Names          Mode   Difficulty   Score    ", ScoresFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 16, ColorDefaultBlue, true);
+	char StrBuffer[13];
+	for (int i = 0; i < GameHighscoresSize; i++)
+	{
+		_itoa_s(i + 1, StrBuffer, 13, 10);
+		RenderText(StrBuffer, NormalFont, SCREENPOS_X_CENTERED / 8, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1), ColorDefaultBlue, false);
+		// Режим
+		if (GameHighscores[i].Mode == 0)
+		{
+			RenderText("Classic", NormalFont, SCREENPOS_X_CENTERED / 8 + 460, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
+		}
+		else if (GameHighscores[i].Mode == 1)
+		{
+			RenderText("Arithmetic", NormalFont, SCREENPOS_X_CENTERED / 8 + 460, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
+		}
+		else
+		{
+			RenderText("_____", NormalFont, SCREENPOS_X_CENTERED / 8 + 460, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
+		}
+		// Сложность
+		if (GameHighscores[i].Difficulty == DIFFICULTY_EASY)
+		{
+			RenderText("Easy", NormalFont, SCREENPOS_X_CENTERED / 8 + 670, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
+		}
+		else if (GameHighscores[i].Difficulty == DIFFICULTY_NORMAL)
+		{
+			RenderText("Normal", NormalFont, SCREENPOS_X_CENTERED / 8 + 670, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
+		}
+		else if (GameHighscores[i].Difficulty == DIFFICULTY_HARD)
+		{
+			RenderText("Hard", NormalFont, SCREENPOS_X_CENTERED / 8 + 670, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
+		}
+		else
+		{
+			RenderText("____", NormalFont, SCREENPOS_X_CENTERED / 8 + 670, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
+		}
+		// Счёт
+		if (GameHighscores[i].Score >= 0)
+		{
+			_itoa_s(GameHighscores[i].Score, StrBuffer, 13, 10);
+			RenderText(StrBuffer, NormalFont, SCREENPOS_X_CENTERED / 8 + 870, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
+		}
+		else
+		{
+			RenderText("____", NormalFont, SCREENPOS_X_CENTERED / 8 + 870, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
+		}
+		// Имя
+		RenderText(GameHighscores[i].Name, NormalFont, SCREENPOS_X_CENTERED / 8 + 100, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1), ColorDefaultBlue, false);
+	}
+
+	// ФПС, если включён
+	if (FPSCounter) {
+		RenderText(FPSString, NormalFont, 0, 0, 0, 0, 0, 255, false);
+		if (TickCurrent - TicksToSecond_FPS >= 1000)
+		{
+			TicksToSecond_FPS = TickCurrent;
+			_itoa_s(FramesPerSecondPresent, FPSString, 10);
+			FramesPerSecondPresent = 0;
+		}
+	}
+
+	// Курсор
+	RenderTexture(Textures[GIMG_INTERFACE_CURSOR], MousePosWindow.x, MousePosWindow.y);
+}
 void DrawFrame() {
 	if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
 	FramesPerSecondPresent++;
-	// Менюшки		
-	if (MainMenuShow)
-	{
-		// Фон
-		RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
-		// Линия
-		SDL_Rect Line = { SCREENPOS_X_CENTERED - 250,SCREENPOS_Y_CENTERED / 4 + 55 + SCREENPOS_Y_CENTERED / 8, 500, 5 };
-		SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
-		SDL_RenderFillRect(RendererPrimary, &Line);
-		SDL_SetRenderDrawColor(RendererPrimary, 255, 255, 255, 255);
-		RenderText("Main Menu", MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8, ColorDefaultBlue, true);
-		// Play classic        
-		DrawButton(BTN_MENU_CLASSIC, 5);
-		// Play arithmeitc
-		DrawButton(BTN_MENU_ARITHMETIC, 5);
-		// Scores        
-		DrawButton(BTN_MENU_SCORES, 5);
-		// Quit        
-		DrawButton(BTN_MENU_QUIT_DESKTOP, 5);
-	}
-	else if (HighscoresShow)
-	{
-		// Фон
-		RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
-		// Кнопка Back
-		DrawButton(BTN_SCORES_BACK, 5);
-		// Напись
-		RenderText("Highscores", MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED / 4 - SCREENPOS_Y_CENTERED / 8, ColorDefaultBlue, true);
-		RenderText("  #    Names          Mode   Difficulty   Score    ", ScoresFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 16, ColorDefaultBlue, true);
-		char StrBuffer[13];
-		for (int i = 0; i < GameHighscoresSize; i++)
-		{
-			_itoa_s(i + 1, StrBuffer, 13, 10);
-			RenderText(StrBuffer, NormalFont, SCREENPOS_X_CENTERED / 8, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1), ColorDefaultBlue, false);
-			// Режим
-			if (GameHighscores[i].Mode == 0)
-			{
-				RenderText("Classic", NormalFont, SCREENPOS_X_CENTERED / 8 + 460, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
-			}
-			else if (GameHighscores[i].Mode == 1)
-			{
-				RenderText("Arithmetic", NormalFont, SCREENPOS_X_CENTERED / 8 + 460, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
-			}
-			else
-			{
-				RenderText("_____", NormalFont, SCREENPOS_X_CENTERED / 8 + 460, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
-			}
-			// Сложность
-			if (GameHighscores[i].Difficulty == DIFFICULTY_EASY)
-			{
-				RenderText("Easy", NormalFont, SCREENPOS_X_CENTERED / 8 + 670, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
-			}
-			else if (GameHighscores[i].Difficulty == DIFFICULTY_NORMAL)
-			{
-				RenderText("Normal", NormalFont, SCREENPOS_X_CENTERED / 8 + 670, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
-			}
-			else if (GameHighscores[i].Difficulty == DIFFICULTY_HARD)
-			{
-				RenderText("Hard", NormalFont, SCREENPOS_X_CENTERED / 8 + 670, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
-			}
-			else
-			{
-				RenderText("____", NormalFont, SCREENPOS_X_CENTERED / 8 + 670, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
-			}
-			// Счёт
-			if (GameHighscores[i].Score >= 0)
-			{
-				_itoa_s(GameHighscores[i].Score, StrBuffer, 13, 10);
-				RenderText(StrBuffer, NormalFont, SCREENPOS_X_CENTERED / 8 + 870, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
-			}
-			else
-			{
-				RenderText("____", NormalFont, SCREENPOS_X_CENTERED / 8 + 870, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1) + 27, ColorDefaultBlue, true);
-			}
-			// Имя
-			RenderText(GameHighscores[i].Name, NormalFont, SCREENPOS_X_CENTERED / 8 + 100, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8 * (i + 1), ColorDefaultBlue, false);
-		}
-	}
-	else if (HighscoresEnterShow)
+	// Менюшки
+	if (HighscoresEnterShow)
 	{
 		// Фон
 		RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
