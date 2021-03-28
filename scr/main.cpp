@@ -353,7 +353,7 @@ inline void RestartGame() {
     }
     
 }
-void GameSession()
+void GameSession(bool ArithmethicMode, DifficultyCode Difficulty)
 {
     Uint32 TicksToNextFrame = SDL_GetTicks();
     while (true)
@@ -460,7 +460,7 @@ int main(int argc, char* argv[])
     SDL_StartTextInput();
     TickTimer = SDL_GetTicks();
     SlowdownDecreaseTimer = SDL_GetTicks();
-    GameSession();
+    MainMenu();
    
     //Выходим из приложения
     QuitGame();

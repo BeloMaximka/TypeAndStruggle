@@ -122,3 +122,4 @@ extern const int GameHighscoresSize;
 extern highscore GameHighscores[];
 
 void QuitGame();
+void GameSession(bool ArithmethicMode, DifficultyCode Difficulty);
