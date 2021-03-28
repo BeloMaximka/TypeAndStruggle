@@ -360,39 +360,6 @@ void ReadMouse(SDL_Event& Event) {
 					QuitGame();
 				}
 			}
-			else if (ChoosingDifficultyShow)
-			{
-				//Кнопка Easy
-				if (IsColliding(MouseCollision, GameButtons[BTN_DIFFICULTY_EASY].Collision))
-				{
-					Difficulty = DIFFICULTY_EASY;
-					ChoosingDifficultyShow = false;
-					GamePaused = false;
-					Restart = true;
-				}
-				//Кнопка Normal
-				else if (IsColliding(MouseCollision, GameButtons[BTN_DIFFICULTY_NORMAL].Collision))
-				{
-					Difficulty = DIFFICULTY_NORMAL;
-					ChoosingDifficultyShow = false;
-					GamePaused = false;
-					Restart = true;
-				}
-				//Кнопка Hard
-				else if (IsColliding(MouseCollision, GameButtons[BTN_DIFFICULTY_HARD].Collision))
-				{
-					Difficulty = DIFFICULTY_HARD;
-					ChoosingDifficultyShow = false;
-					GamePaused = false;
-					Restart = true;
-				}
-				//Кнопка Back
-				else if (IsColliding(MouseCollision, GameButtons[BTN_DIFFICULTY_BACK].Collision))
-				{
-					ChoosingDifficultyShow = false;
-					MainMenuShow = true;
-				}
-			}
 			else if (PlayerDead)
 			{
 				// Рестарт
