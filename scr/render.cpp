@@ -76,6 +76,8 @@ void DrawButton(int ButtonId, int LineThickness) {
 void DrawPauseMenuFrame()
 {
 	if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
+	FramesPerSecondPresent++;
+
 	RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
 	SDL_Rect Line = { SCREENPOS_X_CENTERED - 275,SCREENPOS_Y_CENTERED / 4 + 55 + SCREENPOS_Y_CENTERED / 8, 550, 5 };
 	SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
@@ -90,6 +92,42 @@ void DrawPauseMenuFrame()
 	DrawButton(BTN_INGAME_QUIT_DESKTOP, 5);
 	// Restart
 	DrawButton(BTN_INGAME_RESTART, 5);
+
+	// ФПС, если включён
+	if (FPSCounter) {
+		RenderText(FPSString, NormalFont, 0, 0, 0, 0, 0, 255, false);
+		if (TickCurrent - TicksToSecond_FPS >= 1000)
+		{
+			TicksToSecond_FPS = TickCurrent;
+			_itoa_s(FramesPerSecondPresent, FPSString, 10);
+			FramesPerSecondPresent = 0;
+		}
+	}
+
+	// Курсор
+	RenderTexture(Textures[GIMG_INTERFACE_CURSOR], MousePosWindow.x, MousePosWindow.y);
+}
+void DrawDifficultyFrame()
+{
+	if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
+	FramesPerSecondPresent++;
+
+	// Фон
+	RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
+	// Линия
+	SDL_Rect Line = { SCREENPOS_X_CENTERED - 370,SCREENPOS_Y_CENTERED / 4 + 55 + SCREENPOS_Y_CENTERED / 8, 740, 5 };
+	SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
+	SDL_RenderFillRect(RendererPrimary, &Line);
+	SDL_SetRenderDrawColor(RendererPrimary, 255, 255, 255, 255);
+	RenderText("Choose difficulty:", MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8, ColorDefaultBlue, true);
+	// Easy
+	DrawButton(BTN_DIFFICULTY_EASY, 5);
+	// Normal
+	DrawButton(BTN_DIFFICULTY_NORMAL, 5);
+	// Hard        
+	DrawButton(BTN_DIFFICULTY_HARD, 5);
+	// Back        
+	DrawButton(BTN_DIFFICULTY_BACK, 5);
 
 	// ФПС, если включён
 	if (FPSCounter) {
@@ -128,25 +166,6 @@ void DrawFrame() {
 		DrawButton(BTN_MENU_SCORES, 5);
 		// Quit        
 		DrawButton(BTN_MENU_QUIT_DESKTOP, 5);
-	}
-	else if (ChoosingDifficultyShow)
-	{
-		// Фон
-		RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
-		// Линия
-		SDL_Rect Line = { SCREENPOS_X_CENTERED - 370,SCREENPOS_Y_CENTERED / 4 + 55 + SCREENPOS_Y_CENTERED / 8, 740, 5 };
-		SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
-		SDL_RenderFillRect(RendererPrimary, &Line);
-		SDL_SetRenderDrawColor(RendererPrimary, 255, 255, 255, 255);
-		RenderText("Choose difficulty:", MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8, ColorDefaultBlue, true);
-		// Easy
-		DrawButton(BTN_DIFFICULTY_EASY, 5);
-		// Normal
-		DrawButton(BTN_DIFFICULTY_NORMAL, 5);
-		// Hard        
-		DrawButton(BTN_DIFFICULTY_HARD, 5);
-		// Back        
-		DrawButton(BTN_DIFFICULTY_BACK, 5);
 	}
 	else if (HighscoresShow)
 	{

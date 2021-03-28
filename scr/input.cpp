@@ -48,6 +48,53 @@ InputCode ReadMousePause(const SDL_Event& Event, const buttons& Buttons)
 	}
 	return InputCode::NOTHING;
 }
+
+InputCode ReadKeysDifficulty(const SDL_Event& Event)
+{
+	if (Event.type == SDL_KEYDOWN)
+	{
+		switch (Event.key.keysym.scancode)
+		{
+		case SDL_SCANCODE_ESCAPE:
+			return InputCode::DIFFICULTY_BACK;
+		default:
+			return InputCode::NOTHING;
+		}
+	}
+	return InputCode::NOTHING;
+}
+
+InputCode ReadMouseDifficuly(const SDL_Event& Event, const buttons& Buttons)
+{
+	SDL_GetMouseState(&MousePosWindow.x, &MousePosWindow.y);
+	MousePosWindow.x *= (double)TRUE_RESOLUTION_X / WINDOW_RESOLUTION_X;
+	MousePosWindow.y *= (double)TRUE_RESOLUTION_Y / WINDOW_RESOLUTION_Y;
+	collisionbox MouseCollision = UpdateCollision({ (double)MousePosWindow.x , (double)MousePosWindow.y }, 1, 1);
+	if (Event.type == SDL_MOUSEBUTTONDOWN)
+	{
+		//Кнопка Continue
+		if (IsColliding(MouseCollision, Buttons[BTN_DIFFICULTY_BACK].Collision))
+		{
+			return InputCode::DIFFICULTY_BACK;
+		}
+		//Кнопка Quit to Desktop 
+		else if (IsColliding(MouseCollision, Buttons[BTN_DIFFICULTY_EASY].Collision))
+		{
+			return InputCode::DIFFICULTY_EASY;
+		}
+		//Кнопка Restart
+		else if (IsColliding(MouseCollision, Buttons[BTN_DIFFICULTY_NORMAL].Collision))
+		{
+			return InputCode::DIFFICULTY_NORMAL;
+		}
+		//Кнопка Quit to Main Menu 
+		else if (IsColliding(MouseCollision, Buttons[BTN_DIFFICULTY_HARD].Collision))
+		{
+			return InputCode::DIFFICULTY_HARD;
+		}
+	}
+	return InputCode::NOTHING;
+}
 void ReadKeys(SDL_Event& Event) {
 
 	// Проверяем нажатые клавиши
