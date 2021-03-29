@@ -281,11 +281,12 @@ void DrawHighscoreEnterFrame(const std::string& WordInput)
 	// Курсор
 	RenderTexture(Textures[GIMG_INTERFACE_CURSOR], MousePosWindow.x, MousePosWindow.y);
 }
-void DrawDeadFrame()
+void DrawDeadFrame(SDL_Texture* BackgroundTexture)
 {
 	if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
 	FramesPerSecondPresent++;
 
+	RenderTexture(BackgroundTexture, 0, 0, ArenaWidth, ArenaHeight);
 	std::string Temp;
 	char ScoreStrTemp[12];
 	_itoa_s(MainPlayer.Score, ScoreStrTemp, 12, 10);
@@ -430,10 +431,5 @@ void DrawGameSessionFrame(const std::string& WordInput) {
 		TicksToSecond_FPS = TickCurrent;
 		_itoa_s(FramesPerSecondPresent, FPSString, 10);
 		FramesPerSecondPresent = 0;
-	}
-	// Курсор
-	if (GamePaused && !HighscoresEnterShow)
-	{
-		RenderTexture(Textures[GIMG_INTERFACE_CURSOR], MousePosWindow.x, MousePosWindow.y);
 	}
 }

@@ -252,7 +252,7 @@ void HighscoreEnterMenu()
 	}
 }
 
-DeadMenuCode DeadMenu()
+DeadMenuCode DeadMenu(SDL_Texture* BackgroundTexture)
 {
 	Uint32 TicksToNextFrame = SDL_GetTicks();
 	Uint32 TickCurrent = SDL_GetTicks();
@@ -267,7 +267,7 @@ DeadMenuCode DeadMenu()
 		if (TickCurrent - TicksToNextFrame > (1.0 / FramesPerSecondTarget) * 1000)
 		{
 			TicksToNextFrame = TickCurrent;
-			DrawDeadFrame();
+			DrawDeadFrame(BackgroundTexture);
 			SDL_RenderPresent(RendererPrimary);
 			SDL_RenderClear(RendererPrimary);
 		}

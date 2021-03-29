@@ -461,7 +461,18 @@ void GameSession(bool ArithmeticMode, DifficultyCode Difficulty)
         UpdateEntities();
         if (PlayerDead)
         {
-            DeadMenuCode DeadCode = DeadMenu();
+            DrawGameSessionFrame(WordInput);
+            // Сохраняем кадр 
+            int Width;
+            int Height;            
+            SDL_GetRendererOutputSize(RendererPrimary, &Width, &Height);
+            SDL_Surface* Surf = SDL_CreateRGBSurfaceWithFormat(0, Width, Height, 32, SDL_PIXELFORMAT_ARGB8888);            
+            SDL_RenderReadPixels(RendererPrimary, NULL, SDL_PIXELFORMAT_ARGB8888, Surf->pixels, Surf->pitch);  
+            SDL_Texture* Text = SDL_CreateTextureFromSurface(RendererPrimary, Surf);
+            DeadMenuCode DeadCode = DeadMenu(Text);
+            // Удаляем изображение из памяти
+            SDL_FreeSurface(Surf);
+            SDL_DestroyTexture(Text);
             if (DeadCode == DeadMenuCode::RETRY)
             {
                 SetupGame(EnemySpawnDelay, Difficulty);
@@ -471,7 +482,6 @@ void GameSession(bool ArithmeticMode, DifficultyCode Difficulty)
             {
                 return;
             }
-
         }
 
         TickDifference = TickCurrent;
