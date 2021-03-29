@@ -41,7 +41,6 @@ bool ArithmeticMode = false;
 int Difficulty = 1;
 
 double DifficultySpeedModifier = 1;
-double EnemySpawnDelay = 200;
 double SlowdownTimerMod = 0;
 int FramesPerSecondTarget = 60;
 //Создание кнопок
@@ -320,18 +319,18 @@ inline void QuitGame() {
     SDL_Quit();
     exit(0);
 }
-inline void RestartGame() {
+inline void SetupGame(double& EnemySpawnDelay, DifficultyCode Difficulty) {
     GamePlayerHearts.clear();
-    if (Difficulty == DIFFICULTY_EASY)
+    if (Difficulty == DifficultyCode::EASY)
     {
         DifficultySpeedModifier = ArithmeticMode ? 0.7 : 0.6;
         AddHearts(2);
     }
-    else if (Difficulty == DIFFICULTY_NORMAL)
+    else if (Difficulty == DifficultyCode::NORMAL)
     {
         DifficultySpeedModifier = ArithmeticMode ? 0.7 : 0.8;
     }
-    else if (Difficulty == DIFFICULTY_HARD)
+    else if (Difficulty == DifficultyCode::HARD)
     {
         DifficultySpeedModifier = ArithmeticMode ? 0.5 : 0.8;
     }
@@ -343,7 +342,7 @@ inline void RestartGame() {
     MainPlayer.IsDamaged = false;
     PlayerDead = false;
     GamePaused = false;
-    if (ArithmeticMode && Difficulty == DIFFICULTY_HARD)
+    if (ArithmeticMode && Difficulty == DifficultyCode::HARD)
     {
         EnemySpawnDelay = 300;
     }
@@ -353,25 +352,128 @@ inline void RestartGame() {
     }
     
 }
-void GameSession(bool ArithmethicMode, DifficultyCode Difficulty)
+void EnterWord(std::string& WordInput, bool ArithmeticMode, DifficultyCode Difficulty)
+{
+    for (int i = 0; i < GameEnemies.size(); i++)
+    {
+        if ((!ArithmeticMode && WordInput == GameEnemies[i].Word) || (ArithmeticMode && WordInput == GameEnemies[i].ArithmeticAnswer))
+        {
+            // Создаём сердечки
+            EntityCosmeticParticle CosmeticHeartToAdd;
+            CosmeticHeartToAdd.Type = PRTCL_HEART;
+            CosmeticHeartToAdd.Size = 32;
+            CosmeticHeartToAdd.Pos.x = GameEnemies[i].Pos.x - GameEnemies[i].Width / 6;
+            CosmeticHeartToAdd.Pos.y = GameEnemies[i].Pos.y - GameEnemies[i].Height / 6;
+            GameCosmetics.push_back(CosmeticHeartToAdd);
+            CosmeticHeartToAdd.Pos.x = GameEnemies[i].Pos.x + GameEnemies[i].Width / 6;
+            CosmeticHeartToAdd.Pos.y = GameEnemies[i].Pos.y - GameEnemies[i].Height / 8;
+            GameCosmetics.push_back(CosmeticHeartToAdd);
+            CosmeticHeartToAdd.Pos.x = GameEnemies[i].Pos.x;
+            CosmeticHeartToAdd.Pos.y = GameEnemies[i].Pos.y + GameEnemies[i].Height / 6;
+            GameCosmetics.push_back(CosmeticHeartToAdd);
+            // Добавляем очки
+            double ScoreModifier = 1;
+            if (Difficulty == DifficultyCode::EASY)
+            {
+                ScoreModifier = 0.5;
+            }
+            else if (Difficulty == DifficultyCode::NORMAL)
+            {
+                ScoreModifier = 1;
+            }
+            else if (Difficulty == DifficultyCode::HARD)
+            {
+                ScoreModifier = 1.5;
+            }
+            if (ArithmeticMode && (GameEnemies[i].Word.find("*") != std::string::npos || GameEnemies[i].Word.find("/") != std::string::npos))
+            {
+                ScoreModifier += 1;
+            }
+            if (ArithmeticMode)
+            {
+                MainPlayer.Score += 50 * GameEnemies[i].ArithmeticAnswer.length() * ScoreModifier;
+            }
+            else
+            {
+                MainPlayer.Score += 25 * GameEnemies[i].Word.length() * ScoreModifier;
+            }
+
+            // Удаляем противника
+            GameEnemies.erase(GameEnemies.begin() + i);
+
+            i--;
+        }
+    }
+    for (int i = 0; i < GameBonuses.size(); i++)
+    {
+        if (((!ArithmeticMode && WordInput == GameBonuses[i].Word) || (ArithmeticMode && WordInput == GameBonuses[i].ArithmeticAnswer)) && GameBonuses[i].Size == GameBonuses[i].FullSize)
+        {
+            if (GameBonuses[i].ID == BNS_RANDOM)
+            {
+                GameBonuses[i].ID = rand() % BNS_LAST;
+            }
+            if (GameBonuses[i].ID == BNS_HEART)
+            {
+                AddHearts(1);
+            }
+            else if (GameBonuses[i].ID == BNS_X2)
+            {
+                MainPlayer.Score *= 2;
+            }
+            else if (GameBonuses[i].ID == BNS_SLOWDOWN)
+            {
+                SlowdownTimerMod = 100;
+            }
+            // Создаём звездочки
+            EntityCosmeticParticle CosmeticHeartToAdd;
+            CosmeticHeartToAdd.Type = PRTCL_STAR;
+            CosmeticHeartToAdd.Size = 32;
+            CosmeticHeartToAdd.Pos.x = GameBonuses[i].Pos.x - GameBonuses[i].Size / 6;
+            CosmeticHeartToAdd.Pos.y = GameBonuses[i].Pos.y - GameBonuses[i].Size / 6;
+            GameCosmetics.push_back(CosmeticHeartToAdd);
+            CosmeticHeartToAdd.Pos.x = GameBonuses[i].Pos.x + GameBonuses[i].Size / 6;
+            CosmeticHeartToAdd.Pos.y = GameBonuses[i].Pos.y - GameBonuses[i].Size / 8;
+            GameCosmetics.push_back(CosmeticHeartToAdd);
+            CosmeticHeartToAdd.Pos.x = GameBonuses[i].Pos.x;
+            CosmeticHeartToAdd.Pos.y = GameBonuses[i].Pos.y + GameBonuses[i].Size / 6;
+            GameCosmetics.push_back(CosmeticHeartToAdd);
+            // Удаляем бонус
+            GameBonuses.erase(GameBonuses.begin() + i);
+            i--;
+        }
+    }
+    WordInput = "";
+}
+void GameSession(bool ArithmeticMode, DifficultyCode Difficulty)
 {
     Uint32 TicksToNextFrame = SDL_GetTicks();
+    std::string WordInput;
+    double EnemySpawnDelay = 200;
+    SetupGame(EnemySpawnDelay, Difficulty);
     while (true)
     {
         // Чтобы игра слишком часто не обновлялась
         if (TickCurrent - SDL_GetTicks() < 1)
         {
             SDL_Delay(1);
-        }
-        if (Restart)
+        }        
+
+        UpdateEntities();
+        if (PlayerDead)
         {
-            RestartGame();
-            Restart = false;
+            DeadMenuCode DeadCode = DeadMenu();
+            if (DeadCode == DeadMenuCode::RETRY)
+            {
+                SetupGame(EnemySpawnDelay, Difficulty);
+                continue;
+            }
+            else if (DeadCode == DeadMenuCode::TO_MAIN_MENU)
+            {
+                return;
+            }
+
         }
-        if (!GamePaused)
-        {
-            UpdateEntities();
-        }
+
         TickDifference = TickCurrent;
         TickCurrent = SDL_GetTicks();
         TickDifference -= TickCurrent;
@@ -384,7 +486,7 @@ void GameSession(bool ArithmethicMode, DifficultyCode Difficulty)
                 SlowdownTimerMod = 0;
             }
         }
-        if (TickCurrent - TickTimer >= 10 + SlowdownTimerMod && !GamePaused)
+        if (TickCurrent - TickTimer >= 10 + SlowdownTimerMod)
         {
             TickTimer = TickCurrent;
             UpdateTimers();
@@ -392,7 +494,7 @@ void GameSession(bool ArithmethicMode, DifficultyCode Difficulty)
         if (TickCurrent - TicksToNextFrame > (1.0 / FramesPerSecondTarget) * 1000)
         {
             TicksToNextFrame = TickCurrent;
-            DrawFrame();
+            DrawGameSessionFrame(WordInput);
             SDL_RenderPresent(RendererPrimary);
             SDL_RenderClear(RendererPrimary);
         }
@@ -413,8 +515,30 @@ void GameSession(bool ArithmethicMode, DifficultyCode Difficulty)
             {
                 QuitGame();
             }
-            ReadKeys(Event);
+            InputCode KeyCode = ReadGameSessionKeys(Event, WordInput);
             ReadMouse(Event);
+            if (KeyCode == InputCode::GAMESESSION_ENTER)
+            {
+                EnterWord(WordInput, ArithmeticMode, Difficulty);
+            }
+            else if (KeyCode == InputCode::GAMESESSION_PAUSE)
+            {
+                PauseMenuCode PauseCode = PauseMenu();
+                if (PauseCode == PauseMenuCode::RESTART)
+                {
+                    SetupGame(EnemySpawnDelay, Difficulty);
+                    continue;
+                }
+                else if (PauseCode == PauseMenuCode::TO_MAIN_MENU)
+                {
+                    SetupGame(EnemySpawnDelay, Difficulty);
+                    return;
+                }
+                else if (PauseCode == PauseMenuCode::TO_DESKTOP)
+                {
+                    QuitGame();
+                }
+            }
         }
         if (TimerSpawnRateIncrease > 100)
         {

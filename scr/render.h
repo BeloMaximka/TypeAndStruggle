@@ -10,4 +10,5 @@ void DrawDifficultyFrame();
 void DrawMainMenuFrame();
 void DrawHighscoresFrame();
 void DrawHighscoreEnterFrame(const std::string& WordInput);
-void DrawFrame();
+void DrawDeadFrame();
+void DrawGameSessionFrame(const std::string& WordInput);
