@@ -281,7 +281,39 @@ void DrawHighscoreEnterFrame(const std::string& WordInput)
 	// Курсор
 	RenderTexture(Textures[GIMG_INTERFACE_CURSOR], MousePosWindow.x, MousePosWindow.y);
 }
-void DrawFrame() {
+void DrawDeadFrame()
+{
+	if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
+	FramesPerSecondPresent++;
+
+	std::string Temp;
+	char ScoreStrTemp[12];
+	_itoa_s(MainPlayer.Score, ScoreStrTemp, 12, 10);
+	Temp = "Your Score: ";
+	Temp += ScoreStrTemp;
+	//Слова
+	RenderText("Maybe next time!", MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED - SCREENPOS_Y_CENTERED / 2, ColorDefaultBlue, true);
+	// Рекорд
+	RenderText(Temp.c_str(), MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED - SCREENPOS_Y_CENTERED / 4, ColorDefaultBlue, true);
+	// Кнопки
+	DrawButton(BTN_DEAD_RETRY, 5);
+	DrawButton(BTN_DEAD_QUIT_MAINMENU, 5);
+
+	// ФПС, если включён
+	if (FPSCounter) {
+		RenderText(FPSString, NormalFont, 0, 0, 0, 0, 0, 255, false);
+		if (TickCurrent - TicksToSecond_FPS >= 1000)
+		{
+			TicksToSecond_FPS = TickCurrent;
+			_itoa_s(FramesPerSecondPresent, FPSString, 10);
+			FramesPerSecondPresent = 0;
+		}
+	}
+
+	// Курсор
+	RenderTexture(Textures[GIMG_INTERFACE_CURSOR], MousePosWindow.x, MousePosWindow.y);
+}
+void DrawGameSessionFrame(const std::string& WordInput) {
 	if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
 	FramesPerSecondPresent++;
 
@@ -387,21 +419,6 @@ void DrawFrame() {
 	char ScoreStrTemp[12];
 	_itoa_s(MainPlayer.Score, ScoreStrTemp, 12, 10);
 	RenderText(ScoreStrTemp, NormalFont, SCREENPOS_X_CENTERED, TRUE_RESOLUTION_Y - 50, ColorDefaultBlue, true);
-	if (PlayerDead)
-	{
-		std::string Temp;
-		char ScoreStrTemp[12];
-		_itoa_s(MainPlayer.Score, ScoreStrTemp, 12, 10);
-		Temp = "Your Score: ";
-		Temp += ScoreStrTemp;
-		//Слова
-		RenderText("Maybe next time!", MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED - SCREENPOS_Y_CENTERED / 2, ColorDefaultBlue, true);
-		// Рекорд
-		RenderText(Temp.c_str(), MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED - SCREENPOS_Y_CENTERED / 4, ColorDefaultBlue, true);
-		// Кнопки
-		DrawButton(BTN_DEAD_RETRY, 5);
-		DrawButton(BTN_DEAD_QUIT_MAINMENU, 5);
-	}
 	// ФПС, если включён
 	if (FPSCounter) {
 		RenderText(FPSString, NormalFont, 0, 0, 0, 0, 0, 255, false);

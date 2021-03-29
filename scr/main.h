@@ -75,6 +75,7 @@ enum BUTTON_NAMES {
 	BTN_DEAD_QUIT_MAINMENU,
 	BTN_SCORES_BACK
 };
+
 struct highscore {
 	char Name[16];
 	int Score;
