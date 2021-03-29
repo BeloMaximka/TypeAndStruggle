@@ -10,5 +10,5 @@ void DrawDifficultyFrame();
 void DrawMainMenuFrame();
 void DrawHighscoresFrame();
 void DrawHighscoreEnterFrame(const std::string& WordInput);
-void DrawDeadFrame();
+void DrawDeadFrame(SDL_Texture* BackgroundTexture);
 void DrawGameSessionFrame(const std::string& WordInput);

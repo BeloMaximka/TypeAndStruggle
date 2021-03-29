@@ -23,5 +23,5 @@ enum class DeadMenuCode
 
 PauseMenuCode PauseMenu();
 void HighscoreEnterMenu();
-DeadMenuCode DeadMenu();
+DeadMenuCode DeadMenu(SDL_Texture* BackgroundTexture);
 void MainMenu();
