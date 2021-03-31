@@ -165,7 +165,7 @@ void HighscoresMenu()
 	}
 }
 
-void HighscoreEnterMenu()
+void HighscoreEnterMenu(DifficultyCode Difficulty, bool ArithmeticMode)
 {
 	Uint32 TicksToNextFrame = SDL_GetTicks();
 	Uint32 TickCurrent = SDL_GetTicks();
@@ -229,7 +229,7 @@ void HighscoreEnterMenu()
 							GameHighscores[i].Name[j] = WordInput[j];
 						}
 						GameHighscores[i].Score = MainPlayer.Score;
-						GameHighscores[i].Difficulty = Difficulty;
+						GameHighscores[i].Difficulty = (int)Difficulty;
 						GameHighscores[i].Mode = ArithmeticMode;
 					}
 					if (BreakCycle == true)
@@ -252,7 +252,7 @@ void HighscoreEnterMenu()
 	}
 }
 
-DeadMenuCode DeadMenu(SDL_Texture* BackgroundTexture)
+DeadMenuCode DeadMenu(SDL_Texture* BackgroundTexture, DifficultyCode Difficulty, bool ArithmeticMode)
 {
 	Uint32 TicksToNextFrame = SDL_GetTicks();
 	Uint32 TickCurrent = SDL_GetTicks();
@@ -301,7 +301,7 @@ DeadMenuCode DeadMenu(SDL_Texture* BackgroundTexture)
 				{
 					if (GameHighscores[i].Score != 0 && MainPlayer.Score > GameHighscores[i].Score && MainPlayer.Score != 0)
 					{
-						HighscoreEnterMenu();
+						HighscoreEnterMenu(Difficulty, ArithmeticMode);
 						break;
 					}
 				}

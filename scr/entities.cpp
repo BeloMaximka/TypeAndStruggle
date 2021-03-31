@@ -33,7 +33,6 @@ void RemoveHearts(int Count) {
 		if (PlayerNoDefense)
 		{
 			PlayerDead = true;
-			GamePaused = true;
 		}
 		PlayerNoDefense = true;
 		return;
@@ -56,7 +55,7 @@ void RemoveHearts(int Count) {
 		GamePlayerHearts[i] = SumVectors(HeartPos, Rotate);
 	}
 }
-void SpawnEnemy() {
+void SpawnEnemy(DifficultyCode Difficulty, bool ArithmeticMode) {
 	if (rand() % 6 > -1)
 	{
 		EntityEnemy EnemyToAdd;
@@ -101,7 +100,7 @@ void SpawnEnemy() {
 			int ArithmeticResult;
 			int ArithmeticOperation = rand() % 4;
 			double ArithmeticMovementMod = 1;
-			if (Difficulty == DIFFICULTY_EASY)
+			if (Difficulty == DifficultyCode::EASY)
 			{
 				// Генерация первого числа
 				_itoa_s(rand() % 16, StrBuffer, 10, 10);
@@ -151,7 +150,7 @@ void SpawnEnemy() {
 					ArithmeticResult /= Divider;
 				}
 			}
-			else if (Difficulty == DIFFICULTY_NORMAL)
+			else if (Difficulty == DifficultyCode::NORMAL)
 			{
 				// Генерация первого числа
 				_itoa_s(rand() % 100, StrBuffer, 10, 10);
@@ -201,7 +200,7 @@ void SpawnEnemy() {
 					ArithmeticResult /= Divider;
 				}
 			}
-			else if (Difficulty == DIFFICULTY_HARD)
+			else if (Difficulty == DifficultyCode::HARD)
 			{
 				// Генерация первого числа
 				_itoa_s(rand() % 1000, StrBuffer, 10, 10);
@@ -257,15 +256,15 @@ void SpawnEnemy() {
 		}
 		else
 		{
-			if (Difficulty == DIFFICULTY_EASY)
+			if (Difficulty == DifficultyCode::EASY)
 			{
 				EnemyToAdd.Word = WordsList[rand() % (WordsList.size() / 2)];
 			}
-			else if (Difficulty == DIFFICULTY_NORMAL)
+			else if (Difficulty == DifficultyCode::NORMAL)
 			{
 				EnemyToAdd.Word = WordsList[rand() % WordsList.size()];
 			}
-			else if (Difficulty == DIFFICULTY_HARD)
+			else if (Difficulty == DifficultyCode::HARD)
 			{
 				EnemyToAdd.Word = WordsList[rand() % (WordsList.size() - WordsList.size() / 2) + WordsList.size() / 2];
 			}
@@ -275,7 +274,7 @@ void SpawnEnemy() {
 		GameEnemies.push_back(EnemyToAdd);
 	}
 }
-void SpawnBonus() {
+void SpawnBonus(DifficultyCode Difficulty, bool ArithmeticMode) {
 	EntityBonus BonusToAdd;
 	int BonusPosOffet = 100;
 	while (true)
@@ -298,7 +297,7 @@ void SpawnBonus() {
 		int ArithmeticResult;
 		int ArithmeticOperation = rand() % 4;
 		double ArithmeticMovementMod = 1;
-		if (Difficulty == DIFFICULTY_EASY)
+		if (Difficulty == DifficultyCode::EASY)
 		{
 			// Генерация первого числа
 			_itoa_s(rand() % 16, StrBuffer, 10, 10);
@@ -348,7 +347,7 @@ void SpawnBonus() {
 				ArithmeticResult /= Divider;
 			}
 		}
-		else if (Difficulty == DIFFICULTY_NORMAL)
+		else if (Difficulty == DifficultyCode::NORMAL)
 		{
 			// Генерация первого числа
 			_itoa_s(rand() % 100, StrBuffer, 10, 10);
@@ -398,7 +397,7 @@ void SpawnBonus() {
 				ArithmeticResult /= Divider;
 			}
 		}
-		else if (Difficulty == DIFFICULTY_HARD)
+		else if (Difficulty == DifficultyCode::EASY)
 		{
 			// Генерация первого числа
 			_itoa_s(rand() % 1000, StrBuffer, 10, 10);
@@ -453,15 +452,15 @@ void SpawnBonus() {
 	}
 	else
 	{
-		if (Difficulty == DIFFICULTY_EASY)
+		if (Difficulty == DifficultyCode::EASY)
 		{
 			BonusToAdd.Word = WordsList[rand() % (WordsList.size() / 2)];
 		}
-		else if (Difficulty == DIFFICULTY_NORMAL)
+		else if (Difficulty == DifficultyCode::NORMAL)
 		{
 			BonusToAdd.Word = WordsList[rand() % WordsList.size()];
 		}
-		else if (Difficulty == DIFFICULTY_HARD)
+		else if (Difficulty == DifficultyCode::HARD)
 		{
 			BonusToAdd.Word = WordsList[rand() % (WordsList.size() - WordsList.size() / 2) + WordsList.size() / 2];
 		}

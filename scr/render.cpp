@@ -278,8 +278,6 @@ void DrawHighscoreEnterFrame(const std::string& WordInput)
 		}
 	}
 
-	// Курсор
-	RenderTexture(Textures[GIMG_INTERFACE_CURSOR], MousePosWindow.x, MousePosWindow.y);
 }
 void DrawDeadFrame(SDL_Texture* BackgroundTexture)
 {
