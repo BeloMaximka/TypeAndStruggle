@@ -64,5 +64,5 @@ extern std::vector<EntityBonus> GameBonuses;
 void UpdateEntities();
 void AddHearts(int Count);
 void RemoveHearts(int Count);
-void SpawnBonus();
-void SpawnEnemy();
+void SpawnBonus(DifficultyCode Difficulty, bool ArithmeticMode);
+void SpawnEnemy(DifficultyCode Difficulty, bool ArithmeticMode);

@@ -22,6 +22,6 @@ enum class DeadMenuCode
 };
 
 PauseMenuCode PauseMenu();
-void HighscoreEnterMenu();
-DeadMenuCode DeadMenu(SDL_Texture* BackgroundTexture);
+void HighscoreEnterMenu(DifficultyCode Difficulty, bool ArithmeticMode);
+DeadMenuCode DeadMenu(SDL_Texture* BackgroundTexture, DifficultyCode Difficulty, bool ArithmeticMode);
 void MainMenu();

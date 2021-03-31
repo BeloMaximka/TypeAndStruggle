@@ -158,6 +158,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="scr\blur.cpp" />
     <ClCompile Include="scr\collision.cpp" />
     <ClCompile Include="scr\entities.cpp" />
     <ClCompile Include="scr\game_resources.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="scr\timers.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="scr\blur.h" />
     <ClInclude Include="scr\collision.h" />
     <ClInclude Include="scr\entities.h" />
     <ClInclude Include="scr\game_resources.h" />

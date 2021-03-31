@@ -29,15 +29,15 @@ struct button
 typedef std::vector<button> buttons;
 
 // Собственные
+#include "interface.h"
 #include "entities.h"
 #include "game_resources.h"
 #include "log.h"
 #include "render.h"
 #include "strpp.h"
 #include "timers.h"
-#include "interface.h"
 #include "input.h"
-
+#include "blur.h"
 
 
 //------------------------------------------------------
@@ -87,7 +87,6 @@ struct highscore {
 
 // Глобальные переменные
 extern buttons GameButtons;
-extern bool IngameMenuShow;
 extern int MapCurrent[24][24];
 extern const char* WINDOW_NAME;
 extern int TRUE_RESOLUTION_X;
@@ -105,19 +104,10 @@ extern ipoint MousePosWindow;
 extern struct EntityPlayer MainPlayer;
 extern int ArenaWidth;
 extern int ArenaHeight;
-extern std::string WordInput;
-extern bool GamePaused;
-extern bool MainMenuShow;
-extern bool Restart;
-extern bool ChoosingDifficultyShow;
-extern int Difficulty;
 extern bool PlayerDead;
-extern bool ArithmeticMode;
 extern std::vector<std::string> WordsList;
 extern double SlowdownTimerMod;
 extern double DifficultySpeedModifier;
-extern bool HighscoresShow;
-extern bool HighscoresEnterShow;
 extern int FramesPerSecondTarget;
 extern const int GameHighscoresSize;
 extern highscore GameHighscores[];
