@@ -316,7 +316,6 @@ void DrawGameSessionFrame(const std::string& WordInput) {
 	if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
 	FramesPerSecondPresent++;
 
-	// Игровое поле
 	// Фон
 	RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
 	// Косметические частицы
@@ -356,6 +355,21 @@ void DrawGameSessionFrame(const std::string& WordInput) {
 			RenderText(GameBonuses[i].Word.c_str(), NormalFont, GameBonuses[i].Pos.x, GameBonuses[i].Pos.y - GameBonuses[i].Size / 2 - 10, ColorDefaultBlue, true);
 		}
 	}
+
+	// Вращение противника
+	if (SlowdownTimerMod)
+	{
+		EnemyRotateStep += 25 * (1.0 / SlowdownTimerMod + 0.1);
+	}
+	else
+	{
+		EnemyRotateStep += 25;
+	}
+	if (EnemyRotateStep >= 360)
+	{
+		EnemyRotateStep -= 360;
+	}
+
 	// Противники
 	for (int i = 0; i < GameEnemies.size(); i++)
 	{

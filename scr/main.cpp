@@ -4,8 +4,8 @@ using namespace std;
 const char* WINDOW_NAME = "Type&Struggle";
 int TRUE_RESOLUTION_X = 1080; // 640
 int TRUE_RESOLUTION_Y = 1080; // 480
-int WINDOW_RESOLUTION_X = 888; // 1280
-int WINDOW_RESOLUTION_Y = 888; // 720
+int WINDOW_RESOLUTION_X = 720; // 1280
+int WINDOW_RESOLUTION_Y = 720; // 720
 SDL_Renderer* RendererPrimary;
 SDL_Window* WindowPrimary;
 ipoint MousePosWindow;

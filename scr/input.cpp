@@ -294,6 +294,7 @@ InputCode ReadGameSessionKeys(SDL_Event& Event, std::string& WordInput) {
 	if (Event.type == SDL_TEXTINPUT)
 	{
 		WordInput += Event.text.text;
+		SlowdownTimerMod = 100;
 	}
 	return InputCode::NOTHING;
 }

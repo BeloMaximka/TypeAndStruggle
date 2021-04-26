@@ -252,7 +252,7 @@ void SpawnEnemy(DifficultyCode Difficulty, bool ArithmeticMode) {
 			}
 			_itoa_s(ArithmeticResult, StrBuffer, 10, 10);
 			EnemyToAdd.ArithmeticAnswer = StrBuffer;
-			EnemyToAdd.Speed = 0.05 * DifficultySpeedModifier * ArithmeticMovementMod;
+			EnemyToAdd.Speed = 0.1 * DifficultySpeedModifier * ArithmeticMovementMod;
 		}
 		else
 		{
@@ -268,7 +268,7 @@ void SpawnEnemy(DifficultyCode Difficulty, bool ArithmeticMode) {
 			{
 				EnemyToAdd.Word = WordsList[rand() % (WordsList.size() - WordsList.size() / 2) + WordsList.size() / 2];
 			}
-			EnemyToAdd.Speed = 0.07 * sqrt((double)3 / EnemyToAdd.Word.length()) * DifficultySpeedModifier;
+			EnemyToAdd.Speed = 0.14 * sqrt((double)3 / EnemyToAdd.Word.length()) * DifficultySpeedModifier;
 		}
 
 		GameEnemies.push_back(EnemyToAdd);
@@ -490,21 +490,13 @@ void UpdateEntities() {
 	// Враги
 	for (int i = 0; i < GameEnemies.size(); i++)
 	{
+		// Изменение скорости в соответствии с замедлением
 		point MovDir;
 		MovDir.x = MainPlayer.Pos.x - GameEnemies[i].Pos.x;
 		MovDir.y = MainPlayer.Pos.y - GameEnemies[i].Pos.y;
 		GameEnemies[i].MovementDir = NormalizeVector(MovDir);		
 		GameEnemies[i].Rotation = EnemyRotateStep;
-		if (TimerEnemyRotation > 1)
-		{
-			TimerEnemyRotation = 0;
-			EnemyRotateStep += 25;
-			if (EnemyRotateStep >= 360)
-			{
-				EnemyRotateStep = 0;
-			}
-		}
-		// Изменение скорости в соответствии с замедлением
+
 		double SlowdownSpeedMod = 10 / (10 + SlowdownTimerMod);
 		GameEnemies[i].Pos.x += abs(GameEnemies[i].Speed * TickDifference) * GameEnemies[i].MovementDir.x * SlowdownSpeedMod;
 		GameEnemies[i].Pos.y += abs(GameEnemies[i].Speed * TickDifference) * GameEnemies[i].MovementDir.y * SlowdownSpeedMod;
@@ -521,34 +513,6 @@ void UpdateEntities() {
 	}
 	// Изменение скорости в соответствии с замедлением
 	double SlowdownSpeedMod = 10 / (10 + SlowdownTimerMod);
-	for (int i = 0; i < GameEnemies.size(); i++)
-	{
-		point MovDir;
-		MovDir.x = MainPlayer.Pos.x - GameEnemies[i].Pos.x;
-		MovDir.y = MainPlayer.Pos.y - GameEnemies[i].Pos.y;
-		GameEnemies[i].MovementDir = NormalizeVector(MovDir);
-		GameEnemies[i].Rotation = EnemyRotateStep;
-		if (TimerEnemyRotation > 1)
-		{
-			TimerEnemyRotation = 0;
-			EnemyRotateStep += 25;
-			if (EnemyRotateStep >= 360)
-			{
-				EnemyRotateStep = 0;
-			}
-		}		
-		GameEnemies[i].Pos.x += abs(GameEnemies[i].Speed * TickDifference) * GameEnemies[i].MovementDir.x * SlowdownSpeedMod;
-		GameEnemies[i].Pos.y += abs(GameEnemies[i].Speed * TickDifference) * GameEnemies[i].MovementDir.y * SlowdownSpeedMod;
-		GameEnemies[i].Collision = UpdateCollision(GameEnemies[i].Pos, GameEnemies[i].Height, GameEnemies[i].Width);
-		if (IsColliding(GameEnemies[i].Collision, MainPlayer.Collision))
-		{
-			GameEnemies.erase(GameEnemies.begin() + i);
-			RemoveHearts(1);
-			MainPlayer.IsDamaged = true;
-			TimerHeartDamaged = 0;
-			i--;
-		}
-	}
 	// изменение скорости дабы избежать перекрытия имен
 	for (int i = 0; i < GameEnemies.size(); i++)
 	{

@@ -60,6 +60,7 @@ extern std::vector<EntityEnemy> GameEnemies;
 extern std::vector<point> GamePlayerHearts;
 extern std::vector<EntityCosmeticParticle> GameCosmetics;
 extern std::vector<EntityBonus> GameBonuses;
+extern double EnemyRotateStep;
 
 void UpdateEntities();
 void AddHearts(int Count);
