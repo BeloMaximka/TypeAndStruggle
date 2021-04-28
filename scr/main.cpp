@@ -502,6 +502,7 @@ void GameSession(bool ArithmeticMode, DifficultyCode Difficulty)
 		if (TickCurrent - TicksToNextFrame > (1.0 / FramesPerSecondTarget) * 1000)
 		{
 			TicksToNextFrame = TickCurrent;
+			UpdateEnemyRotation(SlowdownTimerMod, EnemyRotateStep);
 			DrawGameSessionFrame(WordInput);
 			SDL_RenderPresent(RendererPrimary);
 			SDL_RenderClear(RendererPrimary);

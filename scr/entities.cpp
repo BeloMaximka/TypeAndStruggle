@@ -16,18 +16,18 @@ void AddHearts(int Count) {
 	for (int i = 0; i < Count; i++)
 	{
 		GamePlayerHearts.push_back({ 0,0 });
-	}	
+	}
 	double RotateAngle = 360 / GamePlayerHearts.size();
-	point HeartPos = MainPlayer.Pos;	
+	point HeartPos = MainPlayer.Pos;
 	point Rotate = { MainPlayer.Width,0 };
-	
+
 	for (int i = 0; i < GamePlayerHearts.size(); i++)
-	{	
+	{
 		Rotate = RotateVector(Rotate, RotateAngle);
 		GamePlayerHearts[i] = SumVectors(HeartPos, Rotate);
 	}
 }
-void RemoveHearts(int Count) {	
+void RemoveHearts(int Count) {
 	if (GamePlayerHearts.size() == 0)
 	{
 		if (PlayerNoDefense)
@@ -494,21 +494,21 @@ void UpdateEntities() {
 		point MovDir;
 		MovDir.x = MainPlayer.Pos.x - GameEnemies[i].Pos.x;
 		MovDir.y = MainPlayer.Pos.y - GameEnemies[i].Pos.y;
-		GameEnemies[i].MovementDir = NormalizeVector(MovDir);		
+		GameEnemies[i].MovementDir = NormalizeVector(MovDir);
 		GameEnemies[i].Rotation = EnemyRotateStep;
 
 		double SlowdownSpeedMod = 10 / (10 + SlowdownTimerMod);
 		GameEnemies[i].Pos.x += abs(GameEnemies[i].Speed * TickDifference) * GameEnemies[i].MovementDir.x * SlowdownSpeedMod;
 		GameEnemies[i].Pos.y += abs(GameEnemies[i].Speed * TickDifference) * GameEnemies[i].MovementDir.y * SlowdownSpeedMod;
 		GameEnemies[i].Collision = UpdateCollision(GameEnemies[i].Pos, GameEnemies[i].Height, GameEnemies[i].Width);
-		if (IsColliding(GameEnemies[i].Collision,MainPlayer.Collision))
-		{			
+		if (IsColliding(GameEnemies[i].Collision, MainPlayer.Collision))
+		{
 			//GameEnemies[i].Pos = { 0,0 };			
-			GameEnemies.erase(GameEnemies.begin() + i);				
+			GameEnemies.erase(GameEnemies.begin() + i);
 			RemoveHearts(1);
 			MainPlayer.IsDamaged = true;
 			TimerHeartDamaged = 0;
-			i--;			
+			i--;
 		}
 	}
 	// Изменение скорости в соответствии с замедлением
@@ -580,5 +580,20 @@ void UpdateEntities() {
 				i--;
 			}
 		}
+	}
+}
+void UpdateEnemyRotation(double SlowdownTimerMod, double& EnemyRotateStep)
+{
+	if (SlowdownTimerMod)
+	{
+		EnemyRotateStep += 25 * (1.0 / SlowdownTimerMod + 0.1);
+	}
+	else
+	{
+		EnemyRotateStep += 25;
+	}
+	if (EnemyRotateStep >= 360)
+	{
+		EnemyRotateStep -= 360;
 	}
 }

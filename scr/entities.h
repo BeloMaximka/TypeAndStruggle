@@ -67,3 +67,4 @@ void AddHearts(int Count);
 void RemoveHearts(int Count);
 void SpawnBonus(DifficultyCode Difficulty, bool ArithmeticMode);
 void SpawnEnemy(DifficultyCode Difficulty, bool ArithmeticMode);
+void UpdateEnemyRotation(double SlowdownTimerMod, double& EnemyRotateStep);
