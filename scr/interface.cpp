@@ -18,7 +18,7 @@ void InitSliders(Sliders& GameSliders)
 	// Music
 	SliderToAdd.Text = "Music Volume: ";
 	SliderToAdd.ID = SLDR_MUSIC;
-	SliderToAdd.Pos = { TRUE_RESOLUTION_X / 2.0, TRUE_RESOLUTION_Y / 2.0};
+	SliderToAdd.Pos = { TRUE_RESOLUTION_X / 2.0, TRUE_RESOLUTION_Y / 2.0 };
 	SliderToAdd.Heigth = 40;
 	SliderToAdd.Width = TRUE_RESOLUTION_X * 0.75;
 	SliderToAdd.Collision = UpdateCollision(SliderToAdd.Pos, SliderToAdd.Heigth, SliderToAdd.Width);
@@ -213,7 +213,7 @@ void OptionsMenu()
 				QuitGame();
 			}
 
-			InputCode MouseCode = ReadMouseOptions(Event, GameButtons);
+			InputCode MouseCode = ReadMouseOptions(Event, GameButtons, GameSliders);
 			InputCode KeyCode = ReadKeysOptions(Event);
 			if (MouseCode == InputCode::OPTIONS_BACK || KeyCode == InputCode::OPTIONS_BACK)
 			{

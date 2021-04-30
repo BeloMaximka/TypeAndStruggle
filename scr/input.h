@@ -29,7 +29,7 @@ enum class InputCode
 };
 
 InputCode ReadKeysOptions(const SDL_Event& Event);
-InputCode ReadMouseOptions(const SDL_Event& Event, const buttons& Buttons);
+InputCode ReadMouseOptions(const SDL_Event& Event, const buttons& Buttons, Sliders& GameSliders);
 InputCode ReadKeysPause(const SDL_Event& Event);
 InputCode ReadMousePause(const SDL_Event& Event, const buttons& Buttons);
 InputCode ReadKeysDifficulty(const SDL_Event& Event);

@@ -17,12 +17,19 @@ InputCode ReadKeysOptions(const SDL_Event& Event)
 	return InputCode::NOTHING;
 }
 
-InputCode ReadMouseOptions(const SDL_Event& Event, const buttons& Buttons)
+InputCode ReadMouseOptions(const SDL_Event& Event, const buttons& Buttons, Sliders& GameSliders)
 {
+	static bool SFXVolumePressed = false;
+	static bool MusicVolumePressed = false;
 	SDL_GetMouseState(&MousePosWindow.x, &MousePosWindow.y);
 	MousePosWindow.x *= (double)TRUE_RESOLUTION_X / WINDOW_RESOLUTION_X;
 	MousePosWindow.y *= (double)TRUE_RESOLUTION_Y / WINDOW_RESOLUTION_Y;
 	collisionbox MouseCollision = UpdateCollision({ (double)MousePosWindow.x , (double)MousePosWindow.y }, 1, 1);
+	if (Event.type == SDL_MOUSEBUTTONUP)
+	{
+		SFXVolumePressed = false;
+		MusicVolumePressed = false;
+	}
 	if (Event.type == SDL_MOUSEBUTTONDOWN)
 	{
 		//Кнопка Back
@@ -30,6 +37,44 @@ InputCode ReadMouseOptions(const SDL_Event& Event, const buttons& Buttons)
 		{
 			return InputCode::OPTIONS_BACK;
 		}
+		//Слайдер SFX Volume
+		if (IsColliding(MouseCollision, GameSliders[SLDR_SFX].Collision))
+		{
+			SFXVolumePressed = true;
+		}
+		//Слайдер Music Volume
+		if (IsColliding(MouseCollision, GameSliders[SLDR_MUSIC].Collision))
+		{
+			MusicVolumePressed = true;
+		}
+	}
+	if (SFXVolumePressed)
+	{
+		GameSliders[SLDR_SFX].Value = (MouseCollision.TopLeft.x - GameSliders[SLDR_SFX].Pos.x + GameSliders[SLDR_SFX].Width / 2) / GameSliders[SLDR_SFX].Width;
+		if (GameSliders[SLDR_SFX].Value < 0)
+		{
+			GameSliders[SLDR_SFX].Value = 0;
+		}
+		else if (GameSliders[SLDR_SFX].Value > 1)
+		{
+			GameSliders[SLDR_SFX].Value = 1;
+		}
+		SFXVolume = GameSliders[SLDR_SFX].Value;
+		return InputCode::NOTHING;
+	}
+	if (MusicVolumePressed)
+	{
+		GameSliders[SLDR_MUSIC].Value = (MouseCollision.TopLeft.x - GameSliders[SLDR_MUSIC].Pos.x + GameSliders[SLDR_MUSIC].Width / 2) / GameSliders[SLDR_MUSIC].Width;
+		if (GameSliders[SLDR_MUSIC].Value < 0)
+		{
+			GameSliders[SLDR_MUSIC].Value = 0;
+		}
+		else if (GameSliders[SLDR_MUSIC].Value > 1)
+		{
+			GameSliders[SLDR_MUSIC].Value = 1;
+		}
+		MusicVolume = GameSliders[SLDR_MUSIC].Value;
+		return InputCode::NOTHING;
 	}
 	return InputCode::NOTHING;
 }
@@ -320,12 +365,12 @@ InputCode ReadGameSessionKeys(SDL_Event& Event, std::string& WordInput) {
 			{
 				WordInput = WordInput.substr(0, WordInput.length() - 1);
 			}
-		}
+	}
 		if (Event.key.keysym.scancode == SDL_SCANCODE_RETURN)
 		{
 			return InputCode::GAMESESSION_ENTER;
 		}
-	}
+}
 #ifdef DEBUG_MODE
 	if (Event.key.keysym.scancode == SDL_SCANCODE_RCTRL)
 	{

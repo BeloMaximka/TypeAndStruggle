@@ -77,16 +77,16 @@ void DrawSlider(Slider& SliderToDraw, bool Centered)
 {
 	SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
 	// Горизонтальная линия
-	SDL_Rect Line = { SliderToDraw.Pos.x, SliderToDraw.Pos.y + SliderToDraw.Heigth * 2.0 / 5,
+	SDL_Rect Line = { SliderToDraw.Pos.x, SliderToDraw.Pos.y,
 					  SliderToDraw.Width, SliderToDraw.Heigth / 5 };
 	if (Centered)
 	{
 		Line.x -= SliderToDraw.Width / 2;
 	}
 	SDL_RenderFillRect(RendererPrimary, &Line);
-	RenderText(SliderToDraw.Text.c_str(), MenuFont, Line.x + SliderToDraw.Width / 2, SliderToDraw.Pos.y - SliderToDraw.Heigth, ColorDefaultBlue, true);
+	RenderText(SliderToDraw.Text.c_str(), MenuFont, Line.x + SliderToDraw.Width / 2, SliderToDraw.Pos.y - SliderToDraw.Heigth * 7 / 5, ColorDefaultBlue, true);
 	// Вертинальная линия
-	Line = { int(Line.x + SliderToDraw.Width * SliderToDraw.Value), int(SliderToDraw.Pos.y), SliderToDraw.Heigth / 5 , SliderToDraw.Heigth };
+	Line = { int(Line.x + SliderToDraw.Width * SliderToDraw.Value), int(SliderToDraw.Pos.y - SliderToDraw.Heigth * 2 / 5), SliderToDraw.Heigth / 5 , SliderToDraw.Heigth };
 	SDL_RenderFillRect(RendererPrimary, &Line);
 
 }
