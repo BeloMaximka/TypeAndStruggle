@@ -62,15 +62,20 @@ InputCode ReadMousePause(const SDL_Event& Event, const buttons& Buttons)
 		{
 			return InputCode::PAUSE_CONTINUE;
 		}
-		//Кнопка Quit to Desktop 
-		else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_QUIT_DESKTOP].Collision))
-		{
-			return InputCode::PAUSE_TO_DESKTOP;
-		}
 		//Кнопка Restart
 		else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_RESTART].Collision))
 		{
 			return InputCode::PAUSE_RESTART;
+		}
+		//Кнопка Options
+		else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_OPTIONS].Collision))
+		{
+			return InputCode::PAUSE_OPTIONS;
+		}
+		//Кнопка Quit to Desktop 
+		else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_QUIT_DESKTOP].Collision))
+		{
+			return InputCode::PAUSE_TO_DESKTOP;
 		}
 		//Кнопка Quit to Main Menu 
 		else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_QUIT_MAINMENU].Collision))

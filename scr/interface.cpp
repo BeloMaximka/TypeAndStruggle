@@ -90,15 +90,19 @@ PauseMenuCode PauseMenu()
 			{
 				return PauseMenuCode::CONTINUE;
 			}
-			else if (KeyCode == InputCode::PAUSE_RESTART || MouseCode == InputCode::PAUSE_RESTART)
+			else if (MouseCode == InputCode::PAUSE_RESTART)
 			{
 				return PauseMenuCode::RESTART;
 			}
-			else if (KeyCode == InputCode::PAUSE_TO_DESKTOP || MouseCode == InputCode::PAUSE_TO_DESKTOP)
+			else if (MouseCode == InputCode::PAUSE_OPTIONS)
+			{
+				OptionsMenu();
+			}
+			else if (MouseCode == InputCode::PAUSE_TO_DESKTOP)
 			{
 				return PauseMenuCode::TO_DESKTOP;
 			}
-			else if (KeyCode == InputCode::PAUSE_TO_MAIN_MENU || MouseCode == InputCode::PAUSE_TO_MAIN_MENU)
+			else if (MouseCode == InputCode::PAUSE_TO_MAIN_MENU)
 			{
 				return PauseMenuCode::TO_MAIN_MENU;
 			}

@@ -117,12 +117,14 @@ void DrawPauseMenuFrame()
 	RenderText("Game Paused", MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8, ColorDefaultBlue, true);
 	// Continue
 	DrawButton(BTN_INGAME_CONTINUE, 5);
+	// Restart
+	DrawButton(BTN_INGAME_RESTART, 5);
+	// Options
+	DrawButton(BTN_INGAME_OPTIONS, 5);
 	// Quit to Main Menu
 	DrawButton(BTN_INGAME_QUIT_MAINMENU, 5);
 	// Quit to Desktop
-	DrawButton(BTN_INGAME_QUIT_DESKTOP, 5);
-	// Restart
-	DrawButton(BTN_INGAME_RESTART, 5);
+	DrawButton(BTN_INGAME_QUIT_DESKTOP, 5);	
 
 	// ФПС, если включён
 	if (FPSCounter) {

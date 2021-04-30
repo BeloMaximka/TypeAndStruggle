@@ -45,9 +45,25 @@ void InitButtons() {
 	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
 	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
 	GameButtons.push_back(ButtonToAdd);
+	// Ingame Restart
+	ButtonToAdd.ID = BTN_INGAME_RESTART;
+	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 4 };
+	ButtonToAdd.Text = "Restart";
+	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
+	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
+	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	GameButtons.push_back(ButtonToAdd);
+	// Options
+	ButtonToAdd.ID = BTN_INGAME_OPTIONS;
+	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 2 + (double)TRUE_RESOLUTION_Y / 8 };
+	ButtonToAdd.Text = "Options";
+	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
+	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
+	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	GameButtons.push_back(ButtonToAdd);
 	// Ingame Quit to Main Menu
 	ButtonToAdd.ID = BTN_INGAME_QUIT_MAINMENU;
-	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 2 + (double)TRUE_RESOLUTION_Y / 8 };
+	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 2 };
 	ButtonToAdd.Text = "Quit to Main Menu";
 	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
 	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
@@ -55,16 +71,8 @@ void InitButtons() {
 	GameButtons.push_back(ButtonToAdd);
 	// Ingame Quit  to Desktop  
 	ButtonToAdd.ID = BTN_INGAME_QUIT_DESKTOP;
-	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 2 };
+	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)3 * TRUE_RESOLUTION_Y / 8 + (double)TRUE_RESOLUTION_Y / 2 };
 	ButtonToAdd.Text = "Quit to Desktop";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
-	GameButtons.push_back(ButtonToAdd);
-	// Ingame Restart
-	ButtonToAdd.ID = BTN_INGAME_RESTART;
-	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 4 };
-	ButtonToAdd.Text = "Restart";
 	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
 	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
 	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
@@ -89,6 +97,14 @@ void InitButtons() {
 	ButtonToAdd.ID = BTN_MENU_SCORES;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 2 + (double)TRUE_RESOLUTION_Y / 8 };
 	ButtonToAdd.Text = "Scores";
+	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
+	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
+	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	GameButtons.push_back(ButtonToAdd);
+	// Options
+	ButtonToAdd.ID = BTN_MENU_OPTIONS;
+	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 2 };
+	ButtonToAdd.Text = "Options";
 	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
 	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
 	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
@@ -155,14 +171,6 @@ void InitButtons() {
 	ButtonToAdd.Text = "Back";
 	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
 	ButtonToAdd.Width = ButtonToAdd.Text.length() * 69;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
-	GameButtons.push_back(ButtonToAdd);
-	// Options
-	ButtonToAdd.ID = BTN_MENU_OPTIONS;
-	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 2 };
-	ButtonToAdd.Text = "Options";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
 	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
 	GameButtons.push_back(ButtonToAdd);
 	// Options Back
