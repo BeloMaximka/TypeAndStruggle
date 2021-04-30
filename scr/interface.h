@@ -1,4 +1,11 @@
 #pragma once
+
+enum SLIDERSIDS
+{
+	SLDR_SFX,
+	SLDR_MUSIC
+};
+
 enum class PauseMenuCode
 {
 	CONTINUE,
@@ -26,12 +33,17 @@ struct Slider
 	point Pos;
 	std::string Text;
 	collisionbox Collision;
+	double Value = 1;
 	int Heigth;
 	int Width;
 	int ID;
-	int Value = 100;
 };
 
+typedef std::vector<Slider> Sliders;
+
+extern Sliders GameSliders;
+
+void InitSliders(Sliders& GameSliders);
 void InitButtons();
 PauseMenuCode PauseMenu();
 void HighscoreEnterMenu(DifficultyCode Difficulty, bool ArithmeticMode);

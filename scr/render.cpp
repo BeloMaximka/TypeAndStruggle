@@ -55,6 +55,7 @@ void RenderTextureCentered(SDL_Texture* Texture, int PosX, int PosY, int Width, 
 	SDL_RendererFlip RendererFlip = (SDL_RendererFlip)(SDL_FLIP_HORIZONTAL | SDL_FLIP_VERTICAL);
 	SDL_RenderCopyEx(RendererPrimary, Texture, NULL, &DestinationRectangle, Angle, NULL, RendererFlip);
 }
+
 void DrawButton(int ButtonId, int LineThickness) {
 	SDL_Rect Line;
 	SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
@@ -71,6 +72,23 @@ void DrawButton(int ButtonId, int LineThickness) {
 	Line = { (int)GameButtons[ButtonId].Pos.x + GameButtons[ButtonId].Width / 2,(int)GameButtons[ButtonId].Pos.y - GameButtons[ButtonId].Heigth / 2, LineThickness, GameButtons[ButtonId].Heigth + LineThickness };
 	SDL_RenderFillRect(RendererPrimary, &Line);
 	RenderText(GameButtons[ButtonId].Text.c_str(), MenuFont, GameButtons[ButtonId].Pos.x, GameButtons[ButtonId].Pos.y, ColorDefaultBlue, true);
+}
+void DrawSlider(Slider& SliderToDraw, bool Centered)
+{
+	SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
+	// Горизонтальная линия
+	SDL_Rect Line = { SliderToDraw.Pos.x, SliderToDraw.Pos.y + SliderToDraw.Heigth * 2.0 / 5,
+					  SliderToDraw.Width, SliderToDraw.Heigth / 5 };
+	if (Centered)
+	{
+		Line.x -= SliderToDraw.Width / 2;
+	}
+	SDL_RenderFillRect(RendererPrimary, &Line);
+	RenderText(SliderToDraw.Text.c_str(), MenuFont, Line.x + SliderToDraw.Width / 2, SliderToDraw.Pos.y - SliderToDraw.Heigth, ColorDefaultBlue, true);
+	// Вертинальная линия
+	Line = { int(Line.x + SliderToDraw.Width * SliderToDraw.Value), int(SliderToDraw.Pos.y), SliderToDraw.Heigth / 5 , SliderToDraw.Heigth };
+	SDL_RenderFillRect(RendererPrimary, &Line);
+
 }
 
 void DrawOptionsFrame()
@@ -89,6 +107,9 @@ void DrawOptionsFrame()
 	SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
 	SDL_RenderFillRect(RendererPrimary, &Line);
 	SDL_SetRenderDrawColor(RendererPrimary, 255, 255, 255, 255);
+	// Слайдеры
+	DrawSlider(GameSliders[SLDR_SFX], true); // SFX
+	DrawSlider(GameSliders[SLDR_MUSIC], true); // Music
 
 	// ФПС, если включён
 	if (FPSCounter) {
@@ -124,7 +145,7 @@ void DrawPauseMenuFrame()
 	// Quit to Main Menu
 	DrawButton(BTN_INGAME_QUIT_MAINMENU, 5);
 	// Quit to Desktop
-	DrawButton(BTN_INGAME_QUIT_DESKTOP, 5);	
+	DrawButton(BTN_INGAME_QUIT_DESKTOP, 5);
 
 	// ФПС, если включён
 	if (FPSCounter) {
@@ -389,7 +410,7 @@ void DrawGameSessionFrame(const std::string& WordInput) {
 		{
 			RenderText(GameBonuses[i].Word.c_str(), NormalFont, GameBonuses[i].Pos.x, GameBonuses[i].Pos.y - GameBonuses[i].Size / 2 - 10, ColorDefaultBlue, true);
 		}
-	}	
+	}
 
 	// Противники
 	for (int i = 0; i < GameEnemies.size(); i++)

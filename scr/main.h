@@ -17,7 +17,7 @@
 #include "collision.h"
 
 
-struct Button
+struct button
 {
 	point Pos;
 	std::string Text;
@@ -26,7 +26,7 @@ struct Button
 	int Width;
 	int ID;	
 };
-typedef std::vector<Button> buttons;
+typedef std::vector<button> buttons;
 
 // Собственные
 #include "interface.h"
@@ -120,6 +120,9 @@ extern buttons GameButtons;
 
 extern const int GameHighscoresSize;
 extern highscore GameHighscores[];
+
+extern double SFXVolume;
+extern double MusicVolume;
 
 void QuitGame();
 void GameSession(bool ArithmethicMode, DifficultyCode Difficulty);

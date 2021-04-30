@@ -1,9 +1,35 @@
 #include "main.h"
 
+Sliders GameSliders;
+
+// Создание слайдеров
+void InitSliders(Sliders& GameSliders)
+{
+	Slider SliderToAdd;
+	// SFX
+	SliderToAdd.Text = "SFX Volume: ";
+	SliderToAdd.ID = SLDR_SFX;
+	SliderToAdd.Pos = { TRUE_RESOLUTION_X / 2.0, TRUE_RESOLUTION_Y / 2.0 - TRUE_RESOLUTION_Y / 8.0 };
+	SliderToAdd.Heigth = 40;
+	SliderToAdd.Width = TRUE_RESOLUTION_X * 0.75;
+	SliderToAdd.Collision = UpdateCollision(SliderToAdd.Pos, SliderToAdd.Heigth, SliderToAdd.Width);
+	SliderToAdd.Value = SFXVolume;
+	GameSliders.push_back(SliderToAdd);
+	// Music
+	SliderToAdd.Text = "Music Volume: ";
+	SliderToAdd.ID = SLDR_MUSIC;
+	SliderToAdd.Pos = { TRUE_RESOLUTION_X / 2.0, TRUE_RESOLUTION_Y / 2.0};
+	SliderToAdd.Heigth = 40;
+	SliderToAdd.Width = TRUE_RESOLUTION_X * 0.75;
+	SliderToAdd.Collision = UpdateCollision(SliderToAdd.Pos, SliderToAdd.Heigth, SliderToAdd.Width);
+	SliderToAdd.Value = MusicVolume;
+	GameSliders.push_back(SliderToAdd);
+}
+
 //Создание кнопок
 void InitButtons() {
 
-	Button ButtonToAdd;
+	button ButtonToAdd;
 	// Ingame Continue    
 	ButtonToAdd.ID = BTN_INGAME_CONTINUE;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 8 };

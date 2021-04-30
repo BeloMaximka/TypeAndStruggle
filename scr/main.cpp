@@ -37,6 +37,9 @@ std::string WordInput = "";
 const int GameHighscoresSize = 10;
 highscore GameHighscores[GameHighscoresSize];
 
+double SFXVolume = 0;
+double MusicVolume = 0;
+
 // Иницализация игры
 void GameInit() {
 	// Пересоздание лога
@@ -175,6 +178,8 @@ void GameInit() {
 
 	// Создаем кнопочки
 	InitButtons();
+	// Слайдеры
+	InitSliders(GameSliders);
 	// Скрываем курсор
 	SDL_ShowCursor(0);
 }
