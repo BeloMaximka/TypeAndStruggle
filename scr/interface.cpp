@@ -1,8 +1,8 @@
-#include "main.h"
+п»ї#include "main.h"
 
 Sliders GameSliders;
 
-// Создание слайдеров
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void InitSliders(Sliders& GameSliders)
 {
 	Slider SliderToAdd;
@@ -26,7 +26,7 @@ void InitSliders(Sliders& GameSliders)
 	GameSliders.push_back(SliderToAdd);
 }
 
-//Создание кнопок
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 void InitButtons() {
 
 	button ButtonToAdd;
@@ -183,7 +183,7 @@ void OptionsMenu()
 
 	while (true)
 	{
-		// Чтобы игра слишком часто не обновлялась
+		// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (TickCurrent - SDL_GetTicks() < REPEAT_DELAY)
 		{
 			SDL_Delay(REPEAT_DELAY);
@@ -230,7 +230,7 @@ PauseMenuCode PauseMenu()
 
 	while (true)
 	{
-		// Чтобы игра слишком часто не обновлялась
+		// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (TickCurrent - SDL_GetTicks() < REPEAT_DELAY)
 		{
 			SDL_Delay(REPEAT_DELAY);
@@ -293,7 +293,7 @@ DifficultyCode DifficultyMenu()
 
 	while (true)
 	{
-		// Чтобы игра слишком часто не обновлялась
+		// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (TickCurrent - SDL_GetTicks() < REPEAT_DELAY)
 		{
 			SDL_Delay(REPEAT_DELAY);
@@ -352,7 +352,7 @@ void HighscoresMenu()
 
 	while (true)
 	{
-		// Чтобы игра слишком часто не обновлялась
+		// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (TickCurrent - SDL_GetTicks() < REPEAT_DELAY)
 		{
 			SDL_Delay(REPEAT_DELAY);
@@ -400,7 +400,7 @@ void HighscoreEnterMenu(DifficultyCode Difficulty, bool ArithmeticMode)
 	std::string WordInput;
 	while (true)
 	{
-		// Чтобы игра слишком часто не обновлялась
+		// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (TickCurrent - SDL_GetTicks() < REPEAT_DELAY)
 		{
 			SDL_Delay(REPEAT_DELAY);
@@ -486,7 +486,7 @@ DeadMenuCode DeadMenu(SDL_Texture* BackgroundTexture, DifficultyCode Difficulty,
 
 	while (true)
 	{
-		// Чтобы игра слишком часто не обновлялась
+		// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (TickCurrent - SDL_GetTicks() < REPEAT_DELAY)
 		{
 			SDL_Delay(REPEAT_DELAY);
@@ -545,7 +545,7 @@ void MainMenu()
 
 	while (true)
 	{
-		// Чтобы игра слишком часто не обновлялась
+		// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (TickCurrent - SDL_GetTicks() < REPEAT_DELAY)
 		{
 			SDL_Delay(REPEAT_DELAY);
