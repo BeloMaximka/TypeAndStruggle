@@ -95,7 +95,7 @@ void InitButtons() {
 	GameButtons.push_back(ButtonToAdd);
 	// Mainmenu Quit  to Desktop  
 	ButtonToAdd.ID = BTN_MENU_QUIT_DESKTOP;
-	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 2 };
+	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)3*TRUE_RESOLUTION_Y / 8 + (double)TRUE_RESOLUTION_Y / 2 };
 	ButtonToAdd.Text = "Quit to Desktop";
 	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
 	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
@@ -155,6 +155,22 @@ void InitButtons() {
 	ButtonToAdd.Text = "Back";
 	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
 	ButtonToAdd.Width = ButtonToAdd.Text.length() * 69;
+	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	GameButtons.push_back(ButtonToAdd);
+	// Options
+	ButtonToAdd.ID = BTN_MENU_OPTIONS;
+	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 2 };
+	ButtonToAdd.Text = "Options";
+	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
+	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
+	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	GameButtons.push_back(ButtonToAdd);
+	// Options Back
+	ButtonToAdd.ID = BTN_OPTIONS_BACK;
+	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 2 + (double)TRUE_RESOLUTION_Y / 16 + (double)TRUE_RESOLUTION_Y / 4 };
+	ButtonToAdd.Text = "Back";
+	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
+	ButtonToAdd.Width = ButtonToAdd.Text.length() * 60;
 	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
 	GameButtons.push_back(ButtonToAdd);
 }

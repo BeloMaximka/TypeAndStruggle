@@ -2,6 +2,38 @@
 
 int TickShoot = SDL_GetTicks();
 
+InputCode ReadKeysOptions(const SDL_Event& Event)
+{
+	if (Event.type == SDL_KEYDOWN)
+	{
+		switch (Event.key.keysym.scancode)
+		{
+		case SDL_SCANCODE_ESCAPE:
+			return InputCode::OPTIONS_BACK;
+		default:
+			return InputCode::NOTHING;
+		}
+	}
+	return InputCode::NOTHING;
+}
+
+InputCode ReadMouseOptions(const SDL_Event& Event, const buttons& Buttons)
+{
+	SDL_GetMouseState(&MousePosWindow.x, &MousePosWindow.y);
+	MousePosWindow.x *= (double)TRUE_RESOLUTION_X / WINDOW_RESOLUTION_X;
+	MousePosWindow.y *= (double)TRUE_RESOLUTION_Y / WINDOW_RESOLUTION_Y;
+	collisionbox MouseCollision = UpdateCollision({ (double)MousePosWindow.x , (double)MousePosWindow.y }, 1, 1);
+	if (Event.type == SDL_MOUSEBUTTONDOWN)
+	{
+		//Кнопка Back
+		if (IsColliding(MouseCollision, Buttons[BTN_OPTIONS_BACK].Collision))
+		{
+			return InputCode::OPTIONS_BACK;
+		}
+	}
+	return InputCode::NOTHING;
+}
+
 InputCode ReadKeysPause(const SDL_Event& Event)
 {
 	if (Event.type == SDL_KEYDOWN)
@@ -133,6 +165,11 @@ InputCode ReadMouseMain(const SDL_Event& Event, const buttons& Buttons)
 		else if (IsColliding(MouseCollision, GameButtons[BTN_MENU_SCORES].Collision))
 		{
 			return InputCode::MAIN_SCORES;
+		}
+		//Кнопка Options
+		else if (IsColliding(MouseCollision, GameButtons[BTN_MENU_OPTIONS].Collision))
+		{
+			return InputCode::MAIN_OPTIONS;
 		}
 		//Кнопка Quit to Desktop
 		else if (IsColliding(MouseCollision, GameButtons[BTN_MENU_QUIT_DESKTOP].Collision))

@@ -1,5 +1,52 @@
 #include "main.h"
 
+void OptionsMenu()
+{
+	Uint32 TicksToNextFrame = SDL_GetTicks();
+	Uint32 TickCurrent = SDL_GetTicks();
+
+	while (true)
+	{
+		// „тобы игра слишком часто не обновл€лась
+		if (TickCurrent - SDL_GetTicks() < REPEAT_DELAY)
+		{
+			SDL_Delay(REPEAT_DELAY);
+		}
+		if (TickCurrent - TicksToNextFrame > (1.0 / FramesPerSecondTarget) * 1000)
+		{
+			TicksToNextFrame = TickCurrent;
+			DrawOptionsFrame();
+			SDL_RenderPresent(RendererPrimary);
+			SDL_RenderClear(RendererPrimary);
+		}
+		TickCurrent = SDL_GetTicks();
+		SDL_Event Event;
+		if (SDL_PollEvent(&Event))
+		{
+			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_RESIZED) {
+				int LowestRes = Event.window.data1 < Event.window.data2 ? Event.window.data1 : Event.window.data2;
+				WINDOW_RESOLUTION_X = LowestRes;
+				WINDOW_RESOLUTION_Y = LowestRes;
+				SDL_SetWindowSize(WindowPrimary, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y);
+			}
+			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_MAXIMIZED) {
+				SDL_SetWindowPosition(WindowPrimary, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+			}
+			if (Event.type == SDL_QUIT)
+			{
+				QuitGame();
+			}
+
+			InputCode MouseCode = ReadMouseOptions(Event, GameButtons);
+			InputCode KeyCode = ReadKeysOptions(Event);
+			if (MouseCode == InputCode::OPTIONS_BACK || KeyCode == InputCode::OPTIONS_BACK)
+			{
+				return;
+			}
+		}
+	}
+}
+
 PauseMenuCode PauseMenu()
 {
 	Uint32 TicksToNextFrame = SDL_GetTicks();
@@ -310,6 +357,7 @@ DeadMenuCode DeadMenu(SDL_Texture* BackgroundTexture, DifficultyCode Difficulty,
 		}
 	}
 }
+
 void MainMenu()
 {
 	Uint32 TicksToNextFrame = SDL_GetTicks();
@@ -371,6 +419,10 @@ void MainMenu()
 			else if (MouseCode == InputCode::MAIN_SCORES)
 			{
 				HighscoresMenu();
+			}
+			else if (MouseCode == InputCode::MAIN_OPTIONS)
+			{
+				OptionsMenu();
 			}
 		}
 	}

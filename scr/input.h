@@ -15,6 +15,7 @@ enum class InputCode
 	MAIN_CLASSIC,
 	MAIN_ARITHMETIC,
 	MAIN_SCORES,
+	MAIN_OPTIONS,
 	MAIN_TO_DESKTOP,
 	SCORES_BACK,
 	SCORESENTER_SKIP,
@@ -23,8 +24,11 @@ enum class InputCode
 	DEAD_TO_MAIN_MENU,
 	GAMESESSION_ENTER,
 	GAMESESSION_PAUSE,
+	OPTIONS_BACK,
 };
 
+InputCode ReadKeysOptions(const SDL_Event& Event);
+InputCode ReadMouseOptions(const SDL_Event& Event, const buttons& Buttons);
 InputCode ReadKeysPause(const SDL_Event& Event);
 InputCode ReadMousePause(const SDL_Event& Event, const buttons& Buttons);
 InputCode ReadKeysDifficulty(const SDL_Event& Event);

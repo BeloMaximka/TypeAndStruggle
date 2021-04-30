@@ -73,6 +73,37 @@ void DrawButton(int ButtonId, int LineThickness) {
 	RenderText(GameButtons[ButtonId].Text.c_str(), MenuFont, GameButtons[ButtonId].Pos.x, GameButtons[ButtonId].Pos.y, ColorDefaultBlue, true);
 }
 
+void DrawOptionsFrame()
+{
+	if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
+	FramesPerSecondPresent++;
+
+	// Фон
+	RenderTexture(Textures[GIMG_MAP], 0, 0, ArenaWidth, ArenaHeight);
+	// Кнопка Back
+	DrawButton(BTN_OPTIONS_BACK, 5);
+	// Напись
+	RenderText("Options", MenuFont, SCREENPOS_X_CENTERED, SCREENPOS_Y_CENTERED / 4 + SCREENPOS_Y_CENTERED / 8, ColorDefaultBlue, true);
+	// Линия под написью
+	SDL_Rect Line = { SCREENPOS_X_CENTERED - 250,SCREENPOS_Y_CENTERED / 4 + 55 + SCREENPOS_Y_CENTERED / 8, 500, 5 };
+	SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
+	SDL_RenderFillRect(RendererPrimary, &Line);
+	SDL_SetRenderDrawColor(RendererPrimary, 255, 255, 255, 255);
+
+	// ФПС, если включён
+	if (FPSCounter) {
+		RenderText(FPSString, NormalFont, 0, 0, 0, 0, 0, 255, false);
+		if (TickCurrent - TicksToSecond_FPS >= 1000)
+		{
+			TicksToSecond_FPS = TickCurrent;
+			_itoa_s(FramesPerSecondPresent, FPSString, 10);
+			FramesPerSecondPresent = 0;
+		}
+	}
+
+	// Курсор
+	RenderTexture(Textures[GIMG_INTERFACE_CURSOR], MousePosWindow.x, MousePosWindow.y);
+}
 void DrawPauseMenuFrame()
 {
 	if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
@@ -162,6 +193,8 @@ void DrawMainMenuFrame()
 	DrawButton(BTN_MENU_ARITHMETIC, 5);
 	// Scores        
 	DrawButton(BTN_MENU_SCORES, 5);
+	// Options
+	DrawButton(BTN_MENU_OPTIONS, 5);
 	// Quit        
 	DrawButton(BTN_MENU_QUIT_DESKTOP, 5);
 
