@@ -17,16 +17,16 @@
 #include "collision.h"
 
 
-struct button
+struct Button
 {
 	point Pos;
 	std::string Text;
+	collisionbox Collision;
 	int Heigth;
 	int Width;
-	int ID;
-	collisionbox Collision;
+	int ID;	
 };
-typedef std::vector<button> buttons;
+typedef std::vector<Button> buttons;
 
 // Собственные
 #include "interface.h"
@@ -86,32 +86,38 @@ struct highscore {
 	int Mode;
 };
 
-//typedef std::vector<button> buttons;
-
 // Глобальные переменные
-extern buttons GameButtons;
-extern int MapCurrent[24][24];
+
 extern const char* WINDOW_NAME;
 extern int TRUE_RESOLUTION_X;
 extern int TRUE_RESOLUTION_Y;
 extern int WINDOW_RESOLUTION_X;
 extern int WINDOW_RESOLUTION_Y;
+
 extern SDL_Renderer* RendererPrimary;
 extern SDL_Window* WindowPrimary;
+extern ipoint MousePosWindow;
+
 extern bool FPSCounter;
+extern int FramesPerSecondPresent;
+extern int FramesPerSecondTarget;
+
 extern Uint32 TickCurrent;
 extern Uint32 TicksToSecond_FPS;
 extern int TickDifference;
-extern int FramesPerSecondPresent;
-extern ipoint MousePosWindow;
-extern struct EntityPlayer MainPlayer;
+
 extern int ArenaWidth;
 extern int ArenaHeight;
-extern bool PlayerDead;
 extern std::vector<std::string> WordsList;
+
+extern struct EntityPlayer MainPlayer;
+extern bool PlayerDead;
+
 extern double SlowdownTimerMod;
 extern double DifficultySpeedModifier;
-extern int FramesPerSecondTarget;
+
+extern buttons GameButtons;
+
 extern const int GameHighscoresSize;
 extern highscore GameHighscores[];
 

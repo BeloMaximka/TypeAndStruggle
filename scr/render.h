@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "main.h"
+
 void RenderTexture(SDL_Texture* Texture, int PosX, int PosY, int Width, int Height);
 void RenderTexture(SDL_Texture* Texture, int PosX, int PosY);
 void RenderText(const char* Text, TTF_Font* Font, int x, int y, SDL_Color Color, bool Centered);
