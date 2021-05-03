@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
+#include "SDL_mixer.h"
 // С++ билиотеки
 #include <stdarg.h>
 #include <string.h>
@@ -38,6 +39,7 @@ typedef std::vector<button> buttons;
 #include "timers.h"
 #include "input.h"
 #include "blur.h"
+#include "audio.h"
 
 
 //------------------------------------------------------
@@ -120,9 +122,6 @@ extern buttons GameButtons;
 
 extern const int GameHighscoresSize;
 extern highscore GameHighscores[];
-
-extern double SFXVolume;
-extern double MusicVolume;
 
 void QuitGame();
 void GameSession(bool ArithmethicMode, DifficultyCode Difficulty);

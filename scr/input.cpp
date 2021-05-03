@@ -59,7 +59,7 @@ InputCode ReadMouseOptions(const SDL_Event& Event, const buttons& Buttons, Slide
 		{
 			GameSliders[SLDR_SFX].Value = 1;
 		}
-		SFXVolume = GameSliders[SLDR_SFX].Value;
+		SetSFXVolume(GameSliders[SLDR_SFX].Value);
 		return InputCode::NOTHING;
 	}
 	if (MusicVolumePressed)
@@ -73,7 +73,7 @@ InputCode ReadMouseOptions(const SDL_Event& Event, const buttons& Buttons, Slide
 		{
 			GameSliders[SLDR_MUSIC].Value = 1;
 		}
-		MusicVolume = GameSliders[SLDR_MUSIC].Value;
+		SetMusicVolume(GameSliders[SLDR_MUSIC].Value);
 		return InputCode::NOTHING;
 	}
 	return InputCode::NOTHING;

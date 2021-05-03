@@ -19,7 +19,7 @@ enum GameImages
 	GIMG_SPRITES_PLAYER_DAMAGED,
 	GIMG_SPRITES_BONUS_RANDOM,
 	GIMG_SPRITES_BONUS_HEART,
-	GIMG_SPRITES_BONUS_X2,	
+	GIMG_SPRITES_BONUS_X2,
 	GIMG_SPRITES_BONUS_SLOWDOWN,
 };
 
@@ -40,4 +40,9 @@ extern TTF_Font* ScoresFont;
 //------------------------------------------------------
 extern SDL_Texture* img_missing_texture;
 extern std::vector<SDL_Texture*> Textures;
+//------------------------------------------------------
+// Аудио
+//------------------------------------------------------
+extern std::vector<Mix_Chunk*> Sounds;
+extern Mix_Music* GameMusic;
 

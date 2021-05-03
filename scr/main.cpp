@@ -37,9 +37,6 @@ std::string WordInput = "";
 const int GameHighscoresSize = 10;
 highscore GameHighscores[GameHighscoresSize];
 
-double SFXVolume = 0;
-double MusicVolume = 0;
-
 // Иницализация игры
 void GameInit() {
 	// Пересоздание лога
@@ -66,6 +63,8 @@ void GameInit() {
 		WriteInLog("[ERROR] TTF_Init error: %s", TTF_GetError());
 		return;
 	}
+	// Ициниализация SDL_mixer
+	InitAudio();
 	// Создаем окно программы
 	WindowPrimary = SDL_CreateWindow(WINDOW_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);//| SDL_WINDOW_BORDERLESS
 	// Опять же, проверка на возможные ошибки
@@ -175,7 +174,6 @@ void GameInit() {
 		}
 		SDL_RWclose(File);
 	}
-
 	// Создаем кнопочки
 	InitButtons();
 	// Слайдеры
@@ -190,6 +188,7 @@ inline void QuitGame() {
 	SDL_Quit();
 	exit(0);
 }
+
 inline void SetupGame(double& EnemySpawnDelay, DifficultyCode Difficulty, bool ArithmeticMode) {
 	GamePlayerHearts.clear();
 	if (Difficulty == DifficultyCode::EASY)
@@ -222,6 +221,7 @@ inline void SetupGame(double& EnemySpawnDelay, DifficultyCode Difficulty, bool A
 	}
 
 }
+
 void EnterWord(std::string& WordInput, bool ArithmeticMode, DifficultyCode Difficulty)
 {
 	for (int i = 0; i < GameEnemies.size(); i++)
@@ -314,6 +314,7 @@ void EnterWord(std::string& WordInput, bool ArithmeticMode, DifficultyCode Diffi
 	}
 	WordInput = "";
 }
+
 void GameSession(bool ArithmeticMode, DifficultyCode Difficulty)
 {
 	Uint32 TicksToNextFrame = SDL_GetTicks();
@@ -470,13 +471,15 @@ int main(int argc, char* argv[])
 	MainPlayer.MovementDir.x = 0;
 	MainPlayer.MovementDir.y = 0;
 	//
-	WriteInLog("[INFO] Starting the game...");
 	GameInit();
 	srand(time(0));
 	SDL_SetRenderDrawColor(RendererPrimary, 0, 0, 0, 255);
 	SDL_StartTextInput();
 	TickTimer = SDL_GetTicks();
 	SlowdownDecreaseTimer = SDL_GetTicks();
+
+	// Запускаем музяку
+	PlayMusic(GameMusic);
 	MainMenu();
 
 	//Выходим из приложения

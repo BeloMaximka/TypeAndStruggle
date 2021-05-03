@@ -13,7 +13,7 @@ void InitSliders(Sliders& GameSliders)
 	SliderToAdd.Heigth = 40;
 	SliderToAdd.Width = TRUE_RESOLUTION_X * 0.75;
 	SliderToAdd.Collision = UpdateCollision(SliderToAdd.Pos, SliderToAdd.Heigth, SliderToAdd.Width);
-	SliderToAdd.Value = SFXVolume;
+	SliderToAdd.Value = 0;
 	GameSliders.push_back(SliderToAdd);
 	// Music
 	SliderToAdd.Text = "Music Volume: ";
@@ -22,7 +22,7 @@ void InitSliders(Sliders& GameSliders)
 	SliderToAdd.Heigth = 40;
 	SliderToAdd.Width = TRUE_RESOLUTION_X * 0.75;
 	SliderToAdd.Collision = UpdateCollision(SliderToAdd.Pos, SliderToAdd.Heigth, SliderToAdd.Width);
-	SliderToAdd.Value = MusicVolume;
+	SliderToAdd.Value = 0;
 	GameSliders.push_back(SliderToAdd);
 }
 
