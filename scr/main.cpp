@@ -116,68 +116,13 @@ void GameInit() {
 	{
 		WriteInLog("[ERROR] Cannot open file \"classic.txt\"!");
 		return;
-	}
-	// Загружаем рекорды с бинарника     
-	File = SDL_RWFromFile("data.bin", "r");
-	if (File != nullptr)
-	{
-		unsigned int FileSize = SDL_RWsize(File);
-		if (FileSize < sizeof(highscore) * GameHighscoresSize)
-		{
-			WriteInLog("[ERROR] \"data.bin\" is corrupted!");
-			WriteInLog("[INFO] Creating new \"data.bin\"...");
-			SDL_RWclose(File);
-			File = SDL_RWFromFile("data.bin", "w");
-			highscore HighscoreToWrite;
-			for (int i = 0; i < 16; i++)
-			{
-				HighscoreToWrite.Name[i] = '_';
-			}
-			HighscoreToWrite.Name[15] = '\0';
-			HighscoreToWrite.Score = -1;
-			HighscoreToWrite.Difficulty = -1;
-			HighscoreToWrite.Mode = -1;
-			for (int j = 0; j < GameHighscoresSize; j++)
-			{
-				GameHighscores[j] = HighscoreToWrite;
-				SDL_RWwrite(File, &HighscoreToWrite, sizeof(highscore), 1);
-			}
-			SDL_RWclose(File);
-		}
-		for (int i = 0; i < GameHighscoresSize; i++)
-		{
-			SDL_RWread(File, &GameHighscores[i].Name, sizeof(char), 16);
-			SDL_RWread(File, &GameHighscores[i].Score, sizeof(int), 1);
-			SDL_RWread(File, &GameHighscores[i].Difficulty, sizeof(int), 1);
-			SDL_RWread(File, &GameHighscores[i].Mode, sizeof(int), 1);
-		}
-		SDL_RWclose(File);
-	}
-	else
-	{
-		WriteInLog("[ERROR] Cannot find file \"data.bin\"!");
-		WriteInLog("[INFO] Creating new \"data.bin\"...");
-		File = SDL_RWFromFile("data.bin", "w");
-		highscore HighscoreToWrite;
-		for (int i = 0; i < 16; i++)
-		{
-			HighscoreToWrite.Name[i] = '_';
-		}
-		HighscoreToWrite.Name[15] = '\0';
-		HighscoreToWrite.Score = -1;
-		HighscoreToWrite.Difficulty = -1;
-		HighscoreToWrite.Mode = -1;
-		for (int j = 0; j < GameHighscoresSize; j++)
-		{
-			GameHighscores[j] = HighscoreToWrite;
-			SDL_RWwrite(File, &HighscoreToWrite, sizeof(highscore), 1);
-		}
-		SDL_RWclose(File);
-	}
+	}	
 	// Создаем кнопочки
 	InitButtons();
 	// Слайдеры
 	InitSliders(GameSliders);
+	// Загружаем рекорды и настройки с бинарника
+	LoadSavedData(GameHighscores, GameSliders);
 	// Скрываем курсор
 	SDL_ShowCursor(0);
 }
@@ -189,7 +134,7 @@ inline void QuitGame() {
 	exit(0);
 }
 
-inline void SetupGame(double& EnemySpawnDelay, DifficultyCode Difficulty, bool ArithmeticMode) {
+inline void SetupGameSession(double& EnemySpawnDelay, DifficultyCode Difficulty, bool ArithmeticMode) {
 	GamePlayerHearts.clear();
 	if (Difficulty == DifficultyCode::EASY)
 	{
@@ -320,7 +265,7 @@ void GameSession(bool ArithmeticMode, DifficultyCode Difficulty)
 	Uint32 TicksToNextFrame = SDL_GetTicks();
 	std::string WordInput;
 	double EnemySpawnDelay = 200;
-	SetupGame(EnemySpawnDelay, Difficulty, ArithmeticMode);
+	SetupGameSession(EnemySpawnDelay, Difficulty, ArithmeticMode);
 	while (true)
 	{
 		// Чтобы игра слишком часто не обновлялась
@@ -358,7 +303,7 @@ void GameSession(bool ArithmeticMode, DifficultyCode Difficulty)
 			SDL_DestroyTexture(BlurredTexture);
 			if (DeadCode == DeadMenuCode::RETRY)
 			{
-				SetupGame(EnemySpawnDelay, Difficulty, ArithmeticMode);
+				SetupGameSession(EnemySpawnDelay, Difficulty, ArithmeticMode);
 				continue;
 			}
 			else if (DeadCode == DeadMenuCode::TO_MAIN_MENU)
@@ -420,12 +365,12 @@ void GameSession(bool ArithmeticMode, DifficultyCode Difficulty)
 				PauseMenuCode PauseCode = PauseMenu();
 				if (PauseCode == PauseMenuCode::RESTART)
 				{
-					SetupGame(EnemySpawnDelay, Difficulty, ArithmeticMode);
+					SetupGameSession(EnemySpawnDelay, Difficulty, ArithmeticMode);
 					continue;
 				}
 				else if (PauseCode == PauseMenuCode::TO_MAIN_MENU)
 				{
-					SetupGame(EnemySpawnDelay, Difficulty, ArithmeticMode);
+					SetupGameSession(EnemySpawnDelay, Difficulty, ArithmeticMode);
 					return;
 				}
 				else if (PauseCode == PauseMenuCode::TO_DESKTOP)

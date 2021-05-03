@@ -19,7 +19,69 @@ Mix_Music* GameMusic;
 TTF_Font* NormalFont;
 TTF_Font* ScoresFont;
 TTF_Font* MenuFont;
+void CreateNewDataFile()
+{
+	SDL_RWops* File = SDL_RWFromFile("data.bin", "w");
+	highscore HighscoreToWrite;
+	for (int i = 0; i < 16; i++)
+	{
+		HighscoreToWrite.Name[i] = '_';
+	}
+	HighscoreToWrite.Name[15] = '\0';
+	HighscoreToWrite.Score = -1;
+	HighscoreToWrite.Difficulty = -1;
+	HighscoreToWrite.Mode = -1;
+	for (int j = 0; j < GameHighscoresSize; j++)
+	{
+		GameHighscores[j] = HighscoreToWrite;
+		SDL_RWwrite(File, &HighscoreToWrite, sizeof(highscore), 1);
+	}
+	// Настройки звука в ноль
+	double Temp = 0;
+	SDL_RWwrite(File, &Temp, sizeof(double), 1);
+	SDL_RWwrite(File, &Temp, sizeof(double), 1);
+	SDL_RWclose(File);
+}
 
+void LoadSavedData(highscore GameHighscores[], Sliders& GameSliders)
+{
+	// Загружаем рекорды с бинарника     
+	SDL_RWops* File = SDL_RWFromFile("data.bin", "r");
+	if (File != nullptr)
+	{
+		unsigned int FileSize = SDL_RWsize(File);
+		if (FileSize < sizeof(highscore) * GameHighscoresSize + sizeof(double) * 2)
+		{
+			WriteInLog("[ERROR] \"data.bin\" is corrupted!");
+			WriteInLog("[INFO] Creating new \"data.bin\"...");
+			SDL_RWclose(File);
+			CreateNewDataFile();
+			SetSFXVolume(0);
+			SetMusicVolume(0);
+		}
+		else
+		{
+			for (int i = 0; i < GameHighscoresSize; i++)
+			{
+				SDL_RWread(File, &GameHighscores[i].Name, sizeof(char), 16);
+				SDL_RWread(File, &GameHighscores[i].Score, sizeof(int), 1);
+				SDL_RWread(File, &GameHighscores[i].Difficulty, sizeof(int), 1);
+				SDL_RWread(File, &GameHighscores[i].Mode, sizeof(int), 1);
+			}
+		}
+		SDL_RWread(File, &GameSliders[SLDR_SFX].Value, sizeof(double), 1);
+		SDL_RWread(File, &GameSliders[SLDR_MUSIC].Value, sizeof(double), 1);
+		SetSFXVolume(GameSliders[SLDR_SFX].Value);
+		SetMusicVolume(GameSliders[SLDR_MUSIC].Value);
+		SDL_RWclose(File);
+	}
+	else
+	{
+		WriteInLog("[ERROR] Cannot find file \"data.bin\"!");
+		WriteInLog("[INFO] Creating new \"data.bin\"...");
+		CreateNewDataFile();
+	}
+}
 Mix_Chunk* LoadSound(const char* FilePath)
 {
 	Mix_Chunk* Sound = Mix_LoadWAV(FilePath);

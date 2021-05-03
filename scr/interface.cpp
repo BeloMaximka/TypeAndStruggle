@@ -217,6 +217,18 @@ void OptionsMenu()
 			InputCode KeyCode = ReadKeysOptions(Event);
 			if (MouseCode == InputCode::OPTIONS_BACK || KeyCode == InputCode::OPTIONS_BACK)
 			{
+				SDL_RWops* File = SDL_RWFromFile("data.bin", "r+");
+				if (File == nullptr)
+				{
+					WriteInLog("[ERROR] Unable to save options to the file \"data.bin\"!");
+				}
+				else
+				{
+					SDL_RWseek(File, sizeof(highscore) * GameHighscoresSize, SEEK_SET);
+					SDL_RWwrite(File, &GameSliders[SLDR_SFX].Value, sizeof(double), 1);
+					SDL_RWwrite(File, &GameSliders[SLDR_MUSIC].Value, sizeof(double), 1);
+					SDL_RWclose(File);
+				}
 				return;
 			}
 		}

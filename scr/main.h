@@ -29,6 +29,13 @@ struct button
 };
 typedef std::vector<button> buttons;
 
+struct highscore {
+	char Name[16];
+	int Score;
+	int Difficulty;
+	int Mode;
+};
+
 // Собственные
 #include "interface.h"
 #include "entities.h"
@@ -79,13 +86,6 @@ enum BUTTON_NAMES {
 	BTN_DEAD_QUIT_MAINMENU,
 	BTN_SCORES_BACK,
 	BTN_OPTIONS_BACK
-};
-
-struct highscore {
-	char Name[16];
-	int Score;
-	int Difficulty;
-	int Mode;
 };
 
 // Глобальные переменные
