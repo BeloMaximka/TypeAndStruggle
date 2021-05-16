@@ -125,6 +125,7 @@ void GameInit() {
 	LoadSavedData(GameHighscores, GameSliders);
 	// Скрываем курсор
 	SDL_ShowCursor(0);
+	WriteInLog("[INFO] Initialization complete.");
 }
 // Выход из игры
 inline void QuitGame() {
