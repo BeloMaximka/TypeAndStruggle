@@ -35,6 +35,7 @@ InputCode ReadMouseOptions(const SDL_Event& Event, const buttons& Buttons, Slide
 		//Кнопка Back
 		if (IsColliding(MouseCollision, Buttons[BTN_OPTIONS_BACK].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::OPTIONS_BACK;
 		}
 		//Слайдер SFX Volume
@@ -105,26 +106,31 @@ InputCode ReadMousePause(const SDL_Event& Event, const buttons& Buttons)
 		//Кнопка Continue
 		if (IsColliding(MouseCollision, Buttons[BTN_INGAME_CONTINUE].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::PAUSE_CONTINUE;
 		}
 		//Кнопка Restart
 		else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_RESTART].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::PAUSE_RESTART;
 		}
 		//Кнопка Options
 		else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_OPTIONS].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::PAUSE_OPTIONS;
 		}
 		//Кнопка Quit to Desktop 
 		else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_QUIT_DESKTOP].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::PAUSE_TO_DESKTOP;
 		}
 		//Кнопка Quit to Main Menu 
 		else if (IsColliding(MouseCollision, Buttons[BTN_INGAME_QUIT_MAINMENU].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::PAUSE_TO_MAIN_MENU;
 		}
 	}
@@ -157,21 +163,25 @@ InputCode ReadMouseDifficuly(const SDL_Event& Event, const buttons& Buttons)
 		//Кнопка Continue
 		if (IsColliding(MouseCollision, Buttons[BTN_DIFFICULTY_BACK].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::DIFFICULTY_BACK;
 		}
 		//Кнопка Quit to Desktop 
 		else if (IsColliding(MouseCollision, Buttons[BTN_DIFFICULTY_EASY].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::DIFFICULTY_EASY;
 		}
 		//Кнопка Restart
 		else if (IsColliding(MouseCollision, Buttons[BTN_DIFFICULTY_NORMAL].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::DIFFICULTY_NORMAL;
 		}
 		//Кнопка Quit to Main Menu 
 		else if (IsColliding(MouseCollision, Buttons[BTN_DIFFICULTY_HARD].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::DIFFICULTY_HARD;
 		}
 	}
@@ -204,26 +214,31 @@ InputCode ReadMouseMain(const SDL_Event& Event, const buttons& Buttons)
 		//Кнопка Play Classic
 		if (IsColliding(MouseCollision, GameButtons[BTN_MENU_CLASSIC].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::MAIN_CLASSIC;
 		}
 		//Кнопка Arithmetic
 		else if (IsColliding(MouseCollision, GameButtons[BTN_MENU_ARITHMETIC].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::MAIN_ARITHMETIC;
 		}
 		//Кнопка Scores
 		else if (IsColliding(MouseCollision, GameButtons[BTN_MENU_SCORES].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::MAIN_SCORES;
 		}
 		//Кнопка Options
 		else if (IsColliding(MouseCollision, GameButtons[BTN_MENU_OPTIONS].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::MAIN_OPTIONS;
 		}
 		//Кнопка Quit to Desktop
 		else if (IsColliding(MouseCollision, GameButtons[BTN_MENU_QUIT_DESKTOP].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::MAIN_TO_DESKTOP;
 		}
 	}
@@ -256,6 +271,7 @@ InputCode ReadMouseScores(const SDL_Event& Event, const buttons& Buttons)
 		//Кнопка Back
 		if (IsColliding(MouseCollision, GameButtons[BTN_SCORES_BACK].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::SCORES_BACK;
 		}
 	}
@@ -333,11 +349,13 @@ InputCode ReadMouseDead(const SDL_Event& Event, const buttons& Buttons)
 		//Кнопка Retry
 		if (IsColliding(MouseCollision, GameButtons[BTN_DEAD_RETRY].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::DEAD_RETRY;
 		}
 		// Кнопка Return to Main Menu
 		else if (IsColliding(MouseCollision, GameButtons[BTN_DEAD_QUIT_MAINMENU].Collision))
 		{
+			PlaySound(Sounds[GSND_BOOP]);
 			return InputCode::DEAD_TO_MAIN_MENU;
 		}
 	}

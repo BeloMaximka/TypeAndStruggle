@@ -170,6 +170,7 @@ inline void SetupGameSession(double& EnemySpawnDelay, DifficultyCode Difficulty,
 
 void EnterWord(std::string& WordInput, bool ArithmeticMode, DifficultyCode Difficulty)
 {
+	bool Blooped = false;
 	for (int i = 0; i < GameEnemies.size(); i++)
 	{
 		if ((!ArithmeticMode && WordInput == GameEnemies[i].Word) || (ArithmeticMode && WordInput == GameEnemies[i].ArithmeticAnswer))
@@ -215,6 +216,10 @@ void EnterWord(std::string& WordInput, bool ArithmeticMode, DifficultyCode Diffi
 			}
 
 			// Удаляем противника
+			if (!Blooped)
+			{
+				PlaySound(Sounds[GSND_BLOOP]);
+			}
 			GameEnemies.erase(GameEnemies.begin() + i);
 
 			i--;
@@ -254,6 +259,10 @@ void EnterWord(std::string& WordInput, bool ArithmeticMode, DifficultyCode Diffi
 			CosmeticHeartToAdd.Pos.y = GameBonuses[i].Pos.y + GameBonuses[i].Size / 6;
 			GameCosmetics.push_back(CosmeticHeartToAdd);
 			// Удаляем бонус
+			if (!Blooped)
+			{
+				PlaySound(Sounds[GSND_BLOOP]);
+			}
 			GameBonuses.erase(GameBonuses.begin() + i);
 			i--;
 		}

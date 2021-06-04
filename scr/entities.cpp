@@ -27,6 +27,7 @@ void AddHearts(int Count) {
 		GamePlayerHearts[i] = SumVectors(HeartPos, Rotate);
 	}
 }
+
 void RemoveHearts(int Count) {
 	if (GamePlayerHearts.size() == 0)
 	{
@@ -55,6 +56,7 @@ void RemoveHearts(int Count) {
 		GamePlayerHearts[i] = SumVectors(HeartPos, Rotate);
 	}
 }
+
 void SpawnEnemy(DifficultyCode Difficulty, bool ArithmeticMode) {
 	if (rand() % 6 > -1)
 	{
@@ -274,6 +276,7 @@ void SpawnEnemy(DifficultyCode Difficulty, bool ArithmeticMode) {
 		GameEnemies.push_back(EnemyToAdd);
 	}
 }
+
 void SpawnBonus(DifficultyCode Difficulty, bool ArithmeticMode) {
 	EntityBonus BonusToAdd;
 	int BonusPosOffet = 100;
@@ -468,6 +471,7 @@ void SpawnBonus(DifficultyCode Difficulty, bool ArithmeticMode) {
 	BonusToAdd.Lifetime = 200;
 	GameBonuses.push_back(BonusToAdd);
 }
+
 void UpdateHearts(double RotateStep) {
 	if (GamePlayerHearts.size() > 0)
 	{
@@ -486,6 +490,7 @@ void UpdateHearts(double RotateStep) {
 		}
 	}
 }
+
 void UpdateEntities() {
 	// Враги
 	for (int i = 0; i < GameEnemies.size(); i++)
@@ -582,6 +587,7 @@ void UpdateEntities() {
 		}
 	}
 }
+
 void UpdateEnemyRotation(double SlowdownTimerMod, double& EnemyRotateStep)
 {
 	if (SlowdownTimerMod)

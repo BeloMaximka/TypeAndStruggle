@@ -23,6 +23,12 @@ enum GameImages
 	GIMG_SPRITES_BONUS_SLOWDOWN,
 };
 
+enum GameSounds
+{
+	GSND_BOOP,
+	GSND_BLOOP
+};
+
 void LoadSavedData(highscore GameHighscores[], Sliders& GameSliders);
 TTF_Font* LoadFont(const char* FilePath, int FontSize);
 SDL_Texture* GetTextTexture(const char* Text, TTF_Font* Font, SDL_Color Color);

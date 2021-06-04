@@ -177,4 +177,7 @@ void InitResources() {
 
 	WriteInLog("[INFO] Loading audio...");
 	GameMusic = LoadMusic("sounds/music.mp3");
+
+	Sounds.push_back(LoadSound("sounds/boop.wav"));
+	Sounds.push_back(LoadSound("sounds/bloop.wav"));
 }
