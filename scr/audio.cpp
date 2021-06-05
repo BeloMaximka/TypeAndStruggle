@@ -7,16 +7,17 @@ void InitAudio()
 		WriteInLog("[ERROR] Mix_Init error: %s", Mix_GetError());
 		return;
 	}
-	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 1, 4096) == -1) {
+	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 1, 256) == -1) {
 		WriteInLog("[ERROR] Mix_OpenAudio error: %s", Mix_GetError());
 		return;
 	}
+	Mix_AllocateChannels(CHANNEL_SHIFT + GSND_LAST + 1);
 }
 
 // ≈сли AdditionalTimes -1, то звук будет проигрыватьс€ бесконечно
-void PlaySound(Mix_Chunk* Sound, int AdditionalTimes)
+void PlaySound(int SoundID, int AdditionalTimes)
 {
-	if (Mix_PlayChannel(-1, Sound, AdditionalTimes) == -1) {
+	if (Mix_PlayChannel(CHANNEL_SHIFT + SoundID, Sounds[SoundID], AdditionalTimes) == -1) {
 		WriteInLog("[ERROR] Mix_PlayChannel error: %s", Mix_GetError());
 	}
 }

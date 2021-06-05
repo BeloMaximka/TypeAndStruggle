@@ -379,7 +379,7 @@ void DrawGameSessionFrame(const std::string& WordInput) {
 	{
 		if (TimerCosmeticHeartDecrease > 5)
 		{
-			GameCosmetics[i].Size -= 3;
+			GameCosmetics[i].Size -= 3 * ((101-SlowdownTimerMod)/100.0);
 			if (GameCosmetics[i].Size < 1)
 			{
 				GameCosmetics.erase(GameCosmetics.begin() + i);

@@ -26,7 +26,11 @@ enum GameImages
 enum GameSounds
 {
 	GSND_BOOP,
-	GSND_BLOOP
+	GSND_BLOOP,
+	GSND_CLICK,
+	GSND_CLICK2,
+	GSND_LAST
+
 };
 
 void LoadSavedData(highscore GameHighscores[], Sliders& GameSliders);

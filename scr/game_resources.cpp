@@ -176,8 +176,10 @@ void InitResources() {
 	ScoresFont = LoadFont(FONT_FILEPATH, SCORESFONT_SIZE);
 
 	WriteInLog("[INFO] Loading audio...");
-	GameMusic = LoadMusic("sounds/music.mp3");
+	GameMusic = LoadMusic("sounds/music.wav");
 
 	Sounds.push_back(LoadSound("sounds/boop.wav"));
 	Sounds.push_back(LoadSound("sounds/bloop.wav"));
+	Sounds.push_back(LoadSound("sounds/click.wav"));
+	Sounds.push_back(LoadSound("sounds/click2.wav"));
 }

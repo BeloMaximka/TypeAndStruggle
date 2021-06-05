@@ -218,7 +218,7 @@ void EnterWord(std::string& WordInput, bool ArithmeticMode, DifficultyCode Diffi
 			// Удаляем противника
 			if (!Blooped)
 			{
-				PlaySound(Sounds[GSND_BLOOP]);
+				PlaySound(GSND_BLOOP);
 			}
 			GameEnemies.erase(GameEnemies.begin() + i);
 
@@ -261,7 +261,7 @@ void EnterWord(std::string& WordInput, bool ArithmeticMode, DifficultyCode Diffi
 			// Удаляем бонус
 			if (!Blooped)
 			{
-				PlaySound(Sounds[GSND_BLOOP]);
+				PlaySound(GSND_BLOOP);
 			}
 			GameBonuses.erase(GameBonuses.begin() + i);
 			i--;
@@ -373,6 +373,8 @@ void GameSession(bool ArithmeticMode, DifficultyCode Difficulty)
 			else if (KeyCode == InputCode::GAMESESSION_PAUSE)
 			{
 				PauseMenuCode PauseCode = PauseMenu();
+				// Обновляем разницу между тиками, чтобы игнорировать время нахождения в паузе
+				TickDifference = 0;
 				if (PauseCode == PauseMenuCode::RESTART)
 				{
 					SetupGameSession(EnemySpawnDelay, Difficulty, ArithmeticMode);
