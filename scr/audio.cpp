@@ -2,7 +2,7 @@
 
 void InitAudio()
 {
-	
+
 	if (Mix_Init(MIX_INIT_MP3) != MIX_INIT_MP3) {
 		WriteInLog("[ERROR] Mix_Init error: %s", Mix_GetError());
 		return;

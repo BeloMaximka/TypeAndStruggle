@@ -97,7 +97,7 @@ void CreateNewDataFile()
 {
 	SDL_RWops* File = SDL_RWFromFile("data.bin", "w");
 	highscore HighscoreToWrite{};
-	for (int i = 0; i < HIGHSCORE_NAME_SIZE/2; i++)
+	for (int i = 0; i < HIGHSCORE_NAME_SIZE / 2; i++)
 	{
 		HighscoreToWrite.Name[i] = '_';
 	}

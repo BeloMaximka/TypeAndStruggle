@@ -26,7 +26,7 @@ struct button
 	int TextID;
 	int Heigth;
 	int Width;
-	int ID;	
+	int ID;
 };
 typedef std::vector<button> buttons;
 
@@ -66,7 +66,7 @@ enum DIFFICULTIES {
 	DIFFICULTY_TEST,
 	DIFFICULTY_EASY,
 	DIFFICULTY_NORMAL,
-	DIFFICULTY_HARD,	
+	DIFFICULTY_HARD,
 };
 enum BUTTON_NAMES {
 	BTN_INGAME_CONTINUE,

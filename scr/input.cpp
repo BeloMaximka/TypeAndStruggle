@@ -419,13 +419,13 @@ InputCode ReadGameSessionKeys(SDL_Event& Event, std::string& WordInput) {
 			{
 				WordInput = WordInput.substr(0, WordInput.length() - 1);
 			}
-	}
+		}
 		if (Event.key.keysym.scancode == SDL_SCANCODE_RETURN)
 		{
 			PlaySound(GSND_CLICK);
 			return InputCode::GAMESESSION_ENTER;
 		}
-}
+	}
 #ifdef DEBUG_MODE
 	if (Event.key.keysym.scancode == SDL_SCANCODE_RCTRL)
 	{

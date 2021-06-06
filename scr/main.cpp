@@ -288,7 +288,7 @@ void GameSession(bool ArithmeticMode, DifficultyCode Difficulty)
 			SDL_RenderReadPixels(RendererPrimary, NULL, SDL_PIXELFORMAT_ARGB8888, SourceSurface->pixels, SourceSurface->pitch);
 
 			int SmallerSize = 300;
-			SDL_Surface* SmallerSurface = SDL_CreateRGBSurfaceWithFormat(0, SmallerSize, SmallerSize, 32, SDL_PIXELFORMAT_ARGB8888);			
+			SDL_Surface* SmallerSurface = SDL_CreateRGBSurfaceWithFormat(0, SmallerSize, SmallerSize, 32, SDL_PIXELFORMAT_ARGB8888);
 			SDL_Rect SmallerImageSize{ 0,0,SmallerSize,SmallerSize };
 			SDL_BlitScaled(SourceSurface, NULL, SmallerSurface, &SmallerImageSize);
 

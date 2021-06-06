@@ -4,7 +4,7 @@
 
 struct collisionbox {
 	point TopLeft;
-	point BottomRight;	
+	point BottomRight;
 };
 
 bool IsColliding(collisionbox First, collisionbox Second);

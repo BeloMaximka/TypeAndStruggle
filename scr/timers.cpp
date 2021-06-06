@@ -16,5 +16,5 @@ void UpdateTimers() {
 	TimerHeartDamaged++;
 	TimerCosmeticHeartDecrease++;
 	TimerSpawnRateIncrease++;
-	TimerBonusUpdate++;	
+	TimerBonusUpdate++;
 }

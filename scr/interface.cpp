@@ -1,4 +1,4 @@
-﻿#include "main.h"
+#include "main.h"
 
 Sliders GameSliders;
 
@@ -193,7 +193,7 @@ void OptionsMenu(bool FromPause = false)
 					SDL_RWseek(File, sizeof(highscore) * GameHighscoresSize, SEEK_SET);
 					SDL_RWwrite(File, &GameSliders[SLDR_SFX].Value, sizeof(double), 1);
 					SDL_RWwrite(File, &GameSliders[SLDR_MUSIC].Value, sizeof(double), 1);
-					SDL_RWseek(File, sizeof(int) * 2 , SEEK_CUR);
+					SDL_RWseek(File, sizeof(int) * 2, SEEK_CUR);
 					SDL_RWwrite(File, &Lang, sizeof(int), 1);
 					SDL_RWclose(File);
 				}

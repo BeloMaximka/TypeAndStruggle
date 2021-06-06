@@ -13,7 +13,7 @@ struct EntityEnemy {
 	double Width;
 	std::string Word;
 	std::string ArithmeticAnswer;
-	int TextureIndex = GIMG_MISSING;	
+	int TextureIndex = GIMG_MISSING;
 };
 struct EntityPlayer {
 	collisionbox Collision;
@@ -21,10 +21,10 @@ struct EntityPlayer {
 	point MovementDir;
 	double Rotation;
 	double Speed;
-	double Width;	
+	double Width;
 	double Height;
 	int Score = 0;
-	bool IsDamaged = false;	
+	bool IsDamaged = false;
 };
 struct EntityCosmeticParticle {
 	point Pos;
@@ -32,14 +32,14 @@ struct EntityCosmeticParticle {
 	int Type;
 };
 struct EntityBonus {
-	point Pos;	
+	point Pos;
 	double Rotation;
 	std::string Word;
 	std::string ArithmeticAnswer;
 	int ID;
 	int Size;
 	int FullSize;
-	int Lifetime;	
+	int Lifetime;
 	int TextureIndex = GIMG_MISSING;
 	bool RotationClockwise;
 };
@@ -51,7 +51,7 @@ enum BonusesIDs
 {
 	BNS_RANDOM,
 	BNS_HEART,
-	BNS_X2,	
+	BNS_X2,
 	BNS_SLOWDOWN,
 	BNS_LAST,
 };
