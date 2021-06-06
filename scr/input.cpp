@@ -9,6 +9,7 @@ InputCode ReadKeysOptions(const SDL_Event& Event)
 		switch (Event.key.keysym.scancode)
 		{
 		case SDL_SCANCODE_ESCAPE:
+			PlaySound(GSND_WHOOSH);
 			return InputCode::OPTIONS_BACK;
 		default:
 			return InputCode::NOTHING;
@@ -41,11 +42,13 @@ InputCode ReadMouseOptions(const SDL_Event& Event, const buttons& Buttons, Slide
 		//Слайдер SFX Volume
 		if (IsColliding(MouseCollision, GameSliders[SLDR_SFX].Collision))
 		{
+			PlaySound(GSND_BOOP);
 			SFXVolumePressed = true;
 		}
 		//Слайдер Music Volume
 		if (IsColliding(MouseCollision, GameSliders[SLDR_MUSIC].Collision))
 		{
+			PlaySound(GSND_BOOP);
 			MusicVolumePressed = true;
 		}
 		//Кнопка EN
@@ -99,6 +102,7 @@ InputCode ReadKeysPause(const SDL_Event& Event)
 		switch (Event.key.keysym.scancode)
 		{
 		case SDL_SCANCODE_ESCAPE:
+			PlaySound(GSND_WHOOSH);
 			return InputCode::PAUSE_CONTINUE;
 		default:
 			return InputCode::NOTHING;
@@ -156,6 +160,7 @@ InputCode ReadKeysDifficulty(const SDL_Event& Event)
 		switch (Event.key.keysym.scancode)
 		{
 		case SDL_SCANCODE_ESCAPE:
+			PlaySound(GSND_WHOOSH);
 			return InputCode::DIFFICULTY_BACK;
 		default:
 			return InputCode::NOTHING;
@@ -264,6 +269,7 @@ InputCode ReadKeysScores(const SDL_Event& Event)
 		switch (Event.key.keysym.scancode)
 		{
 		case SDL_SCANCODE_ESCAPE:
+			PlaySound(GSND_WHOOSH);
 			return InputCode::SCORES_BACK;
 		default:
 			return InputCode::NOTHING;
@@ -290,25 +296,29 @@ InputCode ReadMouseScores(const SDL_Event& Event, const buttons& Buttons)
 	return InputCode::NOTHING;
 }
 
-InputCode ReadKeysScoreEnter(const SDL_Event& Event, std::string& WordInput)
+InputCode ReadKeysScoreEnter(const SDL_Event& Event, std::string& WordInput, int& NameSize)
 {
 	if (Event.type == SDL_KEYDOWN)
 	{
 		switch (Event.key.keysym.scancode)
 		{
 		case SDL_SCANCODE_ESCAPE:
+			PlaySound(GSND_WHOOSH);
 			return InputCode::SCORESENTER_SKIP;
 		case SDL_SCANCODE_BACKSPACE:
 			if (WordInput.length() > 0)
 			{
+				PlaySound(GSND_CLICK2);
 				// если символ больше байта, удаляем сразу два
 				if (WordInput[WordInput.length() - 1] < 0)
 				{
+					NameSize--;
 					WordInput = WordInput.substr(0, WordInput.length() - 2);
 				}
 				// если символ однобайтовый, удаляем один символ
 				else
 				{
+					NameSize--;
 					WordInput = WordInput.substr(0, WordInput.length() - 1);
 				}
 			}
@@ -316,10 +326,12 @@ InputCode ReadKeysScoreEnter(const SDL_Event& Event, std::string& WordInput)
 		case SDL_SCANCODE_RETURN:
 			if (WordInput == "")
 			{
+				PlaySound(GSND_WHOOSH);
 				return InputCode::SCORESENTER_SKIP;
 			}
 			else
 			{
+				PlaySound(GSND_CLICK);
 				return InputCode::SCORESENTER_ENTER;
 			}
 			break;
@@ -328,9 +340,18 @@ InputCode ReadKeysScoreEnter(const SDL_Event& Event, std::string& WordInput)
 		}
 	}
 	// Ввод текста
-	if (Event.type == SDL_TEXTINPUT)
+	if (Event.type == SDL_TEXTINPUT && NameSize < 10)
 	{
+		PlaySound(GSND_CLICK);
 		WordInput += Event.text.text;
+		if (Event.text.text[0] < 0)
+		{
+			NameSize++;
+		}
+		else
+		{
+			NameSize++;
+		}
 	}
 	return InputCode::NOTHING;
 }
@@ -342,6 +363,7 @@ InputCode ReadKeysDead(const SDL_Event& Event)
 		switch (Event.key.keysym.scancode)
 		{
 		case SDL_SCANCODE_ESCAPE:
+			PlaySound(GSND_WHOOSH);
 			return InputCode::DEAD_TO_MAIN_MENU;
 		default:
 			return InputCode::NOTHING;
@@ -381,6 +403,7 @@ InputCode ReadGameSessionKeys(SDL_Event& Event, std::string& WordInput) {
 		// ESC
 		if (Event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
 		{
+			PlaySound(GSND_WHOOSH);
 			return InputCode::GAMESESSION_PAUSE;
 		}
 		if (Event.key.keysym.scancode == SDL_SCANCODE_BACKSPACE && WordInput.length() > 0)
@@ -399,6 +422,7 @@ InputCode ReadGameSessionKeys(SDL_Event& Event, std::string& WordInput) {
 	}
 		if (Event.key.keysym.scancode == SDL_SCANCODE_RETURN)
 		{
+			PlaySound(GSND_CLICK);
 			return InputCode::GAMESESSION_ENTER;
 		}
 }
@@ -413,7 +437,6 @@ InputCode ReadGameSessionKeys(SDL_Event& Event, std::string& WordInput) {
 	{
 		PlaySound(GSND_CLICK);
 		WordInput += Event.text.text;
-		//SlowdownTimerMod = 100;
 	}
 	return InputCode::NOTHING;
 }

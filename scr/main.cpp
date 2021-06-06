@@ -110,6 +110,7 @@ void GameInit() {
 }
 // Выход из игры
 inline void QuitGame() {
+	SDL_Delay(50);
 	SDL_DestroyRenderer(RendererPrimary);
 	SDL_DestroyWindow(WindowPrimary);
 	SDL_Quit();

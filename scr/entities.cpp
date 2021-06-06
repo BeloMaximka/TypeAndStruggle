@@ -508,7 +508,14 @@ void UpdateEntities() {
 		GameEnemies[i].Collision = UpdateCollision(GameEnemies[i].Pos, GameEnemies[i].Height, GameEnemies[i].Width);
 		if (IsColliding(GameEnemies[i].Collision, MainPlayer.Collision))
 		{
-			//GameEnemies[i].Pos = { 0,0 };			
+			if (GamePlayerHearts.size() == 0)
+			{
+				PlaySound(GSND_DEATH);
+			}
+			else
+			{
+				PlaySound(GSND_HURT);
+			}
 			GameEnemies.erase(GameEnemies.begin() + i);
 			RemoveHearts(1);
 			MainPlayer.IsDamaged = true;

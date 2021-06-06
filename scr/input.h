@@ -39,7 +39,7 @@ InputCode ReadMouseDifficuly(const SDL_Event& Event, const buttons& Buttons);
 InputCode ReadMouseMain(const SDL_Event& Event, const buttons& Buttons);
 InputCode ReadKeysScores(const SDL_Event& Event);
 InputCode ReadMouseScores(const SDL_Event& Event, const buttons& Buttons);
-InputCode ReadKeysScoreEnter(const SDL_Event& Event, std::string& WordInput);
+InputCode ReadKeysScoreEnter(const SDL_Event& Event, std::string& WordInput, int& NameSize);
 InputCode ReadKeysDead(const SDL_Event& Event);
 InputCode ReadMouseDead(const SDL_Event& Event, const buttons& Buttons);
 InputCode ReadGameSessionKeys(SDL_Event& Event, std::string& WordInput);

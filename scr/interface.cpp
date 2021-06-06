@@ -375,6 +375,7 @@ void HighscoreEnterMenu(DifficultyCode Difficulty, bool ArithmeticMode)
 {
 	Uint32 TicksToNextFrame = SDL_GetTicks();
 	Uint32 TickCurrent = SDL_GetTicks();
+	int NameSize = 0;
 
 	std::string WordInput;
 	while (true)
@@ -406,7 +407,7 @@ void HighscoreEnterMenu(DifficultyCode Difficulty, bool ArithmeticMode)
 				QuitGame();
 			}
 
-			InputCode KeyCode = ReadKeysScoreEnter(Event, WordInput);
+			InputCode KeyCode = ReadKeysScoreEnter(Event, WordInput, NameSize);
 			if (KeyCode == InputCode::SCORESENTER_SKIP)
 			{
 				return;
@@ -423,11 +424,11 @@ void HighscoreEnterMenu(DifficultyCode Difficulty, bool ArithmeticMode)
 						{
 							GameHighscores[j] = GameHighscores[j - 1];
 						}
-						for (int j = 0; j < 16; j++)
+						for (int j = 0; j < 21; j++)
 						{
 							GameHighscores[i].Name[j] = '\0';
 						}
-						for (int j = 0; j < 15 && j < WordInput.length(); j++)
+						for (int j = 0; j < 20 && j < WordInput.length(); j++)
 						{
 							GameHighscores[i].Name[j] = WordInput[j];
 						}
@@ -440,10 +441,10 @@ void HighscoreEnterMenu(DifficultyCode Difficulty, bool ArithmeticMode)
 						break;
 					}
 				}
-				SDL_RWops* File = SDL_RWFromFile("data.bin", "w");
+				SDL_RWops* File = SDL_RWFromFile("data.bin", "w+");
 				for (int i = 0; i < GameHighscoresSize; i++)
 				{
-					SDL_RWwrite(File, &GameHighscores[i].Name, sizeof(char), 16);
+					SDL_RWwrite(File, &GameHighscores[i].Name, sizeof(char), 21);
 					SDL_RWwrite(File, &GameHighscores[i].Score, sizeof(int), 1);
 					SDL_RWwrite(File, &GameHighscores[i].Difficulty, sizeof(int), 1);
 					SDL_RWwrite(File, &GameHighscores[i].Mode, sizeof(int), 1);

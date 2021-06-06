@@ -30,7 +30,7 @@ struct button
 typedef std::vector<button> buttons;
 
 struct highscore {
-	char Name[16];
+	char Name[21];
 	int Score;
 	int Difficulty;
 	int Mode;

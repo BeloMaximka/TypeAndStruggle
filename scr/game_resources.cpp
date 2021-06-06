@@ -263,4 +263,7 @@ void InitResources() {
 	Sounds.push_back(LoadSound("sounds/bloop.wav"));
 	Sounds.push_back(LoadSound("sounds/click.wav"));
 	Sounds.push_back(LoadSound("sounds/click2.wav"));
+	Sounds.push_back(LoadSound("sounds/whoosh.wav"));
+	Sounds.push_back(LoadSound("sounds/hurt.wav"));
+	Sounds.push_back(LoadSound("sounds/death.wav"));
 }
