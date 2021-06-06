@@ -17,6 +17,7 @@
 #include "point.h"
 #include "collision.h"
 
+#define HIGHSCORE_NAME_SIZE 21
 
 struct button
 {
@@ -30,7 +31,7 @@ struct button
 typedef std::vector<button> buttons;
 
 struct highscore {
-	char Name[21];
+	char Name[HIGHSCORE_NAME_SIZE];
 	int Score;
 	int Difficulty;
 	int Mode;

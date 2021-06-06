@@ -71,7 +71,7 @@ void GameInit() {
 	// Слайдеры
 	InitSliders(GameSliders);
 	// Загружаем рекорды и настройки с бинарника
-	LoadSavedData(GameHighscores, GameSliders, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y);
+	LoadSavedData(GameHighscores, GameSliders, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y, Lang);
 
 	// Создаем окно программы
 	WindowPrimary = SDL_CreateWindow(WINDOW_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);//| SDL_WINDOW_BORDERLESS
@@ -99,7 +99,14 @@ void GameInit() {
 
 	InitResources();
 
-	LoadText("en");
+	if (Lang == LANG_EN)
+	{
+		LoadText("en");
+	}
+	else
+	{
+		LoadText("ru");
+	}
 	// Создаем кнопочки
 	InitButtons(GameButtons);
 

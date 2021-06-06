@@ -71,7 +71,7 @@ enum Text
 };
 
 void LoadText(const char* lang);
-void LoadSavedData(highscore GameHighscores[], Sliders& GameSliders, int& WinResX, int& WinResY);
+void LoadSavedData(highscore GameHighscores[], Sliders& GameSliders, int& WinResX, int& WinResY, int& Lang);
 TTF_Font* LoadFont(const char* FilePath, int FontSize);
 SDL_Texture* GetTextTexture(const char* Text, TTF_Font* Font, SDL_Color Color);
 SDL_Texture* CreateMissingTexture();

@@ -21,7 +21,7 @@ TTF_Font* NormalFont;
 TTF_Font* ScoresFont;
 TTF_Font* MenuFont;
 
-const int CorrectFileSize = sizeof(highscore) * GameHighscoresSize + sizeof(double) * 2 + sizeof(int) * 2;
+const int CorrectFileSize = sizeof(highscore) * GameHighscoresSize + sizeof(double) * 2 + sizeof(int) * 3;
 
 void LoadText(const char* lang)
 {
@@ -96,12 +96,11 @@ void LoadText(const char* lang)
 void CreateNewDataFile()
 {
 	SDL_RWops* File = SDL_RWFromFile("data.bin", "w");
-	highscore HighscoreToWrite;
-	for (int i = 0; i < 16; i++)
+	highscore HighscoreToWrite{};
+	for (int i = 0; i < HIGHSCORE_NAME_SIZE/2; i++)
 	{
 		HighscoreToWrite.Name[i] = '_';
 	}
-	HighscoreToWrite.Name[15] = '\0';
 	HighscoreToWrite.Score = -1;
 	HighscoreToWrite.Difficulty = -1;
 	HighscoreToWrite.Mode = -1;
@@ -118,12 +117,14 @@ void CreateNewDataFile()
 	int Res = 720; // разрешение
 	SDL_RWwrite(File, &Res, sizeof(int), 1);
 	SDL_RWwrite(File, &Res, sizeof(int), 1);
+	Res = LANG_EN; // Язык
+	SDL_RWwrite(File, &Res, sizeof(int), 1);
 	SDL_RWclose(File);
 	SetSFXVolume(0);
 	SetMusicVolume(0);
 }
 
-void LoadSavedData(highscore GameHighscores[], Sliders& GameSliders, int& WinResX, int& WinResY)
+void LoadSavedData(highscore GameHighscores[], Sliders& GameSliders, int& WinResX, int& WinResY, int& Lang)
 {
 	// Загружаем рекорды с бинарника     
 	SDL_RWops* File = SDL_RWFromFile("data.bin", "r");
@@ -141,10 +142,7 @@ void LoadSavedData(highscore GameHighscores[], Sliders& GameSliders, int& WinRes
 		{
 			for (int i = 0; i < GameHighscoresSize; i++)
 			{
-				SDL_RWread(File, &GameHighscores[i].Name, sizeof(char), 16);
-				SDL_RWread(File, &GameHighscores[i].Score, sizeof(int), 1);
-				SDL_RWread(File, &GameHighscores[i].Difficulty, sizeof(int), 1);
-				SDL_RWread(File, &GameHighscores[i].Mode, sizeof(int), 1);
+				SDL_RWread(File, &GameHighscores[i], sizeof(highscore), 1);
 			}
 		}
 		SDL_RWread(File, &GameSliders[SLDR_SFX].Value, sizeof(double), 1);
@@ -153,6 +151,7 @@ void LoadSavedData(highscore GameHighscores[], Sliders& GameSliders, int& WinRes
 		SetMusicVolume(GameSliders[SLDR_MUSIC].Value);
 		SDL_RWread(File, &WinResX, sizeof(int), 1);
 		SDL_RWread(File, &WinResY, sizeof(int), 1);
+		SDL_RWread(File, &Lang, sizeof(int), 1);
 		SDL_RWclose(File);
 	}
 	else

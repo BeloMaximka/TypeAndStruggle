@@ -193,6 +193,8 @@ void OptionsMenu(bool FromPause = false)
 					SDL_RWseek(File, sizeof(highscore) * GameHighscoresSize, SEEK_SET);
 					SDL_RWwrite(File, &GameSliders[SLDR_SFX].Value, sizeof(double), 1);
 					SDL_RWwrite(File, &GameSliders[SLDR_MUSIC].Value, sizeof(double), 1);
+					SDL_RWseek(File, sizeof(int) * 2 , SEEK_CUR);
+					SDL_RWwrite(File, &Lang, sizeof(int), 1);
 					SDL_RWclose(File);
 				}
 				return;
@@ -424,11 +426,11 @@ void HighscoreEnterMenu(DifficultyCode Difficulty, bool ArithmeticMode)
 						{
 							GameHighscores[j] = GameHighscores[j - 1];
 						}
-						for (int j = 0; j < 21; j++)
+						for (int j = 0; j < HIGHSCORE_NAME_SIZE; j++)
 						{
 							GameHighscores[i].Name[j] = '\0';
 						}
-						for (int j = 0; j < 20 && j < WordInput.length(); j++)
+						for (int j = 0; j < HIGHSCORE_NAME_SIZE - 1 && j < WordInput.length(); j++)
 						{
 							GameHighscores[i].Name[j] = WordInput[j];
 						}
@@ -441,13 +443,10 @@ void HighscoreEnterMenu(DifficultyCode Difficulty, bool ArithmeticMode)
 						break;
 					}
 				}
-				SDL_RWops* File = SDL_RWFromFile("data.bin", "w+");
+				SDL_RWops* File = SDL_RWFromFile("data.bin", "r+");
 				for (int i = 0; i < GameHighscoresSize; i++)
 				{
-					SDL_RWwrite(File, &GameHighscores[i].Name, sizeof(char), 21);
-					SDL_RWwrite(File, &GameHighscores[i].Score, sizeof(int), 1);
-					SDL_RWwrite(File, &GameHighscores[i].Difficulty, sizeof(int), 1);
-					SDL_RWwrite(File, &GameHighscores[i].Mode, sizeof(int), 1);
+					SDL_RWwrite(File, &GameHighscores[i], sizeof(highscore), 1);
 				}
 				SDL_RWclose(File);
 				return;
