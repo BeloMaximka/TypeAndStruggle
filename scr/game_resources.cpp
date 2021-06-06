@@ -12,6 +12,7 @@ SDL_Texture* img_missing_texture;
 Mix_Chunk* snd_missing_sound{};
 Mix_Music* snd_missing_music{};
 
+std::string Text[TXT_LAST-1];
 std::vector<SDL_Texture*> Textures;
 std::vector<Mix_Chunk*> Sounds;
 Mix_Music* GameMusic;
@@ -21,6 +22,39 @@ TTF_Font* ScoresFont;
 TTF_Font* MenuFont;
 
 const int CorrectFileSize = sizeof(highscore) * GameHighscoresSize + sizeof(double) * 2 + sizeof(int) * 2;
+
+void LoadText(const char* lang)
+{
+	int BufferSize = strlen(lang) + 10;
+	char* Buffer = new char[BufferSize];
+	sprintf_s(Buffer, BufferSize, "lang\\%s.txt", lang);
+	SDL_RWops* File = SDL_RWFromFile(Buffer, "r");
+	if (!File) {
+		WriteInLog("[ERROR] Unable to read %s.txt by path \"lang\": %s", lang, SDL_GetError());
+		return;
+	}
+	delete[] Buffer;
+	char CurChar;
+	for (int i = 1; i < TXT_LAST-1; i++)
+	{
+		while (SDL_RWread(File, &CurChar, sizeof(char), 1))
+		{
+			if (CurChar == '\n')
+			{
+				continue;
+			}
+			else if (CurChar != '\r')
+			{
+				Text[i] += CurChar;
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
+	SDL_RWclose(File);
+}
 void CreateNewDataFile()
 {
 	SDL_RWops* File = SDL_RWFromFile("data.bin", "w");

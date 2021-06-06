@@ -128,6 +128,8 @@ void GameInit() {
 	// Скрываем курсор
 	SDL_ShowCursor(0);
 	WriteInLog("[INFO] Initialization complete.");
+
+	LoadText("en");
 }
 // Выход из игры
 inline void QuitGame() {

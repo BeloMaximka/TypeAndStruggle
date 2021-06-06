@@ -32,6 +32,28 @@ enum GameSounds
 	GSND_LAST
 };
 
+enum Text
+{
+	TXT_NULL,
+	TXT_OPTIONS,
+	TXT_PAUSED,
+	TXT_CHOOSEDIFF,
+	TXT_MAINMENU,
+	TXT_HIGHSCORES,
+	TXT_HIGHSCORES_CAP,
+	TXT_CLASSIC,
+	TXT_ARITHMETIC,
+	TXT_EASY,
+	TXT_NORMAL,
+	TXT_HARD,
+	TXT_TOPTEN,
+	TXT_ENTERNAME,
+	TXT_YOURSCORE,
+	TXT_MAYBENEXTTIME,
+	TXT_LAST,
+};
+
+void LoadText(const char* lang);
 void LoadSavedData(highscore GameHighscores[], Sliders& GameSliders, int& WinResX, int& WinResY);
 TTF_Font* LoadFont(const char* FilePath, int FontSize);
 SDL_Texture* GetTextTexture(const char* Text, TTF_Font* Font, SDL_Color Color);
@@ -56,3 +78,4 @@ extern std::vector<SDL_Texture*> Textures;
 extern std::vector<Mix_Chunk*> Sounds;
 extern Mix_Music* GameMusic;
 
+extern std::string Text[TXT_LAST - 1];
