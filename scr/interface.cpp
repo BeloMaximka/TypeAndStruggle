@@ -131,11 +131,21 @@ void InitButtons(buttons& GameButtons)
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 2 + (double)TRUE_RESOLUTION_Y / 16 + (double)TRUE_RESOLUTION_Y / 4 };
 	ButtonToAdd.TextID = TXT_BACK;
 	GameButtons.push_back(ButtonToAdd);
+	// Options Back
+	ButtonToAdd.ID = BTN_EN;
+	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2 + TRUE_RESOLUTION_X / 8.0, (double)TRUE_RESOLUTION_Y / 2 + (double)TRUE_RESOLUTION_Y / 8 };
+	ButtonToAdd.TextID = TXT_EN;
+	GameButtons.push_back(ButtonToAdd);
+	// Options Back
+	ButtonToAdd.ID = BTN_RU;
+	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2 - TRUE_RESOLUTION_X / 8.0, (double)TRUE_RESOLUTION_Y / 2 + (double)TRUE_RESOLUTION_Y / 8 };
+	ButtonToAdd.TextID = TXT_RU;
+	GameButtons.push_back(ButtonToAdd);
 
 	SetButtonsSize(GameButtons, MenuFont);
 }
 
-void OptionsMenu()
+void OptionsMenu(bool FromPause = false)
 {
 	Uint32 TicksToNextFrame = SDL_GetTicks();
 	Uint32 TickCurrent = SDL_GetTicks();
@@ -150,7 +160,7 @@ void OptionsMenu()
 		if (TickCurrent - TicksToNextFrame > (1.0 / FramesPerSecondTarget) * 1000)
 		{
 			TicksToNextFrame = TickCurrent;
-			DrawOptionsFrame();
+			DrawOptionsFrame(FromPause);
 			SDL_RenderPresent(RendererPrimary);
 			SDL_RenderClear(RendererPrimary);
 		}
@@ -237,7 +247,7 @@ PauseMenuCode PauseMenu()
 			}
 			else if (MouseCode == InputCode::PAUSE_OPTIONS)
 			{
-				OptionsMenu();
+				OptionsMenu(true);
 			}
 			else if (MouseCode == InputCode::PAUSE_TO_DESKTOP)
 			{

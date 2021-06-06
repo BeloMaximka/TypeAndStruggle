@@ -62,6 +62,8 @@ enum Text
 	TXT_BACK,
 	TXT_RETRY,
 	TXT_BACKMAINMENU,
+	TXT_EN,
+	TXT_RU,
 	TXT_LAST,
 };
 
@@ -90,4 +92,4 @@ extern std::vector<SDL_Texture*> Textures;
 extern std::vector<Mix_Chunk*> Sounds;
 extern Mix_Music* GameMusic;
 
-extern std::string Text[TXT_LAST - 1];
+extern std::string Text[TXT_LAST];

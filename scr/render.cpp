@@ -78,9 +78,9 @@ void RenderTextureCentered(SDL_Texture* Texture, int PosX, int PosY, int Width, 
 	SDL_RenderCopyEx(RendererPrimary, Texture, NULL, &DestinationRectangle, Angle, NULL, RendererFlip);
 }
 
-void DrawButton(int ButtonId, int LineThickness) {
+void DrawButton(int ButtonId, int LineThickness, SDL_Color Color = ColorDefaultBlue) {
 	SDL_Rect Line;
-	SDL_SetRenderDrawColor(RendererPrimary, ColorDefaultBlue.r, ColorDefaultBlue.g, ColorDefaultBlue.b, ColorDefaultBlue.a);
+	SDL_SetRenderDrawColor(RendererPrimary, Color.r, Color.g, Color.b, Color.a);
 	// Верхняя
 	Line = { (int)GameButtons[ButtonId].Pos.x - GameButtons[ButtonId].Width / 2,(int)GameButtons[ButtonId].Pos.y - GameButtons[ButtonId].Heigth / 2, GameButtons[ButtonId].Width, LineThickness };
 	SDL_RenderFillRect(RendererPrimary, &Line);
@@ -93,7 +93,7 @@ void DrawButton(int ButtonId, int LineThickness) {
 	// Правая
 	Line = { (int)GameButtons[ButtonId].Pos.x + GameButtons[ButtonId].Width / 2,(int)GameButtons[ButtonId].Pos.y - GameButtons[ButtonId].Heigth / 2, LineThickness, GameButtons[ButtonId].Heigth + LineThickness };
 	SDL_RenderFillRect(RendererPrimary, &Line);
-	RenderText(Text[GameButtons[ButtonId].TextID].c_str(), MenuFont, GameButtons[ButtonId].Pos.x, GameButtons[ButtonId].Pos.y, ColorDefaultBlue, true);
+	RenderText(Text[GameButtons[ButtonId].TextID].c_str(), MenuFont, GameButtons[ButtonId].Pos.x, GameButtons[ButtonId].Pos.y, Color, true);
 }
 
 void DrawSlider(Slider& SliderToDraw, bool Centered)
@@ -114,7 +114,7 @@ void DrawSlider(Slider& SliderToDraw, bool Centered)
 
 }
 
-void DrawOptionsFrame()
+void DrawOptionsFrame(bool FromPause = false)
 {
 	if (FramesPerSecondPresent > 10000) FramesPerSecondPresent = 0;
 	FramesPerSecondPresent++;
@@ -133,6 +133,21 @@ void DrawOptionsFrame()
 	// Слайдеры
 	DrawSlider(GameSliders[SLDR_SFX], true); // SFX
 	DrawSlider(GameSliders[SLDR_MUSIC], true); // Music
+	if (FromPause)
+	{
+		DrawButton(BTN_EN, 5, { 54, 88, 163, 128 });
+		DrawButton(BTN_RU, 5, { 54, 88, 163, 128 });
+	}
+	else if (Lang == LANG_EN)
+	{
+		DrawButton(BTN_EN, 5, { 54, 88, 163, 128 });
+		DrawButton(BTN_RU, 5);
+	}
+	else if (Lang == LANG_RU)
+	{
+		DrawButton(BTN_EN, 5);
+		DrawButton(BTN_RU, 5, { 54, 88, 163, 128 });
+	}
 
 	// ФПС, если включён
 	if (FPSCounter) {

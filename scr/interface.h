@@ -28,6 +28,12 @@ enum class DeadMenuCode
 	RETRY,
 };
 
+enum Langs
+{
+	LANG_EN,
+	LANG_RU,
+};
+
 struct Slider
 {
 	point Pos;

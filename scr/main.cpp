@@ -37,6 +37,8 @@ std::string WordInput = "";
 const int GameHighscoresSize = 10;
 highscore GameHighscores[GameHighscoresSize];
 
+int Lang = LANG_EN;
+
 // Иницализация игры
 void GameInit() {
 	// Пересоздание лога

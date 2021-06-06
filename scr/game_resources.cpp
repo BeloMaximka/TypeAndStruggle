@@ -12,7 +12,7 @@ SDL_Texture* img_missing_texture;
 Mix_Chunk* snd_missing_sound{};
 Mix_Music* snd_missing_music{};
 
-std::string Text[TXT_LAST-1];
+std::string Text[TXT_LAST];
 std::vector<SDL_Texture*> Textures;
 std::vector<Mix_Chunk*> Sounds;
 Mix_Music* GameMusic;
@@ -35,7 +35,7 @@ void LoadText(const char* lang)
 	}
 	delete[] Buffer;
 	char CurChar;
-	for (int i = 1; i < TXT_LAST-1; i++)
+	for (int i = 1; i < TXT_LAST; i++)
 	{
 		while (SDL_RWread(File, &CurChar, sizeof(char), 1))
 		{

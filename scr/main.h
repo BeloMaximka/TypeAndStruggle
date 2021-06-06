@@ -85,7 +85,9 @@ enum BUTTON_NAMES {
 	BTN_DEAD_RETRY,
 	BTN_DEAD_QUIT_MAINMENU,
 	BTN_SCORES_BACK,
-	BTN_OPTIONS_BACK
+	BTN_OPTIONS_BACK,
+	BTN_EN,
+	BTN_RU,
 };
 
 // Глобальные переменные
@@ -122,6 +124,8 @@ extern buttons GameButtons;
 
 extern const int GameHighscoresSize;
 extern highscore GameHighscores[];
+
+extern int Lang;
 
 void QuitGame();
 void GameSession(bool ArithmethicMode, DifficultyCode Difficulty);
