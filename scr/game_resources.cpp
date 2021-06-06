@@ -19,6 +19,8 @@ Mix_Music* GameMusic;
 TTF_Font* NormalFont;
 TTF_Font* ScoresFont;
 TTF_Font* MenuFont;
+
+const int CorrectFileSize = sizeof(highscore) * GameHighscoresSize + sizeof(double) * 2 + sizeof(int) * 2;
 void CreateNewDataFile()
 {
 	SDL_RWops* File = SDL_RWFromFile("data.bin", "w");
@@ -36,28 +38,32 @@ void CreateNewDataFile()
 		GameHighscores[j] = HighscoreToWrite;
 		SDL_RWwrite(File, &HighscoreToWrite, sizeof(highscore), 1);
 	}
-	// Настройки звука в ноль
-	double Temp = 0;
+
+	double Temp = 0; // Настройки звука в ноль
 	SDL_RWwrite(File, &Temp, sizeof(double), 1);
 	SDL_RWwrite(File, &Temp, sizeof(double), 1);
+
+	int Res = 720; // разрешение
+	SDL_RWwrite(File, &Res, sizeof(int), 1);
+	SDL_RWwrite(File, &Res, sizeof(int), 1);
 	SDL_RWclose(File);
+	SetSFXVolume(0);
+	SetMusicVolume(0);
 }
 
-void LoadSavedData(highscore GameHighscores[], Sliders& GameSliders)
+void LoadSavedData(highscore GameHighscores[], Sliders& GameSliders, int& WinResX, int& WinResY)
 {
 	// Загружаем рекорды с бинарника     
 	SDL_RWops* File = SDL_RWFromFile("data.bin", "r");
 	if (File != nullptr)
 	{
 		unsigned int FileSize = SDL_RWsize(File);
-		if (FileSize < sizeof(highscore) * GameHighscoresSize + sizeof(double) * 2)
+		if (FileSize < CorrectFileSize)
 		{
 			WriteInLog("[ERROR] \"data.bin\" is corrupted!");
 			WriteInLog("[INFO] Creating new \"data.bin\"...");
 			SDL_RWclose(File);
 			CreateNewDataFile();
-			SetSFXVolume(0);
-			SetMusicVolume(0);
 		}
 		else
 		{
@@ -73,6 +79,8 @@ void LoadSavedData(highscore GameHighscores[], Sliders& GameSliders)
 		SDL_RWread(File, &GameSliders[SLDR_MUSIC].Value, sizeof(double), 1);
 		SetSFXVolume(GameSliders[SLDR_SFX].Value);
 		SetMusicVolume(GameSliders[SLDR_MUSIC].Value);
+		SDL_RWread(File, &WinResX, sizeof(int), 1);
+		SDL_RWread(File, &WinResY, sizeof(int), 1);
 		SDL_RWclose(File);
 	}
 	else

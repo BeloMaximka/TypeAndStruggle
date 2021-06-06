@@ -8,6 +8,22 @@ int HeartbeatRate = 100;
 //SDL_Color ColorDefaultBlue = { 44, 85, 107, 255 };
 SDL_Color ColorDefaultBlue = { 54, 88, 163, 255 };
 
+void UpdateWindowResolution(SDL_Event& Event)
+{
+	int LowestRes = Event.window.data1 < Event.window.data2 ? Event.window.data1 : Event.window.data2;
+	WINDOW_RESOLUTION_X = LowestRes;
+	WINDOW_RESOLUTION_Y = LowestRes;
+	SDL_SetWindowSize(WindowPrimary, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y);
+	SDL_RWops* File = SDL_RWFromFile("data.bin", "r+");
+	if (File == nullptr)
+	{
+		WriteInLog("[ERROR] Unable to save options to the file \"data.bin\"!");
+	}
+	SDL_RWseek(File, sizeof(highscore) * GameHighscoresSize + sizeof(double) * 2, SEEK_SET);
+	SDL_RWwrite(File, &WINDOW_RESOLUTION_X, sizeof(int), 1);
+	SDL_RWwrite(File, &WINDOW_RESOLUTION_Y, sizeof(int), 1);
+	SDL_RWclose(File);
+}
 // Рендерит текстуру
 void RenderTexture(SDL_Texture* Texture, int PosX, int PosY, int Width, int Height)
 {

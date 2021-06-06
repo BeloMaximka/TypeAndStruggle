@@ -30,10 +30,9 @@ enum GameSounds
 	GSND_CLICK,
 	GSND_CLICK2,
 	GSND_LAST
-
 };
 
-void LoadSavedData(highscore GameHighscores[], Sliders& GameSliders);
+void LoadSavedData(highscore GameHighscores[], Sliders& GameSliders, int& WinResX, int& WinResY);
 TTF_Font* LoadFont(const char* FilePath, int FontSize);
 SDL_Texture* GetTextTexture(const char* Text, TTF_Font* Font, SDL_Color Color);
 SDL_Texture* CreateMissingTexture();

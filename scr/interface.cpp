@@ -200,10 +200,7 @@ void OptionsMenu()
 		if (SDL_PollEvent(&Event))
 		{
 			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_RESIZED) {
-				int LowestRes = Event.window.data1 < Event.window.data2 ? Event.window.data1 : Event.window.data2;
-				WINDOW_RESOLUTION_X = LowestRes;
-				WINDOW_RESOLUTION_Y = LowestRes;
-				SDL_SetWindowSize(WindowPrimary, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y);
+				UpdateWindowResolution(Event);
 			}
 			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_MAXIMIZED) {
 				SDL_SetWindowPosition(WindowPrimary, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
@@ -259,10 +256,7 @@ PauseMenuCode PauseMenu()
 		if (SDL_PollEvent(&Event))
 		{
 			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_RESIZED) {
-				int LowestRes = Event.window.data1 < Event.window.data2 ? Event.window.data1 : Event.window.data2;
-				WINDOW_RESOLUTION_X = LowestRes;
-				WINDOW_RESOLUTION_Y = LowestRes;
-				SDL_SetWindowSize(WindowPrimary, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y);
+				UpdateWindowResolution(Event);
 			}
 			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_MAXIMIZED) {
 				SDL_SetWindowPosition(WindowPrimary, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
@@ -322,10 +316,7 @@ DifficultyCode DifficultyMenu()
 		if (SDL_PollEvent(&Event))
 		{
 			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_RESIZED) {
-				int LowestRes = Event.window.data1 < Event.window.data2 ? Event.window.data1 : Event.window.data2;
-				WINDOW_RESOLUTION_X = LowestRes;
-				WINDOW_RESOLUTION_Y = LowestRes;
-				SDL_SetWindowSize(WindowPrimary, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y);
+				UpdateWindowResolution(Event);
 			}
 			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_MAXIMIZED) {
 				SDL_SetWindowPosition(WindowPrimary, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
@@ -381,10 +372,7 @@ void HighscoresMenu()
 		if (SDL_PollEvent(&Event))
 		{
 			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_RESIZED) {
-				int LowestRes = Event.window.data1 < Event.window.data2 ? Event.window.data1 : Event.window.data2;
-				WINDOW_RESOLUTION_X = LowestRes;
-				WINDOW_RESOLUTION_Y = LowestRes;
-				SDL_SetWindowSize(WindowPrimary, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y);
+				UpdateWindowResolution(Event);
 			}
 			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_MAXIMIZED) {
 				SDL_SetWindowPosition(WindowPrimary, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
@@ -429,10 +417,7 @@ void HighscoreEnterMenu(DifficultyCode Difficulty, bool ArithmeticMode)
 		if (SDL_PollEvent(&Event))
 		{
 			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_RESIZED) {
-				int LowestRes = Event.window.data1 < Event.window.data2 ? Event.window.data1 : Event.window.data2;
-				WINDOW_RESOLUTION_X = LowestRes;
-				WINDOW_RESOLUTION_Y = LowestRes;
-				SDL_SetWindowSize(WindowPrimary, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y);
+				UpdateWindowResolution(Event);
 			}
 			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_MAXIMIZED) {
 				SDL_SetWindowPosition(WindowPrimary, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
@@ -515,10 +500,7 @@ DeadMenuCode DeadMenu(SDL_Texture* BackgroundTexture, DifficultyCode Difficulty,
 		if (SDL_PollEvent(&Event))
 		{
 			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_RESIZED) {
-				int LowestRes = Event.window.data1 < Event.window.data2 ? Event.window.data1 : Event.window.data2;
-				WINDOW_RESOLUTION_X = LowestRes;
-				WINDOW_RESOLUTION_Y = LowestRes;
-				SDL_SetWindowSize(WindowPrimary, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y);
+				UpdateWindowResolution(Event);
 			}
 			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_MAXIMIZED) {
 				SDL_SetWindowPosition(WindowPrimary, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
@@ -574,10 +556,7 @@ void MainMenu()
 		if (SDL_PollEvent(&Event))
 		{
 			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_RESIZED) {
-				int LowestRes = Event.window.data1 < Event.window.data2 ? Event.window.data1 : Event.window.data2;
-				WINDOW_RESOLUTION_X = LowestRes;
-				WINDOW_RESOLUTION_Y = LowestRes;
-				SDL_SetWindowSize(WindowPrimary, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y);
+				UpdateWindowResolution(Event);
 			}
 			if (Event.type == SDL_WINDOWEVENT && Event.window.event == SDL_WINDOWEVENT_MAXIMIZED) {
 				SDL_SetWindowPosition(WindowPrimary, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);

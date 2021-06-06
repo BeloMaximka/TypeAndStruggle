@@ -65,6 +65,14 @@ void GameInit() {
 	}
 	// Ициниализация SDL_mixer
 	InitAudio();
+
+	// Создаем кнопочки
+	InitButtons();
+	// Слайдеры
+	InitSliders(GameSliders);
+	// Загружаем рекорды и настройки с бинарника
+	LoadSavedData(GameHighscores, GameSliders, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y);
+
 	// Создаем окно программы
 	WindowPrimary = SDL_CreateWindow(WINDOW_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);//| SDL_WINDOW_BORDERLESS
 	// Опять же, проверка на возможные ошибки
@@ -116,13 +124,7 @@ void GameInit() {
 	{
 		WriteInLog("[ERROR] Cannot open file \"classic.txt\"!");
 		return;
-	}	
-	// Создаем кнопочки
-	InitButtons();
-	// Слайдеры
-	InitSliders(GameSliders);
-	// Загружаем рекорды и настройки с бинарника
-	LoadSavedData(GameHighscores, GameSliders);
+	}
 	// Скрываем курсор
 	SDL_ShowCursor(0);
 	WriteInLog("[INFO] Initialization complete.");
