@@ -30,6 +30,7 @@ void BoxBlurHorizontal(Uint32* Source, Uint32* Target, int Width, int Height, in
 		}
 	}
 }
+
 void BoxBlurTotal(Uint32* Source, Uint32* Destination, int Width, int Height, int Radius) {
 	double Accumlator = 1.0 / (Radius + Radius + 1);
 	for (auto i = 0; i < Width; i++) {
@@ -67,10 +68,12 @@ void BoxBlurTotal(Uint32* Source, Uint32* Destination, int Width, int Height, in
 		}
 	}
 }
+
 void BoxBlur(Uint32* Source, Uint32* Destination, int Width, int Height, int Radius) {
 	BoxBlurHorizontal(Destination, Source, Width, Height, Radius);
 	BoxBlurTotal(Source, Destination, Width, Height, Radius);
 }
+
 void Blur(Uint32* PixelData, int Width, int Height, int Radius)
 {
 	Uint32* Source = new Uint32[Width * Height];

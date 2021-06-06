@@ -93,7 +93,7 @@ void DrawButton(int ButtonId, int LineThickness) {
 	// Правая
 	Line = { (int)GameButtons[ButtonId].Pos.x + GameButtons[ButtonId].Width / 2,(int)GameButtons[ButtonId].Pos.y - GameButtons[ButtonId].Heigth / 2, LineThickness, GameButtons[ButtonId].Heigth + LineThickness };
 	SDL_RenderFillRect(RendererPrimary, &Line);
-	RenderText(GameButtons[ButtonId].Text.c_str(), MenuFont, GameButtons[ButtonId].Pos.x, GameButtons[ButtonId].Pos.y, ColorDefaultBlue, true);
+	RenderText(Text[GameButtons[ButtonId].TextID].c_str(), MenuFont, GameButtons[ButtonId].Pos.x, GameButtons[ButtonId].Pos.y, ColorDefaultBlue, true);
 }
 
 void DrawSlider(Slider& SliderToDraw, bool Centered)
@@ -107,7 +107,7 @@ void DrawSlider(Slider& SliderToDraw, bool Centered)
 		Line.x -= SliderToDraw.Width / 2;
 	}
 	SDL_RenderFillRect(RendererPrimary, &Line);
-	RenderText(SliderToDraw.Text.c_str(), MenuFont, Line.x + SliderToDraw.Width / 2, SliderToDraw.Pos.y - SliderToDraw.Heigth * 7 / 5, ColorDefaultBlue, true);
+	RenderText(Text[SliderToDraw.TextID].c_str(), MenuFont, Line.x + SliderToDraw.Width / 2, SliderToDraw.Pos.y - SliderToDraw.Heigth * 7 / 5, ColorDefaultBlue, true);
 	// Вертинальная линия
 	Line = { int(Line.x + SliderToDraw.Width * SliderToDraw.Value), int(SliderToDraw.Pos.y - SliderToDraw.Heigth * 2 / 5), SliderToDraw.Heigth / 5 , SliderToDraw.Heigth };
 	SDL_RenderFillRect(RendererPrimary, &Line);
@@ -246,7 +246,6 @@ void DrawMainMenuFrame()
 	DrawButton(BTN_MENU_OPTIONS, 5);
 	// Quit        
 	DrawButton(BTN_MENU_QUIT_DESKTOP, 5);
-
 	// ФПС, если включён
 	if (FPSCounter) {
 		RenderText(FPSString, NormalFont, 0, 0, 0, 0, 0, 255, false);

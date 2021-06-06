@@ -55,6 +55,7 @@ void LoadText(const char* lang)
 	}
 	SDL_RWclose(File);
 }
+
 void CreateNewDataFile()
 {
 	SDL_RWops* File = SDL_RWFromFile("data.bin", "w");
@@ -124,6 +125,7 @@ void LoadSavedData(highscore GameHighscores[], Sliders& GameSliders, int& WinRes
 		CreateNewDataFile();
 	}
 }
+
 Mix_Chunk* LoadSound(const char* FilePath)
 {
 	Mix_Chunk* Sound = Mix_LoadWAV(FilePath);

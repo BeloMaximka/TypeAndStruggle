@@ -7,7 +7,7 @@ void InitSliders(Sliders& GameSliders)
 {
 	Slider SliderToAdd;
 	// SFX
-	SliderToAdd.Text = "SFX Volume: ";
+	SliderToAdd.TextID = TXT_SFXVOLUME;
 	SliderToAdd.ID = SLDR_SFX;
 	SliderToAdd.Pos = { TRUE_RESOLUTION_X / 2.0, TRUE_RESOLUTION_Y / 2.0 - TRUE_RESOLUTION_Y / 8.0 };
 	SliderToAdd.Heigth = 40;
@@ -16,7 +16,7 @@ void InitSliders(Sliders& GameSliders)
 	SliderToAdd.Value = 0;
 	GameSliders.push_back(SliderToAdd);
 	// Music
-	SliderToAdd.Text = "Music Volume: ";
+	SliderToAdd.TextID = TXT_MUSICVOLUME;
 	SliderToAdd.ID = SLDR_MUSIC;
 	SliderToAdd.Pos = { TRUE_RESOLUTION_X / 2.0, TRUE_RESOLUTION_Y / 2.0 };
 	SliderToAdd.Heigth = 40;
@@ -26,154 +26,113 @@ void InitSliders(Sliders& GameSliders)
 	GameSliders.push_back(SliderToAdd);
 }
 
+void SetButtonsSize(buttons& GameButtons, TTF_Font* Font)
+{
+	for (int i = 0; i < GameButtons.size(); i++)
+	{
+		TTF_SizeUTF8(Font, Text[GameButtons[i].TextID].c_str(), &GameButtons[i].Width, &GameButtons[i].Heigth);
+		GameButtons[i].Heigth = TRUE_RESOLUTION_Y / 10;
+		GameButtons[i].Width += 50;
+		GameButtons[i].Collision = UpdateCollision(GameButtons[i].Pos, GameButtons[i].Heigth, GameButtons[i].Width);
+	}
+}
 //�������� ������
-void InitButtons() {
+void InitButtons(buttons& GameButtons)
+{
 
 	button ButtonToAdd;
 	// Ingame Continue    
 	ButtonToAdd.ID = BTN_INGAME_CONTINUE;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 8 };
-	ButtonToAdd.Text = "Continue";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_CONTINUE;
 	GameButtons.push_back(ButtonToAdd);
 	// Ingame Restart
 	ButtonToAdd.ID = BTN_INGAME_RESTART;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 4 };
-	ButtonToAdd.Text = "Restart";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_RESTART;
 	GameButtons.push_back(ButtonToAdd);
 	// Options
 	ButtonToAdd.ID = BTN_INGAME_OPTIONS;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 2 + (double)TRUE_RESOLUTION_Y / 8 };
-	ButtonToAdd.Text = "Options";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_OPTIONS;
 	GameButtons.push_back(ButtonToAdd);
 	// Ingame Quit to Main Menu
 	ButtonToAdd.ID = BTN_INGAME_QUIT_MAINMENU;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 2 };
-	ButtonToAdd.Text = "Quit to Main Menu";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_QUITMAINMENU;
 	GameButtons.push_back(ButtonToAdd);
 	// Ingame Quit  to Desktop  
 	ButtonToAdd.ID = BTN_INGAME_QUIT_DESKTOP;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)3 * TRUE_RESOLUTION_Y / 8 + (double)TRUE_RESOLUTION_Y / 2 };
-	ButtonToAdd.Text = "Quit to Desktop";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_QUITDESKTOP;
 	GameButtons.push_back(ButtonToAdd);
 	// Mainmenu play classic    
 	ButtonToAdd.ID = BTN_MENU_CLASSIC;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 8 };
-	ButtonToAdd.Text = "Play Classic";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_PLAYCLASSIC;
 	GameButtons.push_back(ButtonToAdd);
 	// Mainmenu play arithmetic
 	ButtonToAdd.ID = BTN_MENU_ARITHMETIC;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 4 };
-	ButtonToAdd.Text = "Play Arithmetic";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_PLAYARITHMETIC;
 	GameButtons.push_back(ButtonToAdd);
 	// Mainmenu scores
 	ButtonToAdd.ID = BTN_MENU_SCORES;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 2 + (double)TRUE_RESOLUTION_Y / 8 };
-	ButtonToAdd.Text = "Scores";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_SCORES;
 	GameButtons.push_back(ButtonToAdd);
 	// Options
 	ButtonToAdd.ID = BTN_MENU_OPTIONS;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 2 };
-	ButtonToAdd.Text = "Options";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_OPTIONS;
 	GameButtons.push_back(ButtonToAdd);
 	// Mainmenu Quit  to Desktop  
 	ButtonToAdd.ID = BTN_MENU_QUIT_DESKTOP;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)3 * TRUE_RESOLUTION_Y / 8 + (double)TRUE_RESOLUTION_Y / 2 };
-	ButtonToAdd.Text = "Quit to Desktop";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_QUITDESKTOP;
 	GameButtons.push_back(ButtonToAdd);
 	// Difficulty Easy
 	ButtonToAdd.ID = BTN_DIFFICULTY_EASY;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 8 };
-	ButtonToAdd.Text = "Easy";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 60;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_EASY;
 	GameButtons.push_back(ButtonToAdd);
 	// Difficulty Normal
 	ButtonToAdd.ID = BTN_DIFFICULTY_NORMAL;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 4 + (double)TRUE_RESOLUTION_Y / 4 };
-	ButtonToAdd.Text = "Normal";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 60;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_NORMAL;
 	GameButtons.push_back(ButtonToAdd);
 	// Difficulty Hard
 	ButtonToAdd.ID = BTN_DIFFICULTY_HARD;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 2 + (double)TRUE_RESOLUTION_Y / 8 };
-	ButtonToAdd.Text = "Hard";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 60;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_HARD;
 	GameButtons.push_back(ButtonToAdd);
 	// Difficulty Back
 	ButtonToAdd.ID = BTN_DIFFICULTY_BACK;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 2 + (double)TRUE_RESOLUTION_Y / 16 + (double)TRUE_RESOLUTION_Y / 4 };
-	ButtonToAdd.Text = "Back";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 60;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_BACK;
 	GameButtons.push_back(ButtonToAdd);
 	// Dead Retry
 	ButtonToAdd.ID = BTN_DEAD_RETRY;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 2 };
-	ButtonToAdd.Text = "Retry";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 50;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_RETRY;
 	GameButtons.push_back(ButtonToAdd);
 	// Difficulty  Quit to Main Menu
 	ButtonToAdd.ID = BTN_DEAD_QUIT_MAINMENU;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 2 + (double)TRUE_RESOLUTION_Y / 8 };
-	ButtonToAdd.Text = "Back to Main Menu";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 48;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_BACKMAINMENU;
 	GameButtons.push_back(ButtonToAdd);
 	// Scores Back
 	ButtonToAdd.ID = BTN_SCORES_BACK;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y - (double)TRUE_RESOLUTION_Y / 8 };
-	ButtonToAdd.Text = "Back";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 69;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_BACK;
 	GameButtons.push_back(ButtonToAdd);
 	// Options Back
 	ButtonToAdd.ID = BTN_OPTIONS_BACK;
 	ButtonToAdd.Pos = { (double)TRUE_RESOLUTION_X / 2, (double)TRUE_RESOLUTION_Y / 2 + (double)TRUE_RESOLUTION_Y / 16 + (double)TRUE_RESOLUTION_Y / 4 };
-	ButtonToAdd.Text = "Back";
-	ButtonToAdd.Heigth = TRUE_RESOLUTION_Y / 10;
-	ButtonToAdd.Width = ButtonToAdd.Text.length() * 60;
-	ButtonToAdd.Collision = UpdateCollision(ButtonToAdd.Pos, ButtonToAdd.Heigth, ButtonToAdd.Width);
+	ButtonToAdd.TextID = TXT_BACK;
 	GameButtons.push_back(ButtonToAdd);
+
+	SetButtonsSize(GameButtons, MenuFont);
 }
 
 void OptionsMenu()

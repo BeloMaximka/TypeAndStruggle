@@ -31,9 +31,9 @@ enum class DeadMenuCode
 struct Slider
 {
 	point Pos;
-	std::string Text;
 	collisionbox Collision;
 	double Value = 1;
+	int TextID;
 	int Heigth;
 	int Width;
 	int ID;
@@ -44,7 +44,7 @@ typedef std::vector<Slider> Sliders;
 extern Sliders GameSliders;
 
 void InitSliders(Sliders& GameSliders);
-void InitButtons();
+void InitButtons(buttons& GameButtons);
 PauseMenuCode PauseMenu();
 void HighscoreEnterMenu(DifficultyCode Difficulty, bool ArithmeticMode);
 DeadMenuCode DeadMenu(SDL_Texture* BackgroundTexture, DifficultyCode Difficulty, bool ArithmeticMode);

@@ -66,8 +66,6 @@ void GameInit() {
 	// Ициниализация SDL_mixer
 	InitAudio();
 
-	// Создаем кнопочки
-	InitButtons();
 	// Слайдеры
 	InitSliders(GameSliders);
 	// Загружаем рекорды и настройки с бинарника
@@ -93,9 +91,6 @@ void GameInit() {
 		return;
 	}
 	SDL_SetRenderDrawBlendMode(RendererPrimary, SDL_BLENDMODE_BLEND);
-	// Загружаем ресурсы игры в память
-	WriteInLog("[INFO] Loading game resources...");
-	InitResources();
 
 	// Загружаем слова с текстового файла
 	string TempWord = "";
@@ -125,11 +120,20 @@ void GameInit() {
 		WriteInLog("[ERROR] Cannot open file \"classic.txt\"!");
 		return;
 	}
+
+	// Загружаем ресурсы игры в память
+	WriteInLog("[INFO] Loading game resources...");
+
+	InitResources();
+
+	LoadText("en");
+	// Создаем кнопочки
+	InitButtons(GameButtons);
+
+	SDL_SetWindowSize(WindowPrimary, WINDOW_RESOLUTION_X, WINDOW_RESOLUTION_Y);
 	// Скрываем курсор
 	SDL_ShowCursor(0);
 	WriteInLog("[INFO] Initialization complete.");
-
-	LoadText("en");
 }
 // Выход из игры
 inline void QuitGame() {

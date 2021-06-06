@@ -21,8 +21,8 @@
 struct button
 {
 	point Pos;
-	std::string Text;
 	collisionbox Collision;
+	int TextID;
 	int Heigth;
 	int Width;
 	int ID;	
