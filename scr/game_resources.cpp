@@ -25,7 +25,7 @@ const int CorrectFileSize = sizeof(highscore) * GameHighscoresSize + sizeof(doub
 
 void LoadText(const char* lang)
 {
-	int BufferSize = strlen(lang) + 10;
+	int BufferSize = 32;
 	char* Buffer = new char[BufferSize];
 	sprintf_s(Buffer, BufferSize, "lang\\%s.txt", lang);
 	SDL_RWops* File = SDL_RWFromFile(Buffer, "r");
@@ -35,6 +35,10 @@ void LoadText(const char* lang)
 	}
 	delete[] Buffer;
 	char CurChar;
+	for (int i = 1; i < TXT_LAST; i++)
+	{
+		Text[i].clear();
+	}
 	for (int i = 1; i < TXT_LAST; i++)
 	{
 		while (SDL_RWread(File, &CurChar, sizeof(char), 1))
@@ -54,6 +58,39 @@ void LoadText(const char* lang)
 		}
 	}
 	SDL_RWclose(File);
+	SetButtonsSize(GameButtons, MenuFont);
+
+	// Загружаем слова с текстового файла
+	WordsList.clear();
+	Buffer = new char[BufferSize];
+	sprintf_s(Buffer, BufferSize, "words\\%s.txt", lang);
+	std::string TempWord = "";
+	File = SDL_RWFromFile(Buffer, "r");
+	char Temp;
+	if (File != nullptr)
+	{
+		unsigned int FileSize = SDL_RWsize(File);
+		for (int i = 0; i < FileSize; i++)
+		{
+			SDL_RWread(File, &Temp, sizeof(char), 1);
+			if (Temp == '\r')
+			{
+				SDL_RWread(File, &Temp, sizeof(char), 1);
+				WordsList.push_back(TempWord);
+				TempWord = "";
+			}
+			else
+			{
+				TempWord += Temp;
+			}
+		}
+		SDL_RWclose(File);
+	}
+	else
+	{
+		WriteInLog("[ERROR] Cannot open file \"%s.txt\": %s", lang, SDL_GetError());
+		return;
+	}
 }
 
 void CreateNewDataFile()

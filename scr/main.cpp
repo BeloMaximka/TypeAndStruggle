@@ -94,35 +94,6 @@ void GameInit() {
 	}
 	SDL_SetRenderDrawBlendMode(RendererPrimary, SDL_BLENDMODE_BLEND);
 
-	// Загружаем слова с текстового файла
-	string TempWord = "";
-	char Buffer;
-	SDL_RWops* File = SDL_RWFromFile("classic.txt", "r");
-	if (File != nullptr)
-	{
-		unsigned int FileSize = SDL_RWsize(File);
-		for (int i = 0; i < FileSize; i++)
-		{
-			SDL_RWread(File, &Buffer, sizeof(char), 1);
-			if (Buffer == '\r')
-			{
-				SDL_RWread(File, &Buffer, sizeof(char), 1);
-				WordsList.push_back(TempWord);
-				TempWord = "";
-			}
-			else
-			{
-				TempWord += Buffer;
-			}
-		}
-		SDL_RWclose(File);
-	}
-	else
-	{
-		WriteInLog("[ERROR] Cannot open file \"classic.txt\"!");
-		return;
-	}
-
 	// Загружаем ресурсы игры в память
 	WriteInLog("[INFO] Loading game resources...");
 

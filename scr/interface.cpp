@@ -179,7 +179,7 @@ void OptionsMenu(bool FromPause = false)
 				QuitGame();
 			}
 
-			InputCode MouseCode = ReadMouseOptions(Event, GameButtons, GameSliders);
+			InputCode MouseCode = ReadMouseOptions(Event, GameButtons, GameSliders, FromPause);
 			InputCode KeyCode = ReadKeysOptions(Event);
 			if (MouseCode == InputCode::OPTIONS_BACK || KeyCode == InputCode::OPTIONS_BACK)
 			{
@@ -196,6 +196,16 @@ void OptionsMenu(bool FromPause = false)
 					SDL_RWclose(File);
 				}
 				return;
+			}
+			else if (MouseCode == InputCode::OPTIONS_EN)
+			{
+				Lang = LANG_EN;
+				LoadText("en");
+			}
+			else if (MouseCode == InputCode::OPTIONS_RU)
+			{
+				Lang = LANG_RU;
+				LoadText("ru");
 			}
 		}
 	}

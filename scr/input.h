@@ -26,10 +26,12 @@ enum class InputCode
 	GAMESESSION_ENTER,
 	GAMESESSION_PAUSE,
 	OPTIONS_BACK,
+	OPTIONS_EN,
+	OPTIONS_RU,
 };
 
 InputCode ReadKeysOptions(const SDL_Event& Event);
-InputCode ReadMouseOptions(const SDL_Event& Event, const buttons& Buttons, Sliders& GameSliders);
+InputCode ReadMouseOptions(const SDL_Event& Event, const buttons& Buttons, Sliders& GameSliders, bool FromPause);
 InputCode ReadKeysPause(const SDL_Event& Event);
 InputCode ReadMousePause(const SDL_Event& Event, const buttons& Buttons);
 InputCode ReadKeysDifficulty(const SDL_Event& Event);

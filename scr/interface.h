@@ -49,6 +49,7 @@ typedef std::vector<Slider> Sliders;
 
 extern Sliders GameSliders;
 
+void SetButtonsSize(buttons& GameButtons, TTF_Font* Font);
 void InitSliders(Sliders& GameSliders);
 void InitButtons(buttons& GameButtons);
 PauseMenuCode PauseMenu();

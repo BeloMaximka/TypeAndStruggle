@@ -17,7 +17,7 @@ InputCode ReadKeysOptions(const SDL_Event& Event)
 	return InputCode::NOTHING;
 }
 
-InputCode ReadMouseOptions(const SDL_Event& Event, const buttons& Buttons, Sliders& GameSliders)
+InputCode ReadMouseOptions(const SDL_Event& Event, const buttons& Buttons, Sliders& GameSliders, bool FromPause)
 {
 	static bool SFXVolumePressed = false;
 	static bool MusicVolumePressed = false;
@@ -47,6 +47,18 @@ InputCode ReadMouseOptions(const SDL_Event& Event, const buttons& Buttons, Slide
 		if (IsColliding(MouseCollision, GameSliders[SLDR_MUSIC].Collision))
 		{
 			MusicVolumePressed = true;
+		}
+		//Кнопка EN
+		if (!FromPause && Lang != LANG_EN && IsColliding(MouseCollision, Buttons[BTN_EN].Collision))
+		{
+			PlaySound(GSND_BOOP);
+			return InputCode::OPTIONS_EN;
+		}
+		//Кнопка RU
+		if (!FromPause && Lang != LANG_RU && IsColliding(MouseCollision, Buttons[BTN_RU].Collision))
+		{
+			PlaySound(GSND_BOOP);
+			return InputCode::OPTIONS_RU;
 		}
 	}
 	if (SFXVolumePressed)
