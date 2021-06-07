@@ -364,6 +364,7 @@ void GameSession(bool ArithmeticMode, DifficultyCode Difficulty)
 				PauseMenuCode PauseCode = PauseMenu();
 				// Обновляем разницу между тиками, чтобы игнорировать время нахождения в паузе
 				TickDifference = 0;
+				TickCurrent = SDL_GetTicks();
 				if (PauseCode == PauseMenuCode::RESTART)
 				{
 					SetupGameSession(EnemySpawnDelay, Difficulty, ArithmeticMode);
